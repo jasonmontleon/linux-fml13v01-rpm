@@ -1,0 +1,1785 @@
+From 3f71823f85d02a501340e5280c084081352d1a32 Mon Sep 17 00:00:00 2001
+From: "shengyang.chen" <shengyang.chen@starfivetech.com>
+Date: Fri, 19 Apr 2024 11:05:21 +0800
+Subject: [PATCH 144/210] drm/panel: sync 6.6 mipi code with 6.1 and add 4lane
+ mipi support
+
+1.sync kernel 6.6 dsi and dphytx code with 6.1
+2.add 4lane screen support
+  add new panel-starfive-jadard.c instead of using panel-jadard-jd9365da-h3.c
+
+Signed-off-by: Shengyang Chen <shengyang.chen@starfivetech.com>
+---
+ .../configs/starfive_visionfive2_defconfig    |   2 +-
+ drivers/gpu/drm/panel/Kconfig                 |  10 +
+ drivers/gpu/drm/panel/Makefile                |   1 +
+ drivers/gpu/drm/panel/panel-starfive-jadard.c | 828 ++++++++++++++++++
+ .../gpu/drm/verisilicon/starfive_drm_dsi.c    | 202 +++--
+ drivers/phy/m31/7110-m31-dphy.h               |  23 +
+ drivers/phy/m31/phy-m31-dphy-tx0.c            | 378 +-------
+ 7 files changed, 1029 insertions(+), 415 deletions(-)
+ create mode 100644 drivers/gpu/drm/panel/panel-starfive-jadard.c
+
+diff --git a/arch/riscv/configs/starfive_visionfive2_defconfig b/arch/riscv/configs/starfive_visionfive2_defconfig
+index dee9b5a1c25f..7feee6e84d74 100644
+--- a/arch/riscv/configs/starfive_visionfive2_defconfig
++++ b/arch/riscv/configs/starfive_visionfive2_defconfig
+@@ -228,7 +228,7 @@ CONFIG_VIDEO_STF_VIN=y
+ CONFIG_VIDEO_IMX219=y
+ CONFIG_VIDEO_IMX708=y
+ CONFIG_DRM_PANEL_SIMPLE=y
+-CONFIG_DRM_PANEL_JADARD_JD9365DA_H3=y
++CONFIG_DRM_PANEL_STARFIVE_JADARD=y
+ CONFIG_DRM_TOSHIBA_TC358762=y
+ CONFIG_DRM_VERISILICON=y
+ CONFIG_STARFIVE_INNO_HDMI=y
+diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
+index 3a2f4a9f1d46..a9df28daa245 100644
+--- a/drivers/gpu/drm/panel/Kconfig
++++ b/drivers/gpu/drm/panel/Kconfig
+@@ -233,6 +233,16 @@ config DRM_PANEL_JADARD_JD9365DA_H3
+ 	  WXGA MIPI DSI panel. The panel support TFT dot matrix LCD with
+ 	  800RGBx1280 dots at maximum.
+ 
++config DRM_PANEL_STARFIVE_JADARD
++	tristate "STARFIVE JADARD WXGA DSI panel"
++	depends on OF
++	depends on DRM_MIPI_DSI
++	depends on BACKLIGHT_CLASS_DEVICE
++	help
++	  Say Y here if you want to enable support for StarFive Jadard radxa
++	  WXGA MIPI DSI panel. The panel support TFT dot matrix LCD with
++	  800RGBx1280 dots at maximum.
++
+ config DRM_PANEL_JDI_LT070ME05000
+ 	tristate "JDI LT070ME05000 WUXGA DSI panel"
+ 	depends on OF
+diff --git a/drivers/gpu/drm/panel/Makefile b/drivers/gpu/drm/panel/Makefile
+index 433e93d57949..85afe7fbf1ab 100644
+--- a/drivers/gpu/drm/panel/Makefile
++++ b/drivers/gpu/drm/panel/Makefile
+@@ -21,6 +21,7 @@ obj-$(CONFIG_DRM_PANEL_ILITEK_ILI9881C) += panel-ilitek-ili9881c.o
+ obj-$(CONFIG_DRM_PANEL_INNOLUX_EJ030NA) += panel-innolux-ej030na.o
+ obj-$(CONFIG_DRM_PANEL_INNOLUX_P079ZCA) += panel-innolux-p079zca.o
+ obj-$(CONFIG_DRM_PANEL_JADARD_JD9365DA_H3) += panel-jadard-jd9365da-h3.o
++obj-$(CONFIG_DRM_PANEL_STARFIVE_JADARD) += panel-starfive-jadard.o
+ obj-$(CONFIG_DRM_PANEL_JDI_LT070ME05000) += panel-jdi-lt070me05000.o
+ obj-$(CONFIG_DRM_PANEL_JDI_R63452) += panel-jdi-fhd-r63452.o
+ obj-$(CONFIG_DRM_PANEL_KHADAS_TS050) += panel-khadas-ts050.o
+diff --git a/drivers/gpu/drm/panel/panel-starfive-jadard.c b/drivers/gpu/drm/panel/panel-starfive-jadard.c
+new file mode 100644
+index 000000000000..a86bd6dc72f8
+--- /dev/null
++++ b/drivers/gpu/drm/panel/panel-starfive-jadard.c
+@@ -0,0 +1,828 @@
++// SPDX-License-Identifier: GPL-2.0+
++/*
++ * Copyright (c) 2019 Radxa Limited
++ * Copyright (c) 2022 Edgeble AI Technologies Pvt. Ltd.
++ *
++ * Author:
++ * - Jagan Teki <jagan@amarulasolutions.com>
++ * - Stephen Chen <stephen@radxa.com>
++ */
++
++#include <drm/drm_mipi_dsi.h>
++#include <drm/drm_modes.h>
++#include <drm/drm_panel.h>
++#include <drm/drm_print.h>
++
++#include <linux/gpio/consumer.h>
++#include <linux/delay.h>
++#include <linux/module.h>
++#include <linux/of_device.h>
++#include <linux/regulator/consumer.h>
++
++#include <linux/device.h>
++#include <linux/i2c.h>
++#include <linux/kernel.h>
++#include <linux/of.h>
++#include <linux/of_graph.h>
++#include <drm/drm_crtc.h>
++#include <drm/drm_device.h>
++#include <video/display_timing.h>
++#include <video/videomode.h>
++
++
++//accel sc7a20
++#include <linux/iio/iio.h>
++#include <linux/iio/sysfs.h>
++#include <linux/iio/trigger.h>
++#include <linux/iio/common/st_sensors_i2c.h>
++#include <linux/iio/common/st_sensors.h>
++//#include "st_accel.h"
++
++#define DSI_DRIVER_NAME "starfive-dri"
++
++enum cmd_type {
++	CMD_TYPE_DCS,
++	CMD_TYPE_DELAY,
++};
++
++struct jadard_init_cmd {
++	enum cmd_type type;
++	const char *data;
++	size_t len;
++};
++
++#define _INIT_CMD_DCS(...)					\
++	{							\
++		.type	= CMD_TYPE_DCS,				\
++		.data	= (char[]){__VA_ARGS__},		\
++		.len	= sizeof((char[]){__VA_ARGS__})		\
++	}							\
++
++#define _INIT_CMD_DELAY(...)					\
++	{							\
++		.type	= CMD_TYPE_DELAY,			\
++		.data	= (char[]){__VA_ARGS__},		\
++		.len	= sizeof((char[]){__VA_ARGS__})		\
++	}							\
++
++struct jadard_panel_desc {
++	const struct drm_display_mode mode;
++	unsigned int lanes;
++	enum mipi_dsi_pixel_format format;
++	const struct jadard_init_cmd *init_cmds;
++	u32 num_init_cmds;
++	const struct display_timing *timings;
++	unsigned int num_timings;
++};
++
++struct jadard {
++	struct drm_panel panel;
++	struct mipi_dsi_device *dsi;
++	const struct jadard_panel_desc *desc;
++	struct i2c_client *client;
++
++	struct device   *dev;
++
++	struct regulator *vdd;
++	struct regulator *vccio;
++	struct gpio_desc *reset;
++	struct gpio_desc *enable;
++	bool enable_initialized;
++	int choosemode;
++};
++
++static inline struct jadard *panel_to_jadard(struct drm_panel *panel)
++{
++	return container_of(panel, struct jadard, panel);
++}
++
++static int jadard_i2c_write(struct i2c_client *client, u8 reg, u8 val)
++{
++	struct i2c_msg msg;
++	u8 buf[2];
++	int ret;
++
++	buf[0] = reg;
++	buf[1] = val;
++	msg.addr = client->addr;
++	msg.flags = 0;
++	msg.buf = buf;
++	msg.len = 2;
++
++	ret = i2c_transfer(client->adapter, &msg, 1);
++	if (ret >= 0)
++		return 0;
++
++	return ret;
++}
++
++static int jadard_i2c_read(struct i2c_client *client, u8 reg, u8 *val)
++{
++	struct i2c_msg msg[2];
++	u8 buf[2];
++	int ret;
++
++	buf[0] = reg;
++	msg[0].addr = client->addr;
++	msg[0].flags = 0;
++	msg[0].buf = buf;
++	msg[0].len = 1;
++	msg[1].addr = client->addr;
++	msg[1].flags = I2C_M_RD;
++	msg[1].buf = val;
++	msg[1].len = 1;
++	ret = i2c_transfer(client->adapter, msg, 2);
++
++	if (ret >= 0)
++		return 0;
++
++	return ret;
++}
++
++static int jadard_enable(struct drm_panel *panel)
++{
++	struct device *dev = panel->dev;
++	struct jadard *jadard = panel_to_jadard(panel);
++	const struct jadard_panel_desc *desc = jadard->desc;
++	struct mipi_dsi_device *dsi = jadard->dsi;
++	unsigned int i;
++	int err;
++	if (jadard->enable_initialized == true)
++		return 0;
++
++	if (jadard->choosemode == 0) {//8inch
++
++		for (i = 0; i < desc->num_init_cmds; i++) {
++			const struct jadard_init_cmd *cmd = &desc->init_cmds[i];
++
++			switch (cmd->type) {
++			case CMD_TYPE_DELAY:
++				msleep(cmd->data[0]);
++				err = 0;
++				break;
++			case CMD_TYPE_DCS:
++				err = mipi_dsi_dcs_write(dsi, cmd->data[0],
++							 cmd->len <= 1 ? NULL : &cmd->data[1],
++							 cmd->len - 1);
++				break;
++			default:
++				err = -EINVAL;
++			}
++
++			if (err < 0) {
++				DRM_DEV_ERROR(dev, "failed to write CMD#0x%x\n", cmd->data[0]);
++				return err;
++			}
++
++		}
++
++		err = mipi_dsi_dcs_exit_sleep_mode(dsi);
++		if (err < 0)
++			DRM_DEV_ERROR(dev, "failed to exit sleep mode ret = %d\n", err);
++		msleep(120);
++
++		err =  mipi_dsi_dcs_set_display_on(dsi);
++		if (err < 0)
++			DRM_DEV_ERROR(dev, "failed to set display on ret = %d\n", err);
++	}
++
++	jadard->enable_initialized = true ;
++
++	return 0;
++}
++
++static int jadard_disable(struct drm_panel *panel)
++{
++	struct device *dev = panel->dev;
++	struct jadard *jadard = panel_to_jadard(panel);
++	int ret;
++	if (jadard->choosemode == 0) {//8inch
++		ret = mipi_dsi_dcs_set_display_off(jadard->dsi);
++		if (ret < 0)
++			DRM_DEV_ERROR(dev, "failed to set display off: %d\n", ret);
++
++		ret = mipi_dsi_dcs_enter_sleep_mode(jadard->dsi);
++		if (ret < 0)
++			DRM_DEV_ERROR(dev, "failed to enter sleep mode: %d\n", ret);
++
++	}
++	jadard->enable_initialized = false;
++
++	return 0;
++}
++
++static int jadard_prepare(struct drm_panel *panel)
++{
++	struct device *dev = panel->dev;
++	struct jadard *jadard = panel_to_jadard(panel);
++	const struct jadard_panel_desc *desc = jadard->desc;
++	struct mipi_dsi_device *dsi = jadard->dsi;
++	unsigned int i;
++	int err;
++
++	if (jadard->enable_initialized == true)
++		return 0;
++
++	gpiod_direction_output(jadard->enable, 0);
++	gpiod_set_value(jadard->enable, 1);
++	mdelay(100);
++
++	gpiod_direction_output(jadard->reset, 0);
++	mdelay(100);
++	gpiod_set_value(jadard->reset, 1);
++	mdelay(100);
++	gpiod_set_value(jadard->reset, 0);
++	mdelay(100);
++	gpiod_set_value(jadard->reset, 1);
++	mdelay(150);
++
++	return 0;
++}
++
++static int jadard_unprepare(struct drm_panel *panel)
++{
++	struct jadard *jadard = panel_to_jadard(panel);
++
++	gpiod_set_value(jadard->reset, 1);
++	msleep(120);
++#if 0
++	regulator_disable(jadard->vdd);
++	regulator_disable(jadard->vccio);
++#endif
++	return 0;
++}
++
++static int jadard_get_modes(struct drm_panel *panel,
++			    struct drm_connector *connector)
++{
++	struct jadard *jadard = panel_to_jadard(panel);
++	const struct drm_display_mode *desc_mode = &jadard->desc->mode;
++	struct drm_display_mode *mode;
++
++	mode = drm_mode_duplicate(connector->dev, desc_mode);
++	if (!mode) {
++		DRM_DEV_ERROR(&jadard->dsi->dev, "failed to add mode %ux%ux@%u\n",
++			      desc_mode->hdisplay, desc_mode->vdisplay,
++			      drm_mode_vrefresh(desc_mode));
++		return -ENOMEM;
++	}
++
++	drm_mode_set_name(mode);
++	drm_mode_probed_add(connector, mode);
++
++	connector->display_info.width_mm = mode->width_mm;
++	connector->display_info.height_mm = mode->height_mm;
++
++	return 1;
++}
++
++static int seiko_panel_get_timings(struct drm_panel *panel,
++					unsigned int num_timings,
++					struct display_timing *timings)
++{
++	struct jadard *jadard = panel_to_jadard(panel);
++	unsigned int i;
++
++	if (jadard->desc->num_timings < num_timings)
++		num_timings = jadard->desc->num_timings;
++
++	if (timings)
++		for (i = 0; i < num_timings; i++)
++			timings[i] = jadard->desc->timings[i];
++
++	return jadard->desc->num_timings;
++}
++
++static const struct drm_panel_funcs jadard_funcs = {
++	.disable = jadard_disable,
++	.unprepare = jadard_unprepare,
++	.prepare = jadard_prepare,
++	.enable = jadard_enable,
++	.get_modes = jadard_get_modes,
++	.get_timings = seiko_panel_get_timings,
++};
++
++static const struct jadard_init_cmd cz101b4001_init_cmds[] = {
++	_INIT_CMD_DCS(0x01),
++	_INIT_CMD_DELAY(100),
++	_INIT_CMD_DCS(0xE0, 0x00),
++	_INIT_CMD_DCS(0xE1, 0x93),
++	_INIT_CMD_DCS(0xE2, 0x65),
++	_INIT_CMD_DCS(0xE3, 0xF8),
++	_INIT_CMD_DCS(0x80, 0x03),
++	_INIT_CMD_DCS(0xE0, 0x01),
++	_INIT_CMD_DCS(0x00, 0x00),
++	_INIT_CMD_DCS(0x01, 0x7E),
++	_INIT_CMD_DCS(0x03, 0x00),
++	_INIT_CMD_DCS(0x04, 0x65),
++	_INIT_CMD_DCS(0x0C, 0x74),
++	_INIT_CMD_DCS(0x17, 0x00),
++	_INIT_CMD_DCS(0x18, 0xB7),
++	_INIT_CMD_DCS(0x19, 0x00),
++	_INIT_CMD_DCS(0x1A, 0x00),
++	_INIT_CMD_DCS(0x1B, 0xB7),
++	_INIT_CMD_DCS(0x1C, 0x00),
++	_INIT_CMD_DCS(0x24, 0xFE),
++	_INIT_CMD_DCS(0x37, 0x19),
++	_INIT_CMD_DCS(0x38, 0x05),
++	_INIT_CMD_DCS(0x39, 0x00),
++	_INIT_CMD_DCS(0x3A, 0x01),
++	_INIT_CMD_DCS(0x3B, 0x01),
++	_INIT_CMD_DCS(0x3C, 0x70),
++	_INIT_CMD_DCS(0x3D, 0xFF),
++	_INIT_CMD_DCS(0x3E, 0xFF),
++	_INIT_CMD_DCS(0x3F, 0xFF),
++	_INIT_CMD_DCS(0x40, 0x06),
++	_INIT_CMD_DCS(0x41, 0xA0),
++	_INIT_CMD_DCS(0x43, 0x1E),
++	_INIT_CMD_DCS(0x44, 0x0F),
++	_INIT_CMD_DCS(0x45, 0x28),
++	_INIT_CMD_DCS(0x4B, 0x04),
++	_INIT_CMD_DCS(0x55, 0x02),
++	_INIT_CMD_DCS(0x56, 0x01),
++	_INIT_CMD_DCS(0x57, 0xA9),
++	_INIT_CMD_DCS(0x58, 0x0A),
++	_INIT_CMD_DCS(0x59, 0x0A),
++	_INIT_CMD_DCS(0x5A, 0x37),
++	_INIT_CMD_DCS(0x5B, 0x19),
++	_INIT_CMD_DCS(0x5D, 0x78),
++	_INIT_CMD_DCS(0x5E, 0x63),
++	_INIT_CMD_DCS(0x5F, 0x54),
++	_INIT_CMD_DCS(0x60, 0x49),
++	_INIT_CMD_DCS(0x61, 0x45),
++	_INIT_CMD_DCS(0x62, 0x38),
++	_INIT_CMD_DCS(0x63, 0x3D),
++	_INIT_CMD_DCS(0x64, 0x28),
++	_INIT_CMD_DCS(0x65, 0x43),
++	_INIT_CMD_DCS(0x66, 0x41),
++	_INIT_CMD_DCS(0x67, 0x43),
++	_INIT_CMD_DCS(0x68, 0x62),
++	_INIT_CMD_DCS(0x69, 0x50),
++	_INIT_CMD_DCS(0x6A, 0x57),
++	_INIT_CMD_DCS(0x6B, 0x49),
++	_INIT_CMD_DCS(0x6C, 0x44),
++	_INIT_CMD_DCS(0x6D, 0x37),
++	_INIT_CMD_DCS(0x6E, 0x23),
++	_INIT_CMD_DCS(0x6F, 0x10),
++	_INIT_CMD_DCS(0x70, 0x78),
++	_INIT_CMD_DCS(0x71, 0x63),
++	_INIT_CMD_DCS(0x72, 0x54),
++	_INIT_CMD_DCS(0x73, 0x49),
++	_INIT_CMD_DCS(0x74, 0x45),
++	_INIT_CMD_DCS(0x75, 0x38),
++	_INIT_CMD_DCS(0x76, 0x3D),
++	_INIT_CMD_DCS(0x77, 0x28),
++	_INIT_CMD_DCS(0x78, 0x43),
++	_INIT_CMD_DCS(0x79, 0x41),
++	_INIT_CMD_DCS(0x7A, 0x43),
++	_INIT_CMD_DCS(0x7B, 0x62),
++	_INIT_CMD_DCS(0x7C, 0x50),
++	_INIT_CMD_DCS(0x7D, 0x57),
++	_INIT_CMD_DCS(0x7E, 0x49),
++	_INIT_CMD_DCS(0x7F, 0x44),
++	_INIT_CMD_DCS(0x80, 0x37),
++	_INIT_CMD_DCS(0x81, 0x23),
++	_INIT_CMD_DCS(0x82, 0x10),
++	_INIT_CMD_DCS(0xE0, 0x02),
++	_INIT_CMD_DCS(0x00, 0x47),
++	_INIT_CMD_DCS(0x01, 0x47),
++	_INIT_CMD_DCS(0x02, 0x45),
++	_INIT_CMD_DCS(0x03, 0x45),
++	_INIT_CMD_DCS(0x04, 0x4B),
++	_INIT_CMD_DCS(0x05, 0x4B),
++	_INIT_CMD_DCS(0x06, 0x49),
++	_INIT_CMD_DCS(0x07, 0x49),
++	_INIT_CMD_DCS(0x08, 0x41),
++	_INIT_CMD_DCS(0x09, 0x1F),
++	_INIT_CMD_DCS(0x0A, 0x1F),
++	_INIT_CMD_DCS(0x0B, 0x1F),
++	_INIT_CMD_DCS(0x0C, 0x1F),
++	_INIT_CMD_DCS(0x0D, 0x1F),
++	_INIT_CMD_DCS(0x0E, 0x1F),
++	_INIT_CMD_DCS(0x0F, 0x5F),
++	_INIT_CMD_DCS(0x10, 0x5F),
++	_INIT_CMD_DCS(0x11, 0x57),
++	_INIT_CMD_DCS(0x12, 0x77),
++	_INIT_CMD_DCS(0x13, 0x35),
++	_INIT_CMD_DCS(0x14, 0x1F),
++	_INIT_CMD_DCS(0x15, 0x1F),
++	_INIT_CMD_DCS(0x16, 0x46),
++	_INIT_CMD_DCS(0x17, 0x46),
++	_INIT_CMD_DCS(0x18, 0x44),
++	_INIT_CMD_DCS(0x19, 0x44),
++	_INIT_CMD_DCS(0x1A, 0x4A),
++	_INIT_CMD_DCS(0x1B, 0x4A),
++	_INIT_CMD_DCS(0x1C, 0x48),
++	_INIT_CMD_DCS(0x1D, 0x48),
++	_INIT_CMD_DCS(0x1E, 0x40),
++	_INIT_CMD_DCS(0x1F, 0x1F),
++	_INIT_CMD_DCS(0x20, 0x1F),
++	_INIT_CMD_DCS(0x21, 0x1F),
++	_INIT_CMD_DCS(0x22, 0x1F),
++	_INIT_CMD_DCS(0x23, 0x1F),
++	_INIT_CMD_DCS(0x24, 0x1F),
++	_INIT_CMD_DCS(0x25, 0x5F),
++	_INIT_CMD_DCS(0x26, 0x5F),
++	_INIT_CMD_DCS(0x27, 0x57),
++	_INIT_CMD_DCS(0x28, 0x77),
++	_INIT_CMD_DCS(0x29, 0x35),
++	_INIT_CMD_DCS(0x2A, 0x1F),
++	_INIT_CMD_DCS(0x2B, 0x1F),
++	_INIT_CMD_DCS(0x58, 0x40),
++	_INIT_CMD_DCS(0x59, 0x00),
++	_INIT_CMD_DCS(0x5A, 0x00),
++	_INIT_CMD_DCS(0x5B, 0x10),
++	_INIT_CMD_DCS(0x5C, 0x06),
++	_INIT_CMD_DCS(0x5D, 0x40),
++	_INIT_CMD_DCS(0x5E, 0x01),
++	_INIT_CMD_DCS(0x5F, 0x02),
++	_INIT_CMD_DCS(0x60, 0x30),
++	_INIT_CMD_DCS(0x61, 0x01),
++	_INIT_CMD_DCS(0x62, 0x02),
++	_INIT_CMD_DCS(0x63, 0x03),
++	_INIT_CMD_DCS(0x64, 0x6B),
++	_INIT_CMD_DCS(0x65, 0x05),
++	_INIT_CMD_DCS(0x66, 0x0C),
++	_INIT_CMD_DCS(0x67, 0x73),
++	_INIT_CMD_DCS(0x68, 0x09),
++	_INIT_CMD_DCS(0x69, 0x03),
++	_INIT_CMD_DCS(0x6A, 0x56),
++	_INIT_CMD_DCS(0x6B, 0x08),
++	_INIT_CMD_DCS(0x6C, 0x00),
++	_INIT_CMD_DCS(0x6D, 0x04),
++	_INIT_CMD_DCS(0x6E, 0x04),
++	_INIT_CMD_DCS(0x6F, 0x88),
++	_INIT_CMD_DCS(0x70, 0x00),
++	_INIT_CMD_DCS(0x71, 0x00),
++	_INIT_CMD_DCS(0x72, 0x06),
++	_INIT_CMD_DCS(0x73, 0x7B),
++	_INIT_CMD_DCS(0x74, 0x00),
++	_INIT_CMD_DCS(0x75, 0xF8),
++	_INIT_CMD_DCS(0x76, 0x00),
++	_INIT_CMD_DCS(0x77, 0xD5),
++	_INIT_CMD_DCS(0x78, 0x2E),
++	_INIT_CMD_DCS(0x79, 0x12),
++	_INIT_CMD_DCS(0x7A, 0x03),
++	_INIT_CMD_DCS(0x7B, 0x00),
++	_INIT_CMD_DCS(0x7C, 0x00),
++	_INIT_CMD_DCS(0x7D, 0x03),
++	_INIT_CMD_DCS(0x7E, 0x7B),
++	_INIT_CMD_DCS(0xE0, 0x04),
++	_INIT_CMD_DCS(0x00, 0x0E),
++	_INIT_CMD_DCS(0x02, 0xB3),
++	_INIT_CMD_DCS(0x09, 0x60),
++	_INIT_CMD_DCS(0x0E, 0x2A),
++	_INIT_CMD_DCS(0x36, 0x59),
++	_INIT_CMD_DCS(0xE0, 0x00),
++
++	_INIT_CMD_DELAY(120),
++};
++
++static const struct display_timing jadard_timing[] = {
++	{
++	.pixelclock = { 79200000, 79200000, 79200000 },
++	.hactive = { 800, 800, 800 },
++	.hfront_porch = {  356, 356, 356 },
++	.hback_porch = { 134, 134, 134 },
++	.hsync_len = { 7, 7, 7 },
++	.vactive = { 1280, 1280, 1280 },
++	.vfront_porch = { 84, 84, 84 },
++	.vback_porch = { 20, 20, 20 },
++	.vsync_len = { 9, 9, 9 },
++	.flags = DISPLAY_FLAGS_DE_LOW,
++	},
++	{
++	 .pixelclock = { 148500000, 148500000, 148500000 },
++	 .hactive = { 1200, 1200, 1200 },
++	 .hfront_porch = {	246, 246, 246 },
++	 .hback_porch = { 5, 5, 5 },
++	 .hsync_len = { 5, 5, 5 },
++	 .vactive = { 1920, 1920, 1920 },
++	 .vfront_porch = { 84, 84, 84 },
++	 .vback_porch = { 20, 20, 20 },
++	 .vsync_len = { 16, 16, 16 },
++	 .flags = DISPLAY_FLAGS_DE_LOW,
++	},
++	{}
++};
++
++static const struct jadard_panel_desc cz101b4001_desc[] = {
++	{
++	.mode = {
++		.clock		= 79200,
++
++		.hdisplay	= 800,
++		.hsync_start	= 800 + 180,
++		.hsync_end	= 800 + 180 + 15,
++		.htotal		= 800 + 180 + 15 + 45,
++
++		.vdisplay	= 1280,
++		.vsync_start	= 1280 + 84,
++		.vsync_end	= 1280 + 84 + 20,
++		.vtotal		= 1280 + 84 + 20 + 7,
++
++		.width_mm	= 62,
++		.height_mm	= 110,
++		.type		= DRM_MODE_TYPE_DRIVER | DRM_MODE_TYPE_PREFERRED,
++	},
++	.lanes = 4,
++	.format = MIPI_DSI_FMT_RGB888,
++	.init_cmds = cz101b4001_init_cmds,
++	.num_init_cmds = ARRAY_SIZE(cz101b4001_init_cmds),
++	.timings = &jadard_timing[0],
++	.num_timings = 1,
++	},
++	{
++	.mode = {
++		 .clock 	 = 148500,
++
++		 .hdisplay	 = 1200,
++		 .hsync_start	 = 1200 + 246,
++		 .hsync_end  = 1200 + 246 + 5,
++		 .htotal	 = 1200 + 246 + 5 + 5,
++
++		 .vdisplay	 = 1920,
++		 .vsync_start	 = 1920 + 84,
++		 .vsync_end  = 1920 + 84 + 20,
++		 .vtotal	 = 1920 + 84 + 20 + 16,
++
++		 .width_mm	 = 62,
++		 .height_mm  = 110,
++		 .type		 = DRM_MODE_TYPE_DRIVER | DRM_MODE_TYPE_PREFERRED,
++	 },
++	 .lanes = 4,
++	 .format = MIPI_DSI_FMT_RGB888,
++	 .init_cmds = cz101b4001_init_cmds,//no
++	 .num_init_cmds = ARRAY_SIZE(cz101b4001_init_cmds),//no
++	 //.timings = &starfive_timing,
++	 .timings = &jadard_timing[1],
++	 .num_timings = 1,
++	},
++	{}
++};
++
++static int panel_probe(struct i2c_client *client)//, const struct i2c_device_id *id
++{
++	u8 reg_value = 0;
++	struct jadard *jd_panel;
++	const struct jadard_panel_desc *desc;
++
++	struct device_node *endpoint, *dsi_host_node;
++	struct mipi_dsi_host *host;
++	struct device *dev = &client->dev;
++
++	const struct st_sensor_settings *settings;
++	struct st_sensor_data *adata;
++	struct iio_dev *indio_dev;
++	int err; u8 mode = 1; int ret = 0;
++
++
++	struct mipi_dsi_device_info info = {
++		.type = DSI_DRIVER_NAME,
++		.channel = 1, //0,
++		.node = NULL,
++	};
++
++	if (!i2c_check_functionality(client->adapter, I2C_FUNC_I2C)) {
++		dev_warn(&client->dev,
++			 "I2C adapter doesn't support I2C_FUNC_SMBUS_BYTE\n");
++		return -EIO;
++	}
++
++	jd_panel = devm_kzalloc(&client->dev, sizeof(struct jadard), GFP_KERNEL);
++	if (!jd_panel)
++		return -ENOMEM;
++
++	desc = &cz101b4001_desc[0];//use 8inch parameter to pre config dsi and phy
++
++	jd_panel->client = client;
++	i2c_set_clientdata(client, jd_panel);
++
++	jd_panel->enable_initialized = false;
++
++	jd_panel->reset = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
++	if (IS_ERR(jd_panel->reset)) {
++		DRM_DEV_ERROR(dev, "failed to get our reset GPIO\n");
++		return PTR_ERR(jd_panel->reset);
++	}
++
++	jd_panel->enable = devm_gpiod_get(dev, "enable", GPIOD_OUT_LOW);
++	if (IS_ERR(jd_panel->enable)) {
++		DRM_DEV_ERROR(dev, "failed to get our enable GPIO\n");
++		return PTR_ERR(jd_panel->enable);
++	}
++
++	/*use i2c read to detect whether the panel has connected */
++	ret = jadard_i2c_read(client, 0x00, &reg_value);
++	if (ret < 0) {
++		dev_info(dev, "no 4lane connect!!!!\n");
++		return -ENODEV;
++	}
++	dev_info(dev, "==4lane panel!!! maybe 8inch==\n");
++	jd_panel->choosemode = 0;
++	endpoint = of_graph_get_next_endpoint(dev->of_node, NULL);
++	if (!endpoint)
++		return -ENODEV;
++
++	dsi_host_node = of_graph_get_remote_port_parent(endpoint);
++	if (!dsi_host_node)
++		goto error;
++
++	host = of_find_mipi_dsi_host_by_node(dsi_host_node);
++	of_node_put(dsi_host_node);
++	if (!host) {
++		of_node_put(endpoint);
++		return -EPROBE_DEFER;
++	}
++
++	drm_panel_init(&jd_panel->panel, dev, &jadard_funcs,
++		       DRM_MODE_CONNECTOR_DSI);
++
++	drm_panel_add(&jd_panel->panel);
++
++	info.node = of_node_get(of_graph_get_remote_port(endpoint));
++	if (!info.node)
++		goto error;
++
++	of_node_put(endpoint);
++	jd_panel->desc = desc;
++
++	jd_panel->dsi = mipi_dsi_device_register_full(host, &info);
++	if (IS_ERR(jd_panel->dsi)) {
++		dev_err(dev, "DSI device registration failed: %ld\n",
++			PTR_ERR(jd_panel->dsi));
++		return PTR_ERR(jd_panel->dsi);
++	}
++
++	mipi_dsi_set_drvdata(jd_panel->dsi, jd_panel);
++
++	//radxa 10inch connect detect
++	gpiod_direction_output(jd_panel->enable, 0);
++	gpiod_set_value(jd_panel->enable, 1);
++	mdelay(100);
++
++	gpiod_direction_output(jd_panel->reset, 0);
++	mdelay(100);
++	gpiod_set_value(jd_panel->reset, 1);
++	mdelay(100);
++	gpiod_set_value(jd_panel->reset, 0);
++	mdelay(100);
++	gpiod_set_value(jd_panel->reset, 1);
++	mdelay(150);
++
++	jd_panel->dsi->mode_flags &= ~MIPI_DSI_MODE_LPM;
++	if(jd_panel->dsi) {
++		//use this command to detect the connected status
++		err = mipi_dsi_dcs_get_power_mode(jd_panel->dsi, &mode);
++		dev_info(dev, "dsi command return %d, mode %d\n", err, mode);
++		if (err == -EIO) {
++			dev_info(dev, "raxda 10 inch detected\n");
++			jd_panel->choosemode = 1;
++			desc = &cz101b4001_desc[1];//choose 1200x1920 mode
++			jd_panel->desc = desc;
++			jd_panel->dsi->hs_rate = 980000000;//after this, dsi and phy will config again
++		} else {
++			dev_info(dev, "4lane is radxa 8inch\n");
++			jd_panel->dsi->hs_rate = 490000000;
++		}
++	}
++	jd_panel->dsi->mode_flags |= MIPI_DSI_MODE_LPM;
++
++	//acceleroter SC7A20
++	dev_info(dev, "probe sc7a20 begin\n");
++	settings = st_accel_get_settings("sc7a20");
++	if (!settings) {
++		dev_err(&client->dev, "device name %s not recognized.\n",
++			client->name);
++		return -ENODEV;
++	}
++
++	indio_dev = devm_iio_device_alloc(&client->dev, sizeof(*adata));
++	if (!indio_dev)
++		return -ENOMEM;
++
++	adata = iio_priv(indio_dev);
++	adata->sensor_settings = (struct st_sensor_settings *)settings;
++
++	ret = st_sensors_i2c_configure(indio_dev, client);
++	if (ret < 0)
++		return ret;
++
++	ret = st_sensors_power_enable(indio_dev);
++	if (ret)
++		return ret;
++	st_accel_common_probe(indio_dev);
++	dev_info(dev, "probe sc7a20 end\n");
++
++	return 0;
++error:
++	of_node_put(endpoint);
++	return -ENODEV;
++no_panel:
++	mipi_dsi_device_unregister(jd_panel->dsi);
++	//drm_panel_remove(&jd_panel->panel);
++	//mipi_dsi_detach(jd_panel->dsi);
++
++	return -ENODEV;
++
++
++}
++
++static void panel_remove(struct i2c_client *client)
++{
++	struct jadard *jd_panel = i2c_get_clientdata(client);
++
++	mipi_dsi_detach(jd_panel->dsi);
++	drm_panel_remove(&jd_panel->panel);
++	mipi_dsi_device_unregister(jd_panel->dsi);
++}
++
++static const struct i2c_device_id panel_id[] = {
++	{ "starfive_jadard", 0 },
++	{ }
++};
++
++static const struct of_device_id panel_dt_ids[] = {
++	{ .compatible = "starfive_jadard", .data = &cz101b4001_desc},
++	{ /* sentinel */ }
++};
++
++static struct i2c_driver panel_driver = {
++	.driver = {
++		.owner	= THIS_MODULE,
++		.name	= "starfive_jadard",
++		.of_match_table = panel_dt_ids,
++	},
++	.probe		= panel_probe,
++	.remove		= panel_remove,
++	.id_table	= panel_id,
++};
++
++static int jadard_dsi_probe(struct mipi_dsi_device *dsi)
++{
++	struct device *dev = &dsi->dev;
++	struct jadard *jadard = mipi_dsi_get_drvdata(dsi);
++
++	int ret;
++
++	dsi->mode_flags = MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_SYNC_PULSE ;
++	dsi->format = MIPI_DSI_FMT_RGB888;
++	dsi->lanes = 4;
++	dsi->channel = 1;
++	dsi->hs_rate = 490000000;
++
++	ret = mipi_dsi_attach(dsi);
++	if (ret < 0) {
++		return ret;
++	}
++
++	return 0;
++}
++
++static void jadard_dsi_remove(struct mipi_dsi_device *dsi)
++{
++	struct jadard *jadard = mipi_dsi_get_drvdata(dsi);
++
++	mipi_dsi_detach(dsi);
++	drm_panel_remove(&jadard->panel);
++}
++
++static const struct of_device_id jadard_of_match[] = {
++	{ .compatible = "starfive-dri-panel-1", .data = &cz101b4001_desc },
++	{ /* sentinel */ }
++};
++MODULE_DEVICE_TABLE(of, jadard_of_match);
++
++static struct mipi_dsi_driver jadard_mipi_driver = {
++	.probe = jadard_dsi_probe,
++	.remove = jadard_dsi_remove,
++	.driver.name = DSI_DRIVER_NAME,
++};
++//module_mipi_dsi_driver(jadard_driver);
++
++
++static int __init init_panel(void)
++{
++	int err;
++
++	mipi_dsi_driver_register(&jadard_mipi_driver);
++	err = i2c_add_driver(&panel_driver);
++
++	return err;
++
++}
++module_init(init_panel);
++
++static void __exit exit_panel(void)
++{
++	i2c_del_driver(&panel_driver);
++	mipi_dsi_driver_unregister(&jadard_mipi_driver);
++}
++module_exit(exit_panel);
++
++
++MODULE_AUTHOR("Jagan Teki <jagan@edgeble.ai>");
++MODULE_AUTHOR("Stephen Chen <stephen@radxa.com>");
++MODULE_DESCRIPTION("Jadard JD9365DA-H3 WUXGA DSI panel");
++MODULE_LICENSE("GPL");
++
+diff --git a/drivers/gpu/drm/verisilicon/starfive_drm_dsi.c b/drivers/gpu/drm/verisilicon/starfive_drm_dsi.c
+index 104fe10624f3..8f8235cef2d0 100644
+--- a/drivers/gpu/drm/verisilicon/starfive_drm_dsi.c
++++ b/drivers/gpu/drm/verisilicon/starfive_drm_dsi.c
+@@ -868,13 +868,13 @@ static int cdns_dsi_bridge_attach(struct drm_bridge *bridge,
+ 	struct cdns_dsi *dsi = input_to_dsi(input);
+ 	struct cdns_dsi_output *output = &dsi->output;
+ 
+-	dev_info(dsi->base.dev, "===>cdns_dsi_bridge_attach begin\n");
++	dev_info(dsi->base.dev, "cdns_dsi_bridge_attach begin\n");
+ 	if (!drm_core_check_feature(bridge->dev, DRIVER_ATOMIC)) {
+ 		dev_err(dsi->base.dev,
+ 			"cdns-dsi driver is only compatible with DRM devices supporting atomic updates");
+ 		return -EOPNOTSUPP;
+ 	}
+-	dev_info(dsi->base.dev, "===>cdns_dsi_bridge_attach end\n");
++	dev_info(dsi->base.dev, "cdns_dsi_bridge_attach end\n");
+ 	return drm_bridge_attach(bridge->encoder, output->bridge, bridge,
+ 				 flags);
+ }
+@@ -887,8 +887,7 @@ cdns_dsi_bridge_mode_valid(struct drm_bridge *bridge,
+ 	struct cdns_dsi_input *input = bridge_to_cdns_dsi_input(bridge);
+ 	struct cdns_dsi *dsi = input_to_dsi(input);
+ 	struct cdns_dsi_output *output = &dsi->output;
+-	struct cdns_dsi_cfg dsi_cfg;
+-	int bpp, ret;
++	int bpp;
+ 
+ 	/*
+ 	 * VFP_DSI should be less than VFP_DPI and VFP_DSI should be at
+@@ -906,10 +905,6 @@ cdns_dsi_bridge_mode_valid(struct drm_bridge *bridge,
+ 	if ((mode->hdisplay * bpp) % 32)
+ 		return MODE_H_ILLEGAL;
+ 
+-	ret = cdns_dsi_check_conf(dsi, mode, &dsi_cfg, true);
+-	//if (ret)
+-	//	return MODE_BAD;
+-
+ 	return MODE_OK;
+ }
+ 
+@@ -953,7 +948,6 @@ static void cdns_dsi_bridge_disable(struct drm_bridge *bridge)
+ 	struct cdns_dsi *dsi = input_to_dsi(input);
+ 	u32 val;
+ 
+-	dsi->link_initialized = false;
+ 	val = readl(dsi->regs + MCTL_MAIN_DATA_CTL);
+ 	val &= ~(IF_VID_SELECT_MASK | IF_VID_MODE | VID_EN | HOST_EOT_GEN |
+ 		 DISP_EOT_GEN);
+@@ -962,24 +956,15 @@ static void cdns_dsi_bridge_disable(struct drm_bridge *bridge)
+ 	val = readl(dsi->regs + MCTL_MAIN_EN) & ~IF_EN(input->id);
+ 	writel(val, dsi->regs + MCTL_MAIN_EN);
+ 	pm_runtime_put(dsi->base.dev);
+-	sys_mipi_dsi_set_ppi_txbyte_hs(0, dsi);
+-	phy_power_off(dsi->dphy);
+-	phy_exit(dsi->dphy);
+-
+ }
+ 
+ static void cdns_dsi_hs_init(struct cdns_dsi *dsi)
+ {
+ 	struct cdns_dsi_output *output = &dsi->output;
+-	//u32 dpi_fifo_int = 0;
+ 	int ret;
+-	/*
+-	 * Power all internal DPHY blocks down and maintain their reset line
+-	 * asserted before changing the DPHY config.
+-	 */
+-	writel(DPHY_CMN_PSO | DPHY_PLL_PSO | DPHY_ALL_D_PDN | DPHY_C_PDN |
+-	       DPHY_CMN_PDN | DPHY_PLL_PDN,
+-	       dsi->regs + MCTL_DPHY_CFG0);
++
++	if (dsi->link_initialized)
++		return;
+ 
+ 	phy_init(dsi->dphy);
+ 	phy_set_mode(dsi->dphy, PHY_MODE_MIPI_DPHY);
+@@ -988,33 +973,19 @@ static void cdns_dsi_hs_init(struct cdns_dsi *dsi)
+ 
+ 	ret = sys_mipi_dsi_set_ppi_txbyte_hs(1, dsi);
+ 
+-	writel(PLL_LOCKED, dsi->regs + MCTL_MAIN_STS_CLR);
+-	writel(DPHY_CMN_PSO | DPHY_ALL_D_PDN | DPHY_C_PDN | DPHY_CMN_PDN,
+-	       dsi->regs + MCTL_DPHY_CFG0);
+-	mdelay(100);
+-	/* De-assert data and clock reset lines. */
+-	writel(DPHY_CMN_PSO | DPHY_ALL_D_PDN | DPHY_C_PDN | DPHY_CMN_PDN |
+-	       DPHY_D_RSTB(output->dev->lanes) | DPHY_C_RSTB,
+-	       dsi->regs + MCTL_DPHY_CFG0);
+-
+-/*
+-	dpi_fifo_int = readl(dsi->regs + DPI_IRQ_CLR);
+-	if (dpi_fifo_int)
+-		writel(1, dsi->regs + DPI_IRQ_CLR);
+-*/
+ }
+ 
+ static void cdns_dsi_init_link(struct cdns_dsi *dsi)
+ {
+ 	struct cdns_dsi_output *output = &dsi->output;
+-	unsigned long sysclk_period, ulpout;
++	unsigned long  ulpout;
+ 	u32 val;
+ 	int i;
+ 
+ 	if (dsi->link_initialized)
+ 		return;
++	cdns_dsi_hs_init(dsi);
+ 
+-	//val = 0;
+ 	val = WAIT_BURST_TIME(0xf);
+ 	for (i = 1; i < output->dev->lanes; i++)
+ 		val |= DATA_LANE_EN(i);
+@@ -1024,24 +995,63 @@ static void cdns_dsi_init_link(struct cdns_dsi *dsi)
+ 
+ 	writel(val, dsi->regs + MCTL_MAIN_PHY_CTL);
+ 
+-	/* ULPOUT should be set to 1ms and is expressed in sysclk cycles.*/
+-	sysclk_period = NSEC_PER_SEC / clk_get_rate(dsi->dsi_sys_clk);
+-	ulpout = DIV_ROUND_UP(NSEC_PER_MSEC, sysclk_period);
++	ulpout = DIV_ROUND_UP(clk_get_rate(dsi->dsi_sys_clk), MSEC_PER_SEC);
++
+ 	writel(CLK_LANE_ULPOUT_TIME(ulpout) | DATA_LANE_ULPOUT_TIME(ulpout),
+ 		dsi->regs + MCTL_ULPOUT_TIME);
+ 
+ 	writel(LINK_EN, dsi->regs + MCTL_MAIN_DATA_CTL);
+ 
+-	val = CLK_LANE_EN | PLL_START;
++	if (output->dev->mode_flags & MIPI_DSI_MODE_LPM){
++		val = CLK_LANE_EN | CLK_FORCE_STOP;
++	} else {
++		val = CLK_LANE_EN;
++	}
+ 	for (i = 0; i < output->dev->lanes; i++)
+ 		val |= DATA_LANE_START(i);
+ 
+ 	writel(val, dsi->regs + MCTL_MAIN_EN);
++	udelay(20);
+ 
+ 	dsi->link_initialized = true;
+ 
+ }
+ 
++static void start_clane_hs(struct cdns_dsi *dsi)
++{
++	// struct cdns_dsi *dsi = (struct cdns_dsi *)handle->priv;
++	struct cdns_dsi_output *output = &dsi->output;
++
++	unsigned long  ulpout;
++	u32 val;
++	int i;
++
++	val = WAIT_BURST_TIME(0xf);
++	for (i = 1; i < output->dev->lanes; i++)
++		val |= DATA_LANE_EN(i);
++
++	if (!(output->dev->mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS))
++		val |= CLK_CONTINUOUS;
++
++	writel(val, dsi->regs + MCTL_MAIN_PHY_CTL);
++
++	ulpout = DIV_ROUND_UP(clk_get_rate(dsi->dsi_sys_clk), MSEC_PER_SEC);
++	writel(CLK_LANE_ULPOUT_TIME(ulpout) | DATA_LANE_ULPOUT_TIME(ulpout),
++	       dsi->regs + MCTL_ULPOUT_TIME);
++
++	writel(LINK_EN, dsi->regs + MCTL_MAIN_DATA_CTL);
++
++	val = CLK_LANE_EN; // | CLK_FORCE_STOP; // | PLL_START; unused bit
++	for (i = 0; i < output->dev->lanes; i++)
++		val |= DATA_LANE_START(i);
++
++	writel(val, dsi->regs + MCTL_MAIN_EN); // start hs clk lane
++
++	// clane output DDR(Double Data Rate) clock = half of dphy hs_rate, because hs is double edge sampling
++
++	dsi->link_initialized = true;
++}
++
+ static void cdns_dsi_bridge_enable(struct drm_bridge *bridge)
+ {
+ 	struct cdns_dsi_input *input = bridge_to_cdns_dsi_input(bridge);
+@@ -1064,10 +1074,15 @@ static void cdns_dsi_bridge_enable(struct drm_bridge *bridge)
+ 
+ 	//WARN_ON_ONCE(cdns_dsi_check_conf(dsi, mode, &dsi_cfg, false));//original //7110 mode illegal,need confirm //cannot disable
+ 	cdns_dsi_check_conf(dsi, mode, &dsi_cfg, false);
+-
+-	cdns_dsi_hs_init(dsi);
++	//cdns_dsi_hs_init(dsi);
+ 	cdns_dsi_init_link(dsi);
+ 
++	if (output->panel)
++		drm_panel_prepare(output->panel);
++
++	if (output->panel)
++		drm_panel_enable(output->panel);
++
+ 	writel(HBP_LEN(dsi_cfg.hbp) | HSA_LEN(dsi_cfg.hsa),
+ 	       dsi->regs + VID_HSIZE1);
+ 	writel(HFP_LEN(dsi_cfg.hfp) | HACT_LEN(dsi_cfg.hact),
+@@ -1103,10 +1118,11 @@ static void cdns_dsi_bridge_enable(struct drm_bridge *bridge)
+ 	tx_byte_period = DIV_ROUND_DOWN_ULL((u64)NSEC_PER_SEC * 8,
+ 					    phy_cfg->hs_clk_rate);
+ 	reg_wakeup = (phy_cfg->hs_prepare + phy_cfg->hs_zero) / tx_byte_period;
++
+ 	writel(REG_WAKEUP_TIME(reg_wakeup) | REG_LINE_DURATION(tmp),
+ 	       dsi->regs + VID_DPHY_TIME);
+ 
+-    vrefresh = drm_mode_vrefresh(mode);//display_timing_vrefresh(dpi);
++    vrefresh = drm_mode_vrefresh(mode)-1;//display_timing_vrefresh(dpi);
+ 
+     tmp = NSEC_PER_SEC / vrefresh;
+ 	tmp /= tx_byte_period;
+@@ -1163,6 +1179,9 @@ static void cdns_dsi_bridge_enable(struct drm_bridge *bridge)
+ 		writel(tmp, dsi->regs + VID_MAIN_CTL);
+ 	}
+ 
++	//to restart the clane and dlane
++	start_clane_hs(dsi);
++
+ 	tmp = readl(dsi->regs + MCTL_MAIN_DATA_CTL);
+ 	tmp &= ~(IF_VID_SELECT_MASK | HOST_EOT_GEN | IF_VID_MODE);
+ 
+@@ -1201,6 +1220,7 @@ static int cdns_dsi_attach(struct mipi_dsi_host *host,
+ 	 * same host. In order to support that we'd need the DRM bridge
+ 	 * framework to allow dynamic reconfiguration of the bridge chain.
+ 	 */
++
+ 	if (output->dev)
+ 		return -EBUSY;
+ 
+@@ -1241,12 +1261,15 @@ static int cdns_dsi_attach(struct mipi_dsi_host *host,
+ 	output->dev = dev;
+ 	output->bridge = bridge;
+ 	output->panel = panel;
++	output->phy_opts.mipi_dphy.hs_clk_rate = dev->hs_rate;
+ 
+ 	/*
+ 	 * The DSI output has been properly configured, we can now safely
+ 	 * register the input to the bridge framework so that it can take place
+ 	 * in a display pipeline.
+ 	 */
++
++	dev_info(host->dev, "hs_rate.%ld, channel = %d\n" ,dev->hs_rate,dev->channel);
+ 	drm_bridge_add(&input->bridge);
+ 	return 0;
+ }
+@@ -1261,6 +1284,7 @@ static int cdns_dsi_detach(struct mipi_dsi_host *host,
+ 	drm_bridge_remove(&input->bridge);
+ 	if (output->panel)
+ 		drm_panel_bridge_remove(output->bridge);
++	output->dev = NULL;
+ 
+ 	return 0;
+ }
+@@ -1271,6 +1295,9 @@ static irqreturn_t cdns_dsi_interrupt(int irq, void *data)
+ 	irqreturn_t ret = IRQ_NONE;
+ 	u32 flag, ctl;
+ 
++    if (dsi->link_initialized == false)
++		ret = IRQ_HANDLED;
++
+ 	flag = readl(dsi->regs + DIRECT_CMD_STS_FLAG);
+ 	if (flag) {
+ 		ctl = readl(dsi->regs + DIRECT_CMD_STS_CTL);
+@@ -1287,16 +1314,11 @@ static ssize_t cdns_dsi_transfer(struct mipi_dsi_host *host,
+ 				 const struct mipi_dsi_msg *msg)
+ {
+ 	struct cdns_dsi *dsi = to_cdns_dsi(host);
+-	u32 cmd, val, wait = WRITE_COMPLETED, ctl = 0;
++	u32 cmd, sts, val, wait = WRITE_COMPLETED, ctl = 0;
+ 	struct mipi_dsi_packet packet;
+ 	int ret, i, tx_len, rx_len;
+-	u32 stat = 0;
+-	int timeout = 100;
+-	int stat_88;
+-	int stat_188;
+-	int stat_88_ack_val;
+ 
+-	ret = pm_runtime_get_sync(host->dev);
++	ret = pm_runtime_resume_and_get(host->dev);
+ 	if (ret < 0)
+ 		return ret;
+ 
+@@ -1311,23 +1333,23 @@ static ssize_t cdns_dsi_transfer(struct mipi_dsi_host *host,
+ 
+ 	/* For read operations, the maximum TX len is 2. */
+ 	if (rx_len && tx_len > 2) {
+-		ret = -EOPNOTSUPP;
++		ret = -ENOTSUPP;
+ 		goto out;
+ 	}
+ 
+ 	/* TX len is limited by the CMD FIFO depth. */
+ 	if (tx_len > dsi->direct_cmd_fifo_depth) {
+-		ret = -EOPNOTSUPP;
++		ret = -ENOTSUPP;
+ 		goto out;
+ 	}
+ 
+ 	/* RX len is limited by the RX FIFO depth. */
+ 	if (rx_len > dsi->rx_fifo_depth) {
+-		ret = -EOPNOTSUPP;
++		ret = -ENOTSUPP;
+ 		goto out;
+ 	}
+ 
+-	cmd = CMD_SIZE(tx_len) | CMD_VCHAN_ID(msg->channel) |
++	cmd = CMD_SIZE(tx_len) | CMD_VCHAN_ID(0) |
+ 		  CMD_DATATYPE(msg->type);
+ 
+ 	if (msg->flags & MIPI_DSI_MSG_USE_LPM)
+@@ -1346,11 +1368,10 @@ static ssize_t cdns_dsi_transfer(struct mipi_dsi_host *host,
+ 		ctl = BTA_EN;
+ 	}
+ 
+-	/* Clear status flags before sending the command. */
++	writel(readl(dsi->regs + MCTL_MAIN_DATA_CTL) | ctl,
++		   dsi->regs + MCTL_MAIN_DATA_CTL);
+ 
+-	iowrite32(wait, dsi->regs + DIRECT_CMD_STS_CLR);
+-	iowrite32(wait, dsi->regs + DIRECT_CMD_STS_CTL);
+-	iowrite32(cmd, dsi->regs + DIRECT_CMD_MAIN_SETTINGS);
++	writel(cmd, dsi->regs + DIRECT_CMD_MAIN_SETTINGS);
+ 
+ 	for (i = 0; i < tx_len; i += 4) {
+ 		const u8 *buf = msg->tx_buf;
+@@ -1359,24 +1380,46 @@ static ssize_t cdns_dsi_transfer(struct mipi_dsi_host *host,
+ 		val = 0;
+ 		for (j = 0; j < 4 && j + i < tx_len; j++)
+ 			val |= (u32)buf[i + j] << (8 * j);
+-		iowrite32(val, dsi->regs + DIRECT_CMD_WRDATA);
++
++		writel(val, dsi->regs + DIRECT_CMD_WRDATA);
+ 	}
+-	iowrite32(0, dsi->regs + DIRECT_CMD_SEND);
+ 
+-	do {
+-		stat = readl(dsi->regs + DIRECT_CMD_STS);
+-		if ((stat & 0x02) == 0x02)
+-			break;
+-		mdelay(10);
+-	} while (--timeout);
+-	if (!timeout)
+-		DRM_DEBUG("timeout!\n");
++	/* Clear status flags before sending the command. */
++	writel(wait, dsi->regs + DIRECT_CMD_STS_CLR);
++	writel(wait, dsi->regs + DIRECT_CMD_STS_CTL);
++	reinit_completion(&dsi->direct_cmd_comp);
++	writel(0, dsi->regs + DIRECT_CMD_SEND);
+ 
+-	stat_88 = readl(dsi->regs + DIRECT_CMD_STS);
+-	stat_188 = readl(dsi->regs + MCTL_DPHY_ERR_FLAG);
+-	stat_88_ack_val = stat_88 >> 16;
+-	if (stat_188 || stat_88_ack_val)
+-		dev_dbg(host->dev, "stat: [188h] %08x, [88h] %08x\r\n", stat_188, stat_88);
++	wait_for_completion_timeout(&dsi->direct_cmd_comp,
++					msecs_to_jiffies(1000));
++
++	sts = readl(dsi->regs + DIRECT_CMD_STS);
++	writel(wait, dsi->regs + DIRECT_CMD_STS_CLR);
++	writel(0, dsi->regs + DIRECT_CMD_STS_CTL);
++
++	writel(readl(dsi->regs + MCTL_MAIN_DATA_CTL) & ~ctl,
++		   dsi->regs + MCTL_MAIN_DATA_CTL);
++
++	/* We did not receive the events we were waiting for. */
++	if (!(sts & wait)) {
++		ret = -ETIMEDOUT;
++		goto out;
++	}
++
++	/* 'READ' or 'WRITE with ACK' failed. */
++	if (sts & (READ_COMPLETED_WITH_ERR | ACK_WITH_ERR_RCVD)) {
++		ret = -EIO;
++		goto out;
++	}
++
++	for (i = 0; i < rx_len; i += 4) {
++		u8 *buf = msg->rx_buf;
++		int j;
++
++		val = readl(dsi->regs + DIRECT_CMD_RDDATA);
++		for (j = 0; j < 4 && j + i < rx_len; j++)
++			buf[i + j] = val >> (8 * j);
++	}
+ 
+ out:
+ 	pm_runtime_put(host->dev);
+@@ -1413,8 +1456,8 @@ static int cdns_dsi_runtime_resume(struct device *dev)
+ 		dev_err(dsi->base.dev, "failed to enable clock\n");
+ 		return ret;
+ 	}
+-	enable_irq(dsi->irq);
+ 
++	enable_irq(dsi->irq);
+ 	ret = cdns_dsi_resets_deassert(dsi, dsi->base.dev);
+ 	if (ret < 0) {
+ 		dev_err(dsi->base.dev, "failed to deassert reset\n");
+@@ -1428,6 +1471,13 @@ static int cdns_dsi_runtime_suspend(struct device *dev)
+ {
+ 	struct cdns_dsi *dsi = dev_get_drvdata(dev);
+ 	int ret;
++	disable_irq(dsi->irq);
++
++	if (dsi->link_initialized == true) {
++		sys_mipi_dsi_set_ppi_txbyte_hs(0, dsi);
++		phy_power_off(dsi->dphy);
++		phy_exit(dsi->dphy);
++	}
+ 
+ 	ret = cdns_dsi_resets_assert(dsi, dsi->base.dev);
+ 	if (ret < 0)
+@@ -1436,7 +1486,7 @@ static int cdns_dsi_runtime_suspend(struct device *dev)
+ 	cdns_dsi_clock_disable(dsi);
+ 
+ 	dsi->link_initialized = false;
+-	disable_irq(dsi->irq);
++
+ 
+ 	return 0;
+ }
+diff --git a/drivers/phy/m31/7110-m31-dphy.h b/drivers/phy/m31/7110-m31-dphy.h
+index 268bbc8dad3f..e346cbdc80ea 100644
+--- a/drivers/phy/m31/7110-m31-dphy.h
++++ b/drivers/phy/m31/7110-m31-dphy.h
+@@ -288,6 +288,29 @@ static const struct m31_dphy_config m31_dphy_configs[] = {
+ 	{25000000, 2400000000, 0x1, 0xC0, 0x000000, 0x0, 0x0D, 0x20, 0x16, 0x0A, 0x50, 0x15, 0x00, 0x18,},
+ 	{25000000, 2500000000, 0x1, 0xC8, 0x000000, 0x0, 0x0E, 0x21, 0x16, 0x0B, 0x53, 0x16, 0x00, 0x18,},
+ #elif (M31_DPHY_REFCLK == M31_DPHY_REFCLK_12M)
++     {12000000, 160000000, 0x0, 0x6a, 0xaa<<16|0xaa<<8|0xaa, 0x3, 0xa, 0x17, 0x11, 0x5, 0x2b, 0xd, 0x7, 0x3d,},
++	{12000000, 170000000, 0x0, 0x71, 0x55<<16|0x55<<8|0x55, 0x3, 0xb, 0x18, 0x11, 0x5, 0x2e, 0xd, 0x7, 0x3d,},
++	{12000000, 180000000, 0x0, 0x78, 0x0<<16|0x0<<8|0x0, 0x3, 0xb, 0x19, 0x12, 0x6, 0x30, 0xe, 0x7, 0x3e,},
++	{12000000, 190000000, 0x0, 0x7e, 0xaa<<16|0xaa<<8|0xaa, 0x3, 0xc, 0x1a, 0x12, 0x6, 0x33, 0xe, 0x7, 0x3e,},
++	{12000000, 200000000, 0x0, 0x85, 0x55<<16|0x55<<8|0x55, 0x3, 0xc, 0x1b, 0x13, 0x7, 0x35, 0xf, 0x7, 0x3f,},
++	{12000000, 320000000, 0x0, 0x6a, 0xaa<<16|0xaa<<8|0xaa, 0x2, 0x8, 0x14, 0xf, 0x5, 0x2b, 0xd, 0x3, 0x23,},
++	{12000000, 330000000, 0x0, 0x6e, 0x0<<16|0x0<<8|0x0, 0x2, 0x8, 0x15, 0xf, 0x5, 0x2d, 0xd, 0x3, 0x23,},
++	{12000000, 340000000, 0x0, 0x71, 0x55<<16|0x55<<8|0x55, 0x2, 0x9, 0x15, 0xf, 0x5, 0x2e, 0xd, 0x3, 0x23,},
++	{12000000, 350000000, 0x0, 0x74, 0xaa<<16|0xaa<<8|0xaa, 0x2, 0x9, 0x15, 0x10, 0x6, 0x2f, 0xe, 0x3, 0x24,},
++	{12000000, 360000000, 0x0, 0x78, 0x0<<16|0x0<<8|0x0, 0x2, 0x9, 0x16, 0x10, 0x6, 0x30, 0xe, 0x3, 0x24,},
++	{12000000, 370000000, 0x0, 0x7b, 0x55<<16|0x55<<8|0x55, 0x2, 0x9, 0x17, 0x10, 0x6, 0x32, 0xe, 0x3, 0x24,},
++	{12000000, 380000000, 0x0, 0x7e, 0xaa<<16|0xaa<<8|0xaa, 0x2, 0xa, 0x17, 0x10, 0x6, 0x33, 0xe, 0x3, 0x24,},
++	{12000000, 390000000, 0x0, 0x82, 0x0<<16|0x0<<8|0x0, 0x2, 0xa, 0x17, 0x11, 0x6, 0x35, 0xf, 0x3, 0x25,},
++	{12000000, 400000000, 0x0, 0x85, 0x55<<16|0x55<<8|0x55, 0x2, 0xa, 0x18, 0x11, 0x7, 0x35, 0xf, 0x3, 0x25,},
++	{12000000, 410000000, 0x0, 0x88, 0xaa<<16|0xaa<<8|0xaa, 0x2, 0xa, 0x19, 0x11, 0x7, 0x37, 0xf, 0x3, 0x25,},
++	{12000000, 420000000, 0x0, 0x8c, 0x0<<16|0x0<<8|0x0, 0x2, 0xa, 0x19, 0x12, 0x7, 0x38, 0x10, 0x3, 0x26,},
++	{12000000, 430000000, 0x0, 0x8f, 0x55<<16|0x55<<8|0x55, 0x2, 0xb, 0x19, 0x12, 0x7, 0x39, 0x10, 0x3, 0x26,},
++	{12000000, 440000000, 0x0, 0x92, 0xaa<<16|0xaa<<8|0xaa, 0x2, 0xb, 0x1a, 0x12, 0x7, 0x3b, 0x10, 0x3, 0x26,},
++	{12000000, 450000000, 0x0, 0x96, 0x0<<16|0x0<<8|0x0, 0x2, 0xb, 0x1b, 0x12, 0x8, 0x3c, 0x10, 0x3, 0x26,},
++	{12000000, 460000000, 0x0, 0x99, 0x55<<16|0x55<<8|0x55, 0x2, 0xb, 0x1b, 0x13, 0x8, 0x3d, 0x11, 0x3, 0x27,},
++	{12000000, 470000000, 0x0, 0x9c, 0xaa<<16|0xaa<<8|0xaa, 0x2, 0xc, 0x1b, 0x13, 0x8, 0x3e, 0x11, 0x3, 0x27,},
++	{12000000, 480000000, 0x0, 0xa0, 0x0<<16|0x0<<8|0x0, 0x2, 0xc, 0x1c, 0x13, 0x8, 0x40, 0x11, 0x3, 0x27,},
++	{12000000, 490000000, 0x0, 0xa3, 0x55<<16|0x55<<8|0x55, 0x2, 0xc, 0x1d, 0x14, 0x8, 0x42, 0x12, 0x3, 0x28,},
+ 	{12000000, 500000000, 0x0, 0xa6, 0xaa<<16|0xaa<<8|0xaa, 0x2, 0xc, 0x1d, 0x14, 0x9, 0x42, 0x12, 0x3, 0x28,},
+ 	{12000000, 510000000, 0x0, 0xaa, 0x0<<16|0x0<<8|0x0, 0x2, 0xc, 0x1e, 0x14, 0x9, 0x44, 0x12, 0x3, 0x28,},
+ 	{12000000, 520000000, 0x0, 0xad, 0x55<<16|0x55<<8|0x55, 0x2, 0xd, 0x1e, 0x15, 0x9, 0x45, 0x13, 0x3, 0x29,},
+diff --git a/drivers/phy/m31/phy-m31-dphy-tx0.c b/drivers/phy/m31/phy-m31-dphy-tx0.c
+index 02be2df1b4ec..63e3271b6ef1 100644
+--- a/drivers/phy/m31/phy-m31-dphy-tx0.c
++++ b/drivers/phy/m31/phy-m31-dphy-tx0.c
+@@ -197,308 +197,6 @@ static int sf_dphy_clkrst_disa_assert(struct device *dev, struct sf_dphy *dphy)
+ 	return ret;
+ }
+ 
+-/*
+-*static int sf_dphy_remove(struct platform_device *pdev)
+-*{
+-*	struct sf_dphy *dphy = dev_get_drvdata(&pdev->dev);
+-*	reset_control_assert(dphy->sys_rst);
+-*	//reset_control_assert(dphy->txbytehs_rst);
+-*	clk_disable_unprepare(dphy->txesc_clk);
+-*	return 0;
+-*}
+-*/
+-
+-#if 0
+-static u32 top_sys_read32(struct sf_dphy *priv, u32 reg)
+-{
+-	return ioread32(priv->topsys + reg);
+-}
+-
+-
+-static inline void top_sys_write32(struct sf_dphy *priv, u32 reg, u32 val)
+-{
+-	iowrite32(val, priv->topsys + reg);
+-}
+-
+-static void dsi_csi2tx_sel(struct sf_dphy *priv, int sel)
+-{
+-  u32 temp = 0;
+-  temp = top_sys_read32(priv, SCFG_DSI_CSI_SEL);
+-  temp &= ~(0x1);
+-  temp |= (sel & 0x1);
+-  top_sys_write32(priv, SCFG_DSI_CSI_SEL, temp);
+-}
+-
+-static void dphy_clane_hs_txready_sel(struct sf_dphy *priv, u32 ready_sel)
+-{
+-	top_sys_write32(priv, SCFG_TXREADY_SRC_SEL_D, ready_sel);
+-	top_sys_write32(priv, SCFG_TXREADY_SRC_SEL_C, ready_sel);
+-	top_sys_write32(priv, SCFG_HS_PRE_ZERO_T_D, 0x30);
+-	top_sys_write32(priv, SCFG_HS_PRE_ZERO_T_C, 0x30);
+-}
+-
+-static void mipi_tx_lxn_set(struct sf_dphy *priv, u32 reg, u32 n_hstx, u32 p_hstx)
+-{
+-	u32 temp = 0;
+-
+-	temp = n_hstx;
+-	temp |= p_hstx << 5;
+-	top_sys_write32(priv, reg, temp);
+-}
+-
+-static void dphy_config(struct sf_dphy *priv, int bit_rate)
+-{
+-	int pre_div,      fbk_int,       extd_cycle_sel;
+-	int dhs_pre_time, dhs_zero_time, dhs_trial_time;
+-	int chs_pre_time, chs_zero_time, chs_trial_time;
+-	int chs_clk_pre_time, chs_clk_post_time;
+-	u32 set_val = 0;
+-
+-	mipi_tx_lxn_set(priv, SCFG_L0N_L0P_HSTX, 0x10, 0x10);
+-	mipi_tx_lxn_set(priv, SCFG_L1N_L1P_HSTX, 0x10, 0x10);
+-	mipi_tx_lxn_set(priv, SCFG_L2N_L2P_HSTX, 0x10, 0x10);
+-	mipi_tx_lxn_set(priv, SCFG_L3N_L3P_HSTX, 0x10, 0x10);
+-	mipi_tx_lxn_set(priv, SCFG_L4N_L4P_HSTX, 0x10, 0x10);
+-
+-	if(bit_rate == 80) {
+-		pre_div=0x1,		fbk_int=2*0x33,		extd_cycle_sel=0x4,
+-		dhs_pre_time=0xe,	dhs_zero_time=0x1d,	dhs_trial_time=0x15,
+-		chs_pre_time=0x5,	chs_zero_time=0x2b,	chs_trial_time=0xd,
+-		chs_clk_pre_time=0xf,
+-		chs_clk_post_time=0x71;
+-	} else if (bit_rate == 100) {
+-		pre_div=0x1,		fbk_int=2*0x40,		extd_cycle_sel=0x4,
+-		dhs_pre_time=0x10,	dhs_zero_time=0x21,	dhs_trial_time=0x17,
+-		chs_pre_time=0x7,	chs_zero_time=0x35,	chs_trial_time=0xf,
+-		chs_clk_pre_time=0xf,
+-		chs_clk_post_time=0x73;
+-	} else if (bit_rate == 200) {
+-		pre_div=0x1,		fbk_int=2*0x40,		extd_cycle_sel=0x3;
+-		dhs_pre_time=0xc,	dhs_zero_time=0x1b,	dhs_trial_time=0x13;
+-		chs_pre_time=0x7,	chs_zero_time=0x35,	chs_trial_time=0xf,
+-		chs_clk_pre_time=0x7,
+-		chs_clk_post_time=0x3f;
+-	} else if(bit_rate == 300) {
+-		pre_div=0x1,		fbk_int=2*0x60, 	extd_cycle_sel=0x3,
+-		dhs_pre_time=0x11,	dhs_zero_time=0x25, dhs_trial_time=0x19,
+-		chs_pre_time=0xa, 	chs_zero_time=0x50, chs_trial_time=0x15,
+-		chs_clk_pre_time=0x7,
+-		chs_clk_post_time=0x45;
+-    } else if(bit_rate == 400) {
+-		pre_div=0x1,      	fbk_int=2*0x40,		extd_cycle_sel=0x2,
+-		dhs_pre_time=0xa, 	dhs_zero_time=0x18,	dhs_trial_time=0x11,
+-		chs_pre_time=0x7, 	chs_zero_time=0x35, chs_trial_time=0xf,
+-		chs_clk_pre_time=0x3,
+-		chs_clk_post_time=0x25;
+-    } else if(bit_rate == 500 ) {
+-		pre_div=0x1,      fbk_int=2*0x50,       extd_cycle_sel=0x2,
+-		dhs_pre_time=0xc, dhs_zero_time=0x1d,	dhs_trial_time=0x14,
+-		chs_pre_time=0x9, chs_zero_time=0x42,	chs_trial_time=0x12,
+-		chs_clk_pre_time=0x3,
+-		chs_clk_post_time=0x28;
+-    } else if(bit_rate == 600 ) {
+-		pre_div=0x1,      fbk_int=2*0x60,       extd_cycle_sel=0x2,
+-		dhs_pre_time=0xe, dhs_zero_time=0x23,	dhs_trial_time=0x17,
+-		chs_pre_time=0xa, chs_zero_time=0x50,	chs_trial_time=0x15,
+-		chs_clk_pre_time=0x3,
+-		chs_clk_post_time=0x2b;
+-    } else if(bit_rate == 700) {
+-		pre_div=0x1,      fbk_int=2*0x38,       extd_cycle_sel=0x1,
+-		dhs_pre_time=0x8, dhs_zero_time=0x14,	dhs_trial_time=0xf,
+-		chs_pre_time=0x6, chs_zero_time=0x2f,	chs_trial_time=0xe,
+-		chs_clk_pre_time=0x1,
+-		chs_clk_post_time=0x16;
+-    } else if(bit_rate == 800 ) {
+-		pre_div=0x1,      fbk_int=2*0x40,       extd_cycle_sel=0x1,
+-		dhs_pre_time=0x9, dhs_zero_time=0x17,	dhs_trial_time=0x10,
+-		chs_pre_time=0x7, chs_zero_time=0x35,	chs_trial_time=0xf,
+-		chs_clk_pre_time=0x1,
+-		chs_clk_post_time=0x18;
+-    } else if(bit_rate == 900 ) {
+-		pre_div=0x1,      fbk_int=2*0x48,       extd_cycle_sel=0x1,
+-		dhs_pre_time=0xa, dhs_zero_time=0x19, 	dhs_trial_time=0x12,
+-		chs_pre_time=0x8, chs_zero_time=0x3c, 	chs_trial_time=0x10,
+-		chs_clk_pre_time=0x1,
+-		chs_clk_post_time=0x19;
+-    } else if(bit_rate == 1000) {
+-		pre_div=0x1,      fbk_int=2*0x50,       extd_cycle_sel=0x1,
+-		dhs_pre_time=0xb, dhs_zero_time=0x1c,	dhs_trial_time=0x13,
+-		chs_pre_time=0x9, chs_zero_time=0x42,	chs_trial_time=0x12,
+-		chs_clk_pre_time=0x1,
+-		chs_clk_post_time=0x1b;
+-    } else if(bit_rate == 1100) {
+-		pre_div=0x1,      fbk_int=2*0x58,       extd_cycle_sel=0x1,
+-		dhs_pre_time=0xc, dhs_zero_time=0x1e,	dhs_trial_time=0x15,
+-		chs_pre_time=0x9, chs_zero_time=0x4a,	chs_trial_time=0x14,
+-		chs_clk_pre_time=0x1,
+-		chs_clk_post_time=0x1d;
+-    } else if(bit_rate == 1200) {
+-		pre_div=0x1,      fbk_int=2*0x60,       extd_cycle_sel=0x1,
+-		dhs_pre_time=0xe, dhs_zero_time=0x20,	dhs_trial_time=0x16,
+-		chs_pre_time=0xa, chs_zero_time=0x50,	chs_trial_time=0x15,
+-		chs_clk_pre_time=0x1,
+-		chs_clk_post_time=0x1e;
+-    } else if(bit_rate == 1300) {
+-		pre_div=0x1,      fbk_int=2*0x34,       extd_cycle_sel=0x0,
+-		dhs_pre_time=0x7, dhs_zero_time=0x12,	dhs_trial_time=0xd,
+-		chs_pre_time=0x5, chs_zero_time=0x2c,	chs_trial_time=0xd,
+-		chs_clk_pre_time=0x0,
+-		chs_clk_post_time=0xf;
+-    } else if(bit_rate == 1400) {
+-		pre_div=0x1,      fbk_int=2*0x38,       extd_cycle_sel=0x0,
+-		dhs_pre_time=0x7, dhs_zero_time=0x14,	dhs_trial_time=0xe,
+-		chs_pre_time=0x6, chs_zero_time=0x2f,	chs_trial_time=0xe,
+-		chs_clk_pre_time=0x0,
+-		chs_clk_post_time=0x10;
+-    } else if(bit_rate == 1500) {
+-		pre_div=0x1,      fbk_int=2*0x3c,       extd_cycle_sel=0x0,
+-		dhs_pre_time=0x8, dhs_zero_time=0x14,	dhs_trial_time=0xf,
+-		chs_pre_time=0x6, chs_zero_time=0x32,	chs_trial_time=0xe,
+-		chs_clk_pre_time=0x0,
+-		chs_clk_post_time=0x11;
+-    } else if(bit_rate == 1600) {
+-		pre_div=0x1,      fbk_int=2*0x40,       extd_cycle_sel=0x0,
+-		dhs_pre_time=0x9, dhs_zero_time=0x15,	dhs_trial_time=0x10,
+-		chs_pre_time=0x7, chs_zero_time=0x35,	chs_trial_time=0xf,
+-		chs_clk_pre_time=0x0,
+-		chs_clk_post_time=0x12;
+-    } else if(bit_rate == 1700) {
+-		pre_div=0x1,      fbk_int=2*0x44,       extd_cycle_sel=0x0,
+-		dhs_pre_time=0x9, dhs_zero_time=0x17,	dhs_trial_time=0x10,
+-		chs_pre_time=0x7, chs_zero_time=0x39,	chs_trial_time=0x10,
+-		chs_clk_pre_time=0x0,
+-		chs_clk_post_time=0x12;
+-    } else if(bit_rate == 1800) {
+-		pre_div=0x1,      fbk_int=2*0x48,       extd_cycle_sel=0x0,
+-		dhs_pre_time=0xa, dhs_zero_time=0x18,	dhs_trial_time=0x11,
+-		chs_pre_time=0x8, chs_zero_time=0x3c,	chs_trial_time=0x10,
+-		chs_clk_pre_time=0x0,
+-		chs_clk_post_time=0x13;
+-    } else if(bit_rate == 1900) {
+-		pre_div=0x1,      fbk_int=2*0x4c,       extd_cycle_sel=0x0,
+-		dhs_pre_time=0xa, dhs_zero_time=0x1a,	dhs_trial_time=0x12,
+-		chs_pre_time=0x8, chs_zero_time=0x3f,	chs_trial_time=0x11,
+-		chs_clk_pre_time=0x0,
+-		chs_clk_post_time=0x14;
+-    } else if(bit_rate == 2000) {
+-		pre_div=0x1,      fbk_int=2*0x50,       extd_cycle_sel=0x0,
+-		dhs_pre_time=0xb, dhs_zero_time=0x1b,	dhs_trial_time=0x13,
+-		chs_pre_time=0x9, chs_zero_time=0x42,	chs_trial_time=0x12,
+-		chs_clk_pre_time=0x0,
+-		chs_clk_post_time=0x15;
+-    } else if(bit_rate == 2100) {
+-		pre_div=0x1,      fbk_int=2*0x54,       extd_cycle_sel=0x0,
+-		dhs_pre_time=0xb, dhs_zero_time=0x1c,	dhs_trial_time=0x13,
+-		chs_pre_time=0x9, chs_zero_time=0x46,	chs_trial_time=0x13,
+-		chs_clk_pre_time=0x0,
+-		chs_clk_post_time=0x15;
+-    } else if(bit_rate == 2200) {
+-		pre_div=0x1,      fbk_int=2*0x5b,       extd_cycle_sel=0x0,
+-		dhs_pre_time=0xc, dhs_zero_time=0x1d,	dhs_trial_time=0x14,
+-		chs_pre_time=0x9, chs_zero_time=0x4a,	chs_trial_time=0x14,
+-		chs_clk_pre_time=0x0,
+-		chs_clk_post_time=0x16;
+-    } else if(bit_rate == 2300) {
+-		pre_div=0x1,      fbk_int=2*0x5c,       extd_cycle_sel=0x0,
+-		dhs_pre_time=0xc, dhs_zero_time=0x1f,	dhs_trial_time=0x15,
+-		chs_pre_time=0xa, chs_zero_time=0x4c,	chs_trial_time=0x14,
+-		chs_clk_pre_time=0x0,
+-		chs_clk_post_time=0x17;
+-    } else if(bit_rate == 2400) {
+-		pre_div=0x1,      fbk_int=2*0x60,       extd_cycle_sel=0x0,
+-		dhs_pre_time=0xd, dhs_zero_time=0x20,	dhs_trial_time=0x16,
+-		chs_pre_time=0xa, chs_zero_time=0x50,	chs_trial_time=0x15,
+-		chs_clk_pre_time=0x0,
+-		chs_clk_post_time=0x18;
+-    } else if(bit_rate == 2500) {
+-		pre_div=0x1,      fbk_int=2*0x64,       extd_cycle_sel=0x0,
+-		dhs_pre_time=0xe, dhs_zero_time=0x21,	dhs_trial_time=0x16,
+-		chs_pre_time=0xb, chs_zero_time=0x53,	chs_trial_time=0x16,
+-		chs_clk_pre_time=0x0,
+-		chs_clk_post_time=0x18;
+-    } else {
+-		//default bit_rate == 700
+-		pre_div=0x1,      fbk_int=2*0x38,       extd_cycle_sel=0x1,
+-		dhs_pre_time=0x8, dhs_zero_time=0x14,	dhs_trial_time=0xf,
+-		chs_pre_time=0x6, chs_zero_time=0x2f,	chs_trial_time=0xe,
+-		chs_clk_pre_time=0x1,
+-		chs_clk_post_time=0x16;
+-    }
+-	top_sys_write32(priv, SCFG_REFCLK_SEL, 0x3);
+-
+-	set_val = 0
+-			| (1 << OFFSET_CFG_L1_SWAP_SEL)
+-			| (4 << OFFSET_CFG_L2_SWAP_SEL)
+-			| (2 << OFFSET_CFG_L3_SWAP_SEL)
+-			| (3 << OFFSET_CFG_L4_SWAP_SEL);
+-	top_sys_write32(priv, SCFG_LX_SWAP_SEL, set_val);
+-
+-	set_val = 0
+-			| (0 << OFFSET_SCFG_PWRON_READY_N)
+-			| (1 << OFFSET_RG_CDTX_PLL_FM_EN)
+-			| (0 << OFFSET_SCFG_PLLSSC_EN)
+-			| (1 << OFFSET_RG_CDTX_PLL_LDO_STB_X2_EN);
+-	top_sys_write32(priv, SCFG_DBUS_PW_PLL_SSC_LD0, set_val);
+-
+-	set_val = fbk_int
+-			| (pre_div << 9);
+-	top_sys_write32(priv, SCFG_RG_CDTX_PLL_FBK_PRE, set_val);
+-
+-	top_sys_write32(priv, SCFG_RG_EXTD_CYCLE_SEL, extd_cycle_sel);
+-
+-	set_val = chs_zero_time
+-			| (dhs_pre_time << OFFSET_DHS_PRE_TIME)
+-			| (dhs_trial_time << OFFSET_DHS_TRIAL_TIME)
+-			| (dhs_zero_time << OFFSET_DHS_ZERO_TIME);
+-	top_sys_write32(priv, SCFG_RG_CLANE_DLANE_TIME, set_val);
+-
+-	set_val = chs_clk_post_time
+-			| (chs_clk_pre_time << OFFSET_CHS_PRE_TIME)
+-			| (chs_pre_time << OFFSET_CHS_TRIAL_TIME)
+-			| (chs_trial_time << OFFSET_CHS_ZERO_TIME);
+-	top_sys_write32(priv, SCFG_RG_CLANE_HS_TIME, set_val);
+-
+-}
+-
+-static void reset_dphy(struct sf_dphy *priv, int resetb)
+-{
+-	u32 cfg_dsc_enable = 0x01;//bit0
+-
+-	u32 precfg = top_sys_read32(priv, SCFG_PHY_RESETB);
+-	precfg &= ~(cfg_dsc_enable);
+-	precfg |= (resetb&cfg_dsc_enable);
+-	top_sys_write32(priv, SCFG_PHY_RESETB, precfg);
+-}
+-
+-static void polling_dphy_lock(struct sf_dphy *priv)
+-{
+-	int pll_unlock;
+-
+-	udelay(10);
+-
+-	do {
+-		pll_unlock = top_sys_read32(priv, SCFG_GRS_CDTX_PLL) >> 3;
+-		pll_unlock &= 0x1;
+-	} while(pll_unlock == 0x1);
+-}
+-
+-static int sf_dphy_configure(struct phy *phy, union phy_configure_opts *opts)
+-{	//dev_info(dphy->dev,"--->sf_dphy_configure\n");
+-	struct sf_dphy *dphy = phy_get_drvdata(phy);
+-	uint32_t bit_rate = 800000000/1000000UL;//new mipi panel clock setting
+-	//uint32_t bit_rate = 500000000/1000000UL;//7110 mipi panel clock setting
+-
+-
+-	dphy_config(dphy, bit_rate);
+-	reset_dphy(dphy, 1);
+-	mdelay(10);
+-	polling_dphy_lock(dphy);
+-
+-	//dev_info(dphy->dev,"--->sf_dphy_configure\n");
+-	return 0;
+-}
+-#endif
+-
+ static int is_pll_locked(struct sf_dphy *dphy)
+ {
+ 	int tmp = sf_dphy_get_reg(dphy->topsys + 0x8,
+@@ -578,16 +276,15 @@ static int sys_m31_dphy_tx_configure(struct phy *phy, union phy_configure_opts *
+ 							AON_POWER_READY_N_SHIFT, AON_POWER_READY_N_MASK);
+ 
+ 			sf_dphy_set_reg(dphy->topsys, 0x0,
+-                            CFG_L0_SWAP_SEL_SHIFT, CFG_L0_SWAP_SEL_MASK);//Lane setting
+-            sf_dphy_set_reg(dphy->topsys, 0x1,
+-                            CFG_L1_SWAP_SEL_SHIFT, CFG_L1_SWAP_SEL_MASK);
+-            sf_dphy_set_reg(dphy->topsys, 0x2,
+-                            CFG_L2_SWAP_SEL_SHIFT, CFG_L2_SWAP_SEL_MASK);
+-            sf_dphy_set_reg(dphy->topsys, 0x3,
+-                            CFG_L3_SWAP_SEL_SHIFT, CFG_L3_SWAP_SEL_MASK);
+-            sf_dphy_set_reg(dphy->topsys, 0x4,
+-                            CFG_L4_SWAP_SEL_SHIFT, CFG_L4_SWAP_SEL_MASK);
+-
++							CFG_L0_SWAP_SEL_SHIFT, CFG_L0_SWAP_SEL_MASK);//Lane setting
++			sf_dphy_set_reg(dphy->topsys, 0x1,
++							CFG_L1_SWAP_SEL_SHIFT, CFG_L1_SWAP_SEL_MASK);
++			sf_dphy_set_reg(dphy->topsys, 0x2,
++							CFG_L2_SWAP_SEL_SHIFT, CFG_L2_SWAP_SEL_MASK);
++			sf_dphy_set_reg(dphy->topsys, 0x3,
++							CFG_L3_SWAP_SEL_SHIFT, CFG_L3_SWAP_SEL_MASK);
++			sf_dphy_set_reg(dphy->topsys, 0x4,
++							CFG_L4_SWAP_SEL_SHIFT, CFG_L4_SWAP_SEL_MASK);
+ 			//PLL setting
+ 			sf_dphy_set_reg(dphy->topsys + 0x1c, 0x0,
+ 							RG_CDTX_PLL_SSC_EN_SHIFT, RG_CDTX_PLL_SSC_EN_MASK);
+@@ -660,6 +357,35 @@ static int sf_dphy_power_off(struct phy *phy)
+ 
+ static int sf_dphy_init(struct phy *phy)
+ {
++	struct sf_dphy *dphy = phy_get_drvdata(phy);
++	uint32_t temp;
++	int ret;
++
++	temp = 0;
++	temp = sf_dphy_get_reg(dphy->aonsys, AON_GP_REG_SHIFT, AON_GP_REG_MASK);
++	dev_info(dphy->dev, "GET_AON_GP_REG\n");
++
++	if (!(temp & DPHY_TX_PSW_EN_MASK)) {
++		temp |= DPHY_TX_PSW_EN_MASK;
++		sf_dphy_set_reg(dphy->aonsys, temp, AON_GP_REG_SHIFT, AON_GP_REG_MASK);
++	}
++	dev_info(dphy->dev, "control ECO\n");
++
++	//pmic turn on
++	ret = regulator_enable(dphy->mipitx_0p9);
++	if (ret) {
++		dev_err(dphy->dev, "Cannot enable mipitx_0p9 regulator\n");
++		//goto err_reg_0p9;
++	}
++	udelay(100);
++	ret = regulator_enable(dphy->mipitx_1p8);
++	if (ret) {
++		dev_err(dphy->dev, "Cannot enable mipitx_1p8 regulator\n");
++		//goto err_reg_1p8;
++	}
++	udelay(100);
++	//mipi_pmic setting
++
+ 	return 0;
+ }
+ 
+@@ -706,7 +432,6 @@ static int sf_dphy_probe(struct platform_device *pdev)
+ 	struct sf_dphy *dphy;
+ 	struct resource *res;
+ 	int ret;
+-	uint32_t temp;
+ 
+ 	dev_info(&pdev->dev, "sf_dphy_probe begin\n");
+ 	dphy = devm_kzalloc(&pdev->dev, sizeof(*dphy), GFP_KERNEL);
+@@ -733,39 +458,16 @@ static int sf_dphy_probe(struct platform_device *pdev)
+ 	// this power switch control bit was added in ECO, check ECO item "aon psw_en" for detail
+ 	dev_info(dphy->dev, "control ECO\n");
+ 	dphy->aonsys = ioremap(0x17010000, 0x10000);
+-	temp = 0;
+-	temp = sf_dphy_get_reg(dphy->aonsys, AON_GP_REG_SHIFT,AON_GP_REG_MASK);
+-	dev_info(dphy->dev, "GET_AON_GP_REG\n");
+-
+-	if (!(temp & DPHY_TX_PSW_EN_MASK)) {
+-		temp |= DPHY_TX_PSW_EN_MASK;
+-		sf_dphy_set_reg(dphy->aonsys, temp,AON_GP_REG_SHIFT,AON_GP_REG_MASK);
+-	}
+-	dev_info(dphy->dev, "control ECO\n");
+ 
+ 	//mipi_pmic setting
+-	dphy->mipitx_1p8 = devm_regulator_get(&pdev->dev, "mipitx_1p8");
++	dphy->mipitx_1p8 = devm_regulator_get(&pdev->dev, "mipi_1p8");
+ 	if (IS_ERR(dphy->mipitx_1p8))
+ 		return PTR_ERR(dphy->mipitx_1p8);
+ 
+-	dphy->mipitx_0p9 = devm_regulator_get(&pdev->dev, "mipitx_0p9");
++	dphy->mipitx_0p9 = devm_regulator_get(&pdev->dev, "mipi_0p9");
+ 	if (IS_ERR(dphy->mipitx_0p9))
+ 		return PTR_ERR(dphy->mipitx_0p9);
+ 
+-	//pmic turn on
+-	ret = regulator_enable(dphy->mipitx_0p9);
+-	if (ret) {
+-		dev_err(&pdev->dev, "Cannot enable mipitx_0p9 regulator\n");
+-		//goto err_reg_0p9;
+-	}
+-	udelay(100);	
+-	ret = regulator_enable(dphy->mipitx_1p8);
+-	if (ret) {
+-		dev_err(&pdev->dev, "Cannot enable mipitx_1p8 regulator\n");
+-		//goto err_reg_1p8;
+-	}
+-	udelay(100);
+-	//mipi_pmic setting
+ 
+ 	ret = sf_dphy_clkrst_get(&pdev->dev, dphy);
+ 
+-- 
+2.47.0
+

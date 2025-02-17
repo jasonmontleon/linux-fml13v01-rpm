@@ -1,0 +1,34 @@
+From 9e9bd05da42c7856de00cf1f32218c0ac95a6c29 Mon Sep 17 00:00:00 2001
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Date: Mon, 6 Jan 2025 11:16:14 +0100
+Subject: [PATCH 196/210] riscv: fml13v01_defconfig: add squashfs support
+
+SquashFS support is needed for running snaps
+
+Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+---
+ arch/riscv/configs/fml13v01_defconfig | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/arch/riscv/configs/fml13v01_defconfig b/arch/riscv/configs/fml13v01_defconfig
+index 5ddcc77aadf5..d01e3073c201 100644
+--- a/arch/riscv/configs/fml13v01_defconfig
++++ b/arch/riscv/configs/fml13v01_defconfig
+@@ -387,6 +387,14 @@ CONFIG_TMPFS=y
+ CONFIG_TMPFS_POSIX_ACL=y
+ CONFIG_HUGETLBFS=y
+ CONFIG_JFFS2_FS=y
++CONFIG_SQUASHFS=y
++CONFIG_SQUASHFS_FILE_DIRECT=y
++CONFIG_SQUASHFS_CHOICE_DECOMP_BY_MOUNT=y
++CONFIG_SQUASHFS_XATTR=y
++CONFIG_SQUASHFS_LZ4=y
++CONFIG_SQUASHFS_LZO=y
++CONFIG_SQUASHFS_XZ=y
++CONFIG_SQUASHFS_ZSTD=y
+ CONFIG_NFS_FS=y
+ CONFIG_NFS_V4=y
+ CONFIG_NFS_V4_1=y
+-- 
+2.47.0
+

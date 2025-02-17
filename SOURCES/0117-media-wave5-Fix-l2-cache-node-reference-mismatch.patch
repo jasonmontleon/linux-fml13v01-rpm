@@ -1,0 +1,37 @@
+From 284534a27b4ec7764a0e3eca69455ddff6948398 Mon Sep 17 00:00:00 2001
+From: Som Qin <som.qin@starfivetech.com>
+Date: Wed, 28 Feb 2024 09:52:20 +0800
+Subject: [PATCH 117/210] media:wave5: Fix l2 cache node reference mismatch
+
+Signed-off-by: Som Qin <som.qin@starfivetech.com>
+---
+ drivers/media/platform/chips-media/wave5/wave5-vpu.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-vpu.c b/drivers/media/platform/chips-media/wave5/wave5-vpu.c
+index 3a20bc1c0a8c..6d6f64e92c37 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpu.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpu.c
+@@ -118,8 +118,8 @@ static int wave5_vpu_load_firmware(struct device *dev, const char *fw_name,
+ 	return 0;
+ }
+ 
+-static const struct of_device_id sifive_l2_ids[] = {
+-	{ .compatible = "sifive,fu740-c000-ccache" },
++static const struct of_device_id l2_cache_ids[] = {
++	{ .compatible = "starfive,jh7110-ccache" },
+ 	{ /* end of table */ },
+ };
+ 
+@@ -238,7 +238,7 @@ static int wave5_vpu_probe(struct platform_device *pdev)
+ 		goto err_enc_unreg;
+ 	}
+ 
+-	np = of_find_matching_node(NULL, sifive_l2_ids);
++	np = of_find_matching_node(NULL, l2_cache_ids);
+ 	if (!np) {
+ 		dev_err(&pdev->dev, "find cache node, fail\n");
+ 		goto err_enc_unreg;
+-- 
+2.47.0
+

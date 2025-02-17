@@ -1,0 +1,271 @@
+From dd089ad0a43eebda8e1f7a5dee7f8fa577ed6a5d Mon Sep 17 00:00:00 2001
+From: Windsome Zeng <windsome.zeng@starfivetech.com>
+Date: Thu, 11 Jan 2024 18:29:10 +0800
+Subject: [PATCH 104/210] riscv: cpu: cache: Implement a new method to flush
+ the entire L2 cache
+
+According to the manual of SiFive U74, implement a new method to flush the entire L2 cache by using the Zero Device.
+
+After testing, 512KB is the critical point between the old and new way. It's better to use sifive_ccache_flush_entire
+function while data size is larger than cache size. Or it will improve more at 512KB when you know what you are doing.
+
+Signed-off-by: Windsome Zeng <windsome.zeng@starfivetech.com>
+---
+ drivers/gpu/drm/verisilicon/vs_dc.c    |   9 +--
+ drivers/gpu/drm/verisilicon/vs_dc.h    |   2 +-
+ drivers/gpu/drm/verisilicon/vs_plane.h |   3 +-
+ drivers/soc/sifive/sifive_ccache.c     | 103 ++++++++++++++++++++++---
+ include/soc/sifive/sifive_ccache.h     |   1 +
+ 5 files changed, 97 insertions(+), 21 deletions(-)
+
+diff --git a/drivers/gpu/drm/verisilicon/vs_dc.c b/drivers/gpu/drm/verisilicon/vs_dc.c
+index 14e23b43dc8f..5cd68a5c8af2 100644
+--- a/drivers/gpu/drm/verisilicon/vs_dc.c
++++ b/drivers/gpu/drm/verisilicon/vs_dc.c
+@@ -948,12 +948,7 @@ static void update_fb(struct vs_plane *plane, u8 display_id,
+ 	update_swizzle(drm_fb->format->format, fb);
+ 	update_watermark(plane_state->watermark, fb);
+ 
+-    sifive_l2_flush64_range(fb->y_address, fb->height * fb->y_stride);
+-    if (fb->u_address)
+-            sifive_l2_flush64_range(fb->u_address, fb->height * fb->u_stride);
+-    if (fb->v_address)
+-            sifive_l2_flush64_range(fb->v_address, fb->height * fb->v_stride);
+-
++	sifive_ccache_flush_entire();
+ 	plane_state->status.tile_mode = fb->tile_mode;
+ }
+ 
+@@ -1277,7 +1272,7 @@ static void update_cursor_plane(struct vs_dc *dc, struct vs_plane *plane,
+   cursor.enable = true;
+ 
+   if (cursor.address != pre_address) {
+-	  sifive_l2_flush64_range(cursor.address, ((cursor.size == CURSOR_SIZE_32X32) ?
++	  sifive_ccache_flush_range(cursor.address, ((cursor.size == CURSOR_SIZE_32X32) ?
+ 				  CURSOR_MEM_SIZE_32X32 : CURSOR_MEM_SIZE_64X64));
+ 	  pre_address = cursor.address;
+   }
+diff --git a/drivers/gpu/drm/verisilicon/vs_dc.h b/drivers/gpu/drm/verisilicon/vs_dc.h
+index 1d14f72e3d61..299b7cea6782 100644
+--- a/drivers/gpu/drm/verisilicon/vs_dc.h
++++ b/drivers/gpu/drm/verisilicon/vs_dc.h
+@@ -8,6 +8,7 @@
+ 
+ #include <linux/version.h>
+ #include <linux/mm_types.h>
++#include <soc/sifive/sifive_ccache.h>
+ 
+ #include <drm/drm_modes.h>
+ #if KERNEL_VERSION(5, 5, 0) > LINUX_VERSION_CODE
+@@ -77,7 +78,6 @@ struct vs_dc {
+ };
+ 
+ extern struct platform_driver dc_platform_driver;
+-extern void sifive_l2_flush64_range(unsigned long start, unsigned long len);
+ 
+ void vs_dc_update_cursor_plane(struct vs_dc *dc, struct vs_plane *plane,
+ 			       struct drm_plane *drm_plane,
+diff --git a/drivers/gpu/drm/verisilicon/vs_plane.h b/drivers/gpu/drm/verisilicon/vs_plane.h
+index f613c1b2c3a3..38873d2cfadf 100644
+--- a/drivers/gpu/drm/verisilicon/vs_plane.h
++++ b/drivers/gpu/drm/verisilicon/vs_plane.h
+@@ -8,6 +8,7 @@
+ 
+ #include <drm/drm_plane_helper.h>
+ #include <drm/drm_fourcc.h>
++#include <soc/sifive/sifive_ccache.h>
+ 
+ #include "vs_type.h"
+ #include "vs_fb.h"
+@@ -76,6 +77,4 @@ to_vs_plane_state(struct drm_plane_state *state)
+ 	return container_of(state, struct vs_plane_state, base);
+ }
+ 
+-extern void sifive_l2_flush64_range(unsigned long start, unsigned long len);
+-
+ #endif /* __VS_PLANE_H__ */
+diff --git a/drivers/soc/sifive/sifive_ccache.c b/drivers/soc/sifive/sifive_ccache.c
+index 31e9977d24ba..4a289fd548ab 100644
+--- a/drivers/soc/sifive/sifive_ccache.c
++++ b/drivers/soc/sifive/sifive_ccache.c
+@@ -46,17 +46,29 @@
+ #define SIFIVE_CCACHE_FLUSH64 0x200
+ #define SIFIVE_CCACHE_FLUSH32 0x240
+ 
++#define SIFIVE_L2_WAYMASK_BASE 0x800
++#define SIFIVE_L2_MAX_MASTER_ID 32
++
+ #define SIFIVE_CCACHE_WAYENABLE 0x08
+ #define SIFIVE_CCACHE_ECCINJECTERR 0x40
+ 
+ #define SIFIVE_CCACHE_MAX_ECCINTR 4
+-#define SIFIVE_CCACHE_LINE_SIZE 64
++#define SIFIVE_L2_DEFAULT_WAY_MASK 0xffff
+ 
+ static void __iomem *ccache_base;
+ static int g_irq[SIFIVE_CCACHE_MAX_ECCINTR];
+ static struct riscv_cacheinfo_ops ccache_cache_ops;
+ static int level;
+ 
++static u32 flush_line_len;
++static u32 cache_size;
++static u32 cache_size_per_way;
++static u32 cache_max_line;
++static u32 cache_ways_per_bank;
++static u32 cache_size_per_block;
++static u32 cache_max_enabled_way;
++static void __iomem *l2_zero_device_base;
++
+ enum {
+ 	DIR_CORR = 0,
+ 	DATA_CORR,
+@@ -101,14 +113,25 @@ static void ccache_config_read(void)
+ 	u32 cfg;
+ 
+ 	cfg = readl(ccache_base + SIFIVE_CCACHE_CONFIG);
+-	pr_info("%llu banks, %llu ways, sets/bank=%llu, bytes/block=%llu\n",
++	cache_ways_per_bank = FIELD_GET(SIFIVE_CCACHE_CONFIG_WAYS_MASK, cfg);
++	cache_size_per_block = BIT_ULL(FIELD_GET(SIFIVE_CCACHE_CONFIG_BLKS_MASK, cfg));
++	flush_line_len = cache_size_per_block;
++	cache_size_per_way = cache_size / cache_ways_per_bank;
++	cache_max_line = cache_size_per_way / flush_line_len - 1;
++
++	pr_info("%llu banks, %u ways, sets/bank=%llu, bytes/block=%u\n",
+ 		FIELD_GET(SIFIVE_CCACHE_CONFIG_BANK_MASK, cfg),
+-		FIELD_GET(SIFIVE_CCACHE_CONFIG_WAYS_MASK, cfg),
++		cache_ways_per_bank,
+ 		BIT_ULL(FIELD_GET(SIFIVE_CCACHE_CONFIG_SETS_MASK, cfg)),
+-		BIT_ULL(FIELD_GET(SIFIVE_CCACHE_CONFIG_BLKS_MASK, cfg)));
++		cache_size_per_block);
+ 
+-	cfg = readl(ccache_base + SIFIVE_CCACHE_WAYENABLE);
+-	pr_info("Index of the largest way enabled: %u\n", cfg);
++	pr_info("max_line=%u, %u bytes/line, %u bytes/way\n",
++		cache_max_line,
++		flush_line_len,
++		cache_size_per_way);
++
++	cache_max_enabled_way = readl(ccache_base + SIFIVE_CCACHE_WAYENABLE);
++	pr_info("Index of the largest way enabled: %u\n", cache_max_enabled_way);
+ }
+ 
+ static const struct of_device_id sifive_ccache_ids[] = {
+@@ -136,6 +159,52 @@ EXPORT_SYMBOL_GPL(unregister_sifive_ccache_error_notifier);
+ static phys_addr_t uncached_offset;
+ DEFINE_STATIC_KEY_FALSE(sifive_ccache_handle_noncoherent_key);
+ 
++static void sifive_ccache_flush_range_by_way_index(u32 start_index, u32 end_index)
++{
++	u32 way, master;
++	u32 index;
++	u64 way_mask;
++	void __iomem *line_addr, *addr;
++
++	mb();
++	way_mask = 1;
++	line_addr = l2_zero_device_base + start_index * flush_line_len;
++	for (way = 0; way <= cache_max_enabled_way; ++way) {
++		addr = ccache_base + SIFIVE_L2_WAYMASK_BASE;
++		for (master = 0; master < SIFIVE_L2_MAX_MASTER_ID; ++master) {
++			writeq_relaxed(way_mask, addr);
++			addr += 8;
++		}
++
++		addr = line_addr;
++		for (index = start_index; index <= end_index; ++index) {
++#ifdef CONFIG_32BIT
++			writel_relaxed(0, addr);
++#else
++			writeq_relaxed(0, addr);
++#endif
++			addr += flush_line_len;
++		}
++
++		way_mask <<= 1;
++		line_addr += cache_size_per_way;
++		mb();
++	}
++
++	addr = ccache_base + SIFIVE_L2_WAYMASK_BASE;
++	for (master = 0; master < SIFIVE_L2_MAX_MASTER_ID; ++master) {
++		writeq_relaxed(SIFIVE_L2_DEFAULT_WAY_MASK, addr);
++		addr += 8;
++	}
++	mb();
++}
++
++void sifive_ccache_flush_entire(void)
++{
++	sifive_ccache_flush_range_by_way_index(0, cache_max_line);
++}
++EXPORT_SYMBOL_GPL(sifive_ccache_flush_entire);
++
+ void sifive_ccache_flush_range(phys_addr_t start, size_t len)
+ {
+ 	phys_addr_t end = start + len;
+@@ -145,8 +214,8 @@ void sifive_ccache_flush_range(phys_addr_t start, size_t len)
+ 		return;
+ 
+ 	mb();
+-	for (line = ALIGN_DOWN(start, SIFIVE_CCACHE_LINE_SIZE); line < end;
+-	     line += SIFIVE_CCACHE_LINE_SIZE) {
++	for (line = ALIGN_DOWN(start, flush_line_len); line < end;
++	     line += flush_line_len) {
+ #ifdef CONFIG_32BIT
+ 		writel(line >> 4, ccache_base + SIFIVE_CCACHE_FLUSH32);
+ #else
+@@ -282,6 +351,18 @@ static int __init sifive_ccache_init(void)
+ 		goto err_node_put;
+ 	}
+ 
++	if (of_address_to_resource(np, 2, &res))
++		return -ENODEV;
++
++	l2_zero_device_base = ioremap(res.start, resource_size(&res));
++	if (!l2_zero_device_base)
++		return -ENOMEM;
++
++	if (of_property_read_u32(np, "cache-size", &cache_size)) {
++		pr_err("L2CACHE: no cache-size property\n");
++		return -ENODEV;
++	}
++
+ 	if (of_property_read_u32(np, "cache-level", &level)) {
+ 		rc = -ENOENT;
+ 		goto err_unmap;
+@@ -305,17 +386,17 @@ static int __init sifive_ccache_init(void)
+ 	}
+ 	of_node_put(np);
+ 
++	ccache_config_read();
++
+ #ifdef CONFIG_RISCV_DMA_NONCOHERENT
+ 	if (!of_property_read_u64(np, "uncached-offset", &offset)) {
+ 		uncached_offset = offset;
+ 		static_branch_enable(&sifive_ccache_handle_noncoherent_key);
+-		riscv_cbom_block_size = SIFIVE_CCACHE_LINE_SIZE;
++		riscv_cbom_block_size = flush_line_len;
+ 		riscv_noncoherent_supported();
+ 	}
+ #endif
+ 
+-	ccache_config_read();
+-
+ 	if (IS_ENABLED(CONFIG_SIFIVE_U74_L2_PMU)) {
+ 		for_each_cpu(cpu, cpu_possible_mask) {
+ 			rc = sifive_u74_l2_pmu_probe(np, ccache_base, cpu);
+diff --git a/include/soc/sifive/sifive_ccache.h b/include/soc/sifive/sifive_ccache.h
+index e336ac3f73cb..358693ba3753 100644
+--- a/include/soc/sifive/sifive_ccache.h
++++ b/include/soc/sifive/sifive_ccache.h
+@@ -27,6 +27,7 @@ static inline bool sifive_ccache_handle_noncoherent(void)
+ #endif
+ }
+ 
++void sifive_ccache_flush_entire(void);
+ void sifive_ccache_flush_range(phys_addr_t start, size_t len);
+ void sifive_l2_flush64_range(phys_addr_t start, size_t len);
+ void *sifive_ccache_set_uncached(void *addr, size_t size);
+-- 
+2.47.0
+

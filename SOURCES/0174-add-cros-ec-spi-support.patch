@@ -1,0 +1,1034 @@
+From 2e026260abb7f9633ba966e97ffc7b0f799b9eaf Mon Sep 17 00:00:00 2001
+From: "yang.wang" <yang.wang@deepcomputing.io>
+Date: Thu, 26 Sep 2024 17:32:03 +0800
+Subject: [PATCH 174/210] add cros-ec-spi support.
+
+Signed-off-by: yang.wang <yang.wang@deepcomputing.io>
+---
+ ...jh7110-starfive-visionfive-2-framework.dts |  26 +-
+ .../configs/starfive_visionfive2_defconfig    |   7 +
+ drivers/hwmon/Kconfig                         |  11 +
+ drivers/hwmon/Makefile                        |   1 +
+ drivers/hwmon/cros_ec_hwmon.c                 | 510 ++++++++++++++++++
+ drivers/input/keyboard/cros_ec_keyb.c         |  10 +
+ drivers/mfd/cros_ec_dev.c                     |  20 +-
+ drivers/platform/chrome/Kconfig               |   4 +-
+ drivers/platform/chrome/cros_ec.c             |   2 +-
+ drivers/platform/chrome/cros_ec_spi.c         |  73 ++-
+ drivers/platform/chrome/cros_ec_sysfs.c       |   7 +
+ .../linux/platform_data/cros_ec_commands.h    |   2 +
+ 12 files changed, 632 insertions(+), 41 deletions(-)
+ create mode 100755 drivers/hwmon/cros_ec_hwmon.c
+
+diff --git a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+index d97d07289fc4..795bcc61656a 100755
+--- a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
++++ b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+@@ -324,16 +324,6 @@ &tdm_ext {
+ //	};
+ //};
+ 
+-&i2c0 {
+-	clock-frequency = <100000>;
+-	i2c-sda-hold-time-ns = <300>;
+-	i2c-sda-falling-time-ns = <510>;
+-	i2c-scl-falling-time-ns = <510>;
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&i2c0_pins>;
+-	status = "okay";
+-};
+-
+ &i2c2 {
+ 	clock-frequency = <100000>;
+ 	i2c-sda-hold-time-ns = <300>;
+@@ -699,7 +689,7 @@ &spi1 {
+ 
+ 	fwos_ec: spi@1 {
+ 		compatible = "google,cros-ec-spi";
+-		irq-gpio = <&sysgpio 25 0>;
++		irq-gpio = <&sysgpio 26 0>;
+ 		pl022,interface = <0>;
+ 		pl022,com-mode = <1>;
+ 		spi-max-frequency = <8250000>;
+@@ -711,20 +701,6 @@ fwos_ec: spi@1 {
+ };
+ 
+ &sysgpio {
+-	i2c0_pins: i2c0-0 {
+-		i2c-pins {
+-			pinmux = <GPIOMUX(57, GPOUT_LOW,
+-					      GPOEN_SYS_I2C0_CLK,
+-					      GPI_SYS_I2C0_CLK)>,
+-				 <GPIOMUX(58, GPOUT_LOW,
+-					      GPOEN_SYS_I2C0_DATA,
+-					      GPI_SYS_I2C0_DATA)>;
+-			bias-disable; /* external pull-up */
+-			input-enable;
+-			input-schmitt-enable;
+-		};
+-	};
+-
+ 	i2c2_pins: i2c2-0 {
+ 		i2c-pins {
+ 			pinmux = <GPIOMUX(3, GPOUT_LOW,
+diff --git a/arch/riscv/configs/starfive_visionfive2_defconfig b/arch/riscv/configs/starfive_visionfive2_defconfig
+index 81b675ea3dd3..42f564e9ad27 100644
+--- a/arch/riscv/configs/starfive_visionfive2_defconfig
++++ b/arch/riscv/configs/starfive_visionfive2_defconfig
+@@ -177,6 +177,7 @@ CONFIG_AIC8800_WLAN_SUPPORT=m
+ CONFIG_AIC_LOADFW_SUPPORT=m
+ CONFIG_INPUT_EVDEV=y
+ CONFIG_KEYBOARD_GPIO=y
++CONFIG_KEYBOARD_CROS_EC=y
+ # CONFIG_INPUT_MOUSE is not set
+ CONFIG_INPUT_TOUCHSCREEN=y
+ CONFIG_TOUCHSCREEN_GOODIX=y
+@@ -207,6 +208,7 @@ CONFIG_POWER_RESET_GPIO_RESTART=y
+ CONFIG_POWER_RESET_SYSCON=y
+ CONFIG_POWER_RESET_SYSCON_POWEROFF=y
+ CONFIG_POWER_SUPPLY=y
++CONFIG_CHARGER_CROS_USBPD=y
+ CONFIG_SENSORS_SFCTEMP=y
+ CONFIG_THERMAL=y
+ CONFIG_THERMAL_WRITABLE_TRIPS=y
+@@ -355,6 +357,11 @@ CONFIG_DMATEST=y
+ # CONFIG_VIRTIO_MENU is not set
+ # CONFIG_VHOST_MENU is not set
+ CONFIG_GOLDFISH=y
++CONFIG_CHROME_PLATFORMS=y
++CONFIG_CROS_EC=y
++CONFIG_CROS_EC_SPI=y
++# CONFIG_CROS_EC_LIGHTBAR is not set
++# CONFIG_CROS_EC_VBC is not set
+ CONFIG_CLK_STARFIVE_JH7110_AON=y
+ CONFIG_CLK_STARFIVE_JH7110_STG=y
+ CONFIG_CLK_STARFIVE_JH7110_ISP=y
+diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
+index a4c361b6619c..c71351cee19a 100644
+--- a/drivers/hwmon/Kconfig
++++ b/drivers/hwmon/Kconfig
+@@ -477,6 +477,17 @@ config SENSORS_CORSAIR_PSU
+ 	  This driver can also be built as a module. If so, the module
+ 	  will be called corsair-psu.
+ 
++config SENSORS_CROS_EC
++	tristate "ChromeOS Embedded Controller sensors"
++	depends on MFD_CROS_EC_DEV
++	default MFD_CROS_EC_DEV
++	help
++	  If you say yes here you get support for ChromeOS Embedded Controller
++	  sensors.
++
++	  This driver can also be built as a module. If so, the module
++	  will be called cros_ec_hwmon.
++
+ config SENSORS_DRIVETEMP
+ 	tristate "Hard disk drives with temperature sensors"
+ 	depends on SCSI && ATA
+diff --git a/drivers/hwmon/Makefile b/drivers/hwmon/Makefile
+index 4ac9452b5430..aefea45ae093 100644
+--- a/drivers/hwmon/Makefile
++++ b/drivers/hwmon/Makefile
+@@ -61,6 +61,7 @@ obj-$(CONFIG_SENSORS_BT1_PVT)	+= bt1-pvt.o
+ obj-$(CONFIG_SENSORS_CORETEMP)	+= coretemp.o
+ obj-$(CONFIG_SENSORS_CORSAIR_CPRO) += corsair-cpro.o
+ obj-$(CONFIG_SENSORS_CORSAIR_PSU) += corsair-psu.o
++obj-$(CONFIG_SENSORS_CROS_EC)	+= cros_ec_hwmon.o
+ obj-$(CONFIG_SENSORS_DA9052_ADC)+= da9052-hwmon.o
+ obj-$(CONFIG_SENSORS_DA9055)+= da9055-hwmon.o
+ obj-$(CONFIG_SENSORS_DELL_SMM)	+= dell-smm-hwmon.o
+diff --git a/drivers/hwmon/cros_ec_hwmon.c b/drivers/hwmon/cros_ec_hwmon.c
+new file mode 100755
+index 000000000000..974223d4a062
+--- /dev/null
++++ b/drivers/hwmon/cros_ec_hwmon.c
+@@ -0,0 +1,510 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ *  ChromeOS EC driver for hwmon
++ *
++ *  Copyright (C) 2024 Thomas Weißschuh <linux@weissschuh.net>
++ */
++#define DEBUG
++#include <linux/device.h>
++#include <linux/hwmon.h>
++#include <linux/math.h>
++#include <linux/mod_devicetable.h>
++#include <linux/module.h>
++#include <linux/platform_device.h>
++#include <linux/platform_data/cros_ec_commands.h>
++#include <linux/platform_data/cros_ec_proto.h>
++#include <linux/types.h>
++#include <linux/units.h>
++#include <linux/of.h>
++
++#define DRV_NAME	"cros-ec-hwmon"
++
++enum cros_ec_hwmon_fan_mode {
++	cros_ec_hwmon_fan_mode_full = 0,
++	cros_ec_hwmon_fan_mode_manual = 1,
++	cros_ec_hwmon_fan_mode_auto = 2,
++};
++
++struct cros_ec_hwmon_priv {
++	struct cros_ec_device *cros_ec;
++	const char *temp_sensor_names[EC_TEMP_SENSOR_ENTRIES + EC_TEMP_SENSOR_B_ENTRIES];
++	u8 usable_fans;
++	bool has_fan_pwm;
++	bool has_temp_threshold;
++	u8 fan_pwm[EC_FAN_SPEED_ENTRIES];
++	enum cros_ec_hwmon_fan_mode fan_mode[EC_FAN_SPEED_ENTRIES];
++};
++
++static int cros_ec_hwmon_read_fan_speed(struct cros_ec_device *cros_ec, u8 index, u16 *speed)
++{
++	int ret;
++	__le16 __speed;
++
++	ret = cros_ec_cmd_readmem(cros_ec, EC_MEMMAP_FAN + index * 2, 2, &__speed);
++	if (ret < 0)
++		return ret;
++
++	*speed = le16_to_cpu(__speed);
++	return 0;
++}
++
++static int cros_ec_hwmon_read_fan_target(struct cros_ec_device *cros_ec,
++					 u16 *speed)
++{
++	struct ec_response_pwm_get_fan_rpm resp;
++	int ret;
++
++	ret = cros_ec_cmd(cros_ec, 0, EC_CMD_PWM_GET_FAN_TARGET_RPM, NULL, 0,
++			  &resp, sizeof(resp));
++	if (ret < 0)
++		return ret;
++
++	*speed = resp.rpm;
++	return 0;
++}
++
++static int
++cros_ec_hwmon_set_fan_auto(struct cros_ec_device *cros_ec, u8 index)
++{
++	struct ec_params_auto_fan_ctrl_v1 req = {
++		.fan_idx = index,
++	};
++
++	return cros_ec_cmd(cros_ec, 1, EC_CMD_THERMAL_AUTO_FAN_CTRL, &req,
++			   sizeof(req), NULL, 0);
++}
++
++static int cros_ec_hwmon_set_fan_duty_cycle(struct cros_ec_device *cros_ec,
++					    u8 index, u8 percent)
++{
++	struct ec_params_pwm_set_fan_duty_v1 req = {
++		.fan_idx = index,
++		.percent = percent,
++	};
++
++	return cros_ec_cmd(cros_ec, 1, EC_CMD_PWM_SET_FAN_DUTY, &req,
++			   sizeof(req), NULL, 0);
++}
++
++static int cros_ec_hwmon_read_temp(struct cros_ec_device *cros_ec, u8 index, u8 *temp)
++{
++	unsigned int offset;
++	int ret;
++
++	if (index < EC_TEMP_SENSOR_ENTRIES)
++		offset = EC_MEMMAP_TEMP_SENSOR + index;
++	else
++		offset = EC_MEMMAP_TEMP_SENSOR_B + index - EC_TEMP_SENSOR_ENTRIES;
++
++	ret = cros_ec_cmd_readmem(cros_ec, offset, 1, temp);
++
++	if (ret < 0)
++		return ret;
++	return 0;
++}
++
++static int cros_ec_hwmon_read_temp_threshold(struct cros_ec_device *cros_ec, u8 index,
++					     enum ec_temp_thresholds threshold, u32 *temp)
++{
++	struct ec_params_thermal_get_threshold_v1 req = {};
++	struct ec_thermal_config resp;
++	int ret;
++	req.sensor_num = index;
++	ret = cros_ec_cmd(cros_ec, 1, EC_CMD_THERMAL_GET_THRESHOLD, &req,
++			  sizeof(req), &resp, sizeof(resp));
++	if (ret < 0)
++		return ret;
++	*temp = resp.temp_host[threshold];
++	return 0;
++}
++
++static int cros_ec_hwmon_write_temp_threshold(struct cros_ec_device *cros_ec, u8 index,
++					      enum ec_temp_thresholds threshold, u32 temp)
++{
++	struct ec_params_thermal_get_threshold_v1 get_req = {};
++	struct ec_params_thermal_set_threshold_v1 set_req = {};
++	int ret;
++
++	get_req.sensor_num = index;
++	ret = cros_ec_cmd(cros_ec, 1, EC_CMD_THERMAL_GET_THRESHOLD, &get_req,
++			  sizeof(get_req), &set_req.cfg, sizeof(set_req.cfg));
++	if (ret < 0)
++		return ret;
++
++	set_req.sensor_num = index;
++	set_req.cfg.temp_host[threshold] = temp;
++	return cros_ec_cmd(cros_ec, 1, EC_CMD_THERMAL_SET_THRESHOLD, &set_req,
++			   sizeof(set_req), NULL, 0);
++}
++
++static bool cros_ec_hwmon_is_error_fan(u16 speed)
++{
++	return speed == EC_FAN_SPEED_NOT_PRESENT || speed == EC_FAN_SPEED_STALLED;
++}
++
++static bool cros_ec_hwmon_is_error_temp(u8 temp)
++{
++	return temp == EC_TEMP_SENSOR_NOT_PRESENT     ||
++	       temp == EC_TEMP_SENSOR_ERROR           ||
++	       temp == EC_TEMP_SENSOR_NOT_POWERED     ||
++	       temp == EC_TEMP_SENSOR_NOT_CALIBRATED;
++}
++
++static long cros_ec_hwmon_temp_to_millicelsius(u8 temp)
++{
++	return kelvin_to_millicelsius((((long)temp) + EC_TEMP_SENSOR_OFFSET));
++}
++
++static enum ec_temp_thresholds cros_ec_hwmon_attr_to_thres(u32 attr)
++{
++	if (attr == hwmon_temp_max)
++		return EC_TEMP_THRESH_WARN;
++	else if (attr == hwmon_temp_crit)
++		return EC_TEMP_THRESH_HIGH;
++	else if (attr == hwmon_temp_emergency)
++		return EC_TEMP_THRESH_HALT;
++	else
++		return 0;
++}
++
++static int cros_ec_hwmon_read(struct device *dev, enum hwmon_sensor_types type,
++			      u32 attr, int channel, long *val)
++{
++	struct cros_ec_hwmon_priv *priv = dev_get_drvdata(dev);
++	int ret = -EOPNOTSUPP;
++	u32 threshold;
++	u16 speed;
++	u8 temp;
++
++	if (type == hwmon_fan) {
++		if (attr == hwmon_fan_input) {
++			ret = cros_ec_hwmon_read_fan_speed(priv->cros_ec, channel, &speed);
++			if (ret == 0) {
++				if (cros_ec_hwmon_is_error_fan(speed))
++					ret = -ENODATA;
++				else
++					*val = speed;
++			}
++		} else if (attr == hwmon_fan_target) {
++			ret = cros_ec_hwmon_read_fan_target(priv->cros_ec, &speed);
++			if (ret == 0)
++				*val = speed;
++
++		} else if (attr == hwmon_fan_fault) {
++			ret = cros_ec_hwmon_read_fan_speed(priv->cros_ec, channel, &speed);
++			if (ret == 0)
++				*val = cros_ec_hwmon_is_error_fan(speed);
++		}
++
++	} else if (type == hwmon_pwm) {
++		if (attr == hwmon_pwm_input) {
++			*val = priv->fan_pwm[channel];
++			ret = 0;
++		} else if (attr == hwmon_pwm_enable) {
++			*val = priv->fan_mode[channel];
++			ret = 0;
++		}
++
++	} else if (type == hwmon_temp) {
++		if (attr == hwmon_temp_input) {
++			ret = cros_ec_hwmon_read_temp(priv->cros_ec, channel, &temp);
++			if (ret == 0) {
++				if (cros_ec_hwmon_is_error_temp(temp))
++					ret = -ENODATA;
++				else
++					*val = cros_ec_hwmon_temp_to_millicelsius(temp);
++			}
++		} else if (attr == hwmon_temp_fault) {
++			ret = cros_ec_hwmon_read_temp(priv->cros_ec, channel, &temp);
++			if (ret == 0)
++				*val = cros_ec_hwmon_is_error_temp(temp);
++
++		} else if (attr == hwmon_temp_max || attr == hwmon_temp_crit ||
++			   attr == hwmon_temp_emergency) {
++			ret = cros_ec_hwmon_read_temp_threshold(priv->cros_ec, channel,
++													cros_ec_hwmon_attr_to_thres(attr),
++													&threshold);
++			if (ret == 0)
++				*val = kelvin_to_millicelsius(threshold);
++		}
++	}
++
++	return ret;
++}
++
++static int cros_ec_hwmon_read_string(struct device *dev, enum hwmon_sensor_types type,
++				     u32 attr, int channel, const char **str)
++{
++	struct cros_ec_hwmon_priv *priv = dev_get_drvdata(dev);
++
++	if (type == hwmon_temp && attr == hwmon_temp_label) {
++		*str = priv->temp_sensor_names[channel];
++		return 0;
++	}
++
++	return -EOPNOTSUPP;
++}
++
++static int cros_ec_hwmon_write_pwm_input(struct cros_ec_hwmon_priv *priv,
++					 int channel, long val)
++{
++	u8 percent;
++	int ret;
++	if (val < 0 || val > 255)
++		return -EINVAL;
++
++	percent = DIV_ROUND_CLOSEST(val * 100, 255);
++	if (priv->fan_mode[channel] == cros_ec_hwmon_fan_mode_manual) {
++		ret = cros_ec_hwmon_set_fan_duty_cycle(priv->cros_ec, channel,
++						       percent);
++		if (ret < 0)
++			return ret;
++	}
++	priv->fan_pwm[channel] = percent;
++	return 0;
++}
++
++static int cros_ec_hwmon_write_pwm_enable(struct cros_ec_hwmon_priv *priv,
++					  int channel, long val)
++{
++	int ret;
++	if (val == cros_ec_hwmon_fan_mode_full)
++		ret = cros_ec_hwmon_set_fan_duty_cycle(priv->cros_ec, channel,
++						       100);
++	else if (val == cros_ec_hwmon_fan_mode_manual)
++		ret = cros_ec_hwmon_set_fan_duty_cycle(priv->cros_ec, channel,
++						       priv->fan_pwm[channel]);
++	else if (val == cros_ec_hwmon_fan_mode_auto)
++		ret = cros_ec_hwmon_set_fan_auto(priv->cros_ec, channel);
++	else
++		return -EINVAL;
++	priv->fan_mode[channel] = val;
++	return ret;
++}
++
++static int cros_ec_hwmon_write(struct device *dev, enum hwmon_sensor_types type,
++			       u32 attr, int channel, long val)
++{
++	struct cros_ec_hwmon_priv *priv = dev_get_drvdata(dev);
++	int ret = -EOPNOTSUPP;
++	if (type == hwmon_pwm) {
++		if (attr == hwmon_pwm_input)
++			ret = cros_ec_hwmon_write_pwm_input(priv, channel, val);
++		else if (attr == hwmon_pwm_enable)
++			ret = cros_ec_hwmon_write_pwm_enable(priv, channel, val);
++
++	} else if (type == hwmon_temp) {
++		ret = cros_ec_hwmon_write_temp_threshold(priv->cros_ec, channel,
++												cros_ec_hwmon_attr_to_thres(attr),
++												millicelsius_to_kelvin(val));
++	}
++	return ret;
++}
++
++static umode_t cros_ec_hwmon_is_visible(const void *data, enum hwmon_sensor_types type,
++					u32 attr, int channel)
++{
++	const struct cros_ec_hwmon_priv *priv = data;
++	u16 speed;
++
++	if (type == hwmon_fan) {
++		if (attr == hwmon_fan_target &&
++		    cros_ec_hwmon_read_fan_target(priv->cros_ec, &speed) == -EOPNOTSUPP)
++			return 0;
++
++		if (priv->usable_fans & BIT(channel))
++			return 0444;
++	} else if (type == hwmon_pwm) {
++		if (priv->has_fan_pwm && priv->usable_fans & BIT(channel))
++			return 0644;
++	} else if (type == hwmon_temp) {
++		if (priv->temp_sensor_names[channel]) {
++			if (attr == hwmon_temp_max ||
++			    attr == hwmon_temp_crit ||
++			    attr == hwmon_temp_emergency) {
++				if (priv->has_temp_threshold)
++					return 0644;
++			} else {
++				return 0444;
++			}
++		}
++	}
++
++	return 0;
++}
++
++static const struct hwmon_channel_info * const cros_ec_hwmon_info[] = {
++	HWMON_CHANNEL_INFO(fan,
++			   HWMON_F_INPUT | HWMON_F_FAULT | HWMON_F_TARGET,
++			   HWMON_F_INPUT | HWMON_F_FAULT,
++			   HWMON_F_INPUT | HWMON_F_FAULT,
++			   HWMON_F_INPUT | HWMON_F_FAULT),
++	HWMON_CHANNEL_INFO(pwm, 
++			   HWMON_PWM_INPUT | HWMON_PWM_ENABLE,
++			   HWMON_PWM_INPUT | HWMON_PWM_ENABLE,
++			   HWMON_PWM_INPUT | HWMON_PWM_ENABLE,
++			   HWMON_PWM_INPUT | HWMON_PWM_ENABLE),
++
++#define cros_EC_HWMON_TEMP_PARAMS (HWMON_T_INPUT | HWMON_T_FAULT | HWMON_T_LABEL | \
++				   HWMON_T_MAX | HWMON_T_CRIT | HWMON_T_EMERGENCY)
++	HWMON_CHANNEL_INFO(temp,
++			   cros_EC_HWMON_TEMP_PARAMS,
++			   cros_EC_HWMON_TEMP_PARAMS,
++			   cros_EC_HWMON_TEMP_PARAMS,
++			   cros_EC_HWMON_TEMP_PARAMS,
++			   cros_EC_HWMON_TEMP_PARAMS,
++			   cros_EC_HWMON_TEMP_PARAMS,
++			   cros_EC_HWMON_TEMP_PARAMS,
++			   cros_EC_HWMON_TEMP_PARAMS,
++			   cros_EC_HWMON_TEMP_PARAMS,
++			   cros_EC_HWMON_TEMP_PARAMS,
++			   cros_EC_HWMON_TEMP_PARAMS,
++			   cros_EC_HWMON_TEMP_PARAMS,
++			   cros_EC_HWMON_TEMP_PARAMS,
++			   cros_EC_HWMON_TEMP_PARAMS,
++			   cros_EC_HWMON_TEMP_PARAMS,
++			   cros_EC_HWMON_TEMP_PARAMS,
++			   cros_EC_HWMON_TEMP_PARAMS,
++			   cros_EC_HWMON_TEMP_PARAMS,
++			   cros_EC_HWMON_TEMP_PARAMS,
++			   cros_EC_HWMON_TEMP_PARAMS,
++			   cros_EC_HWMON_TEMP_PARAMS,
++			   cros_EC_HWMON_TEMP_PARAMS,
++			   cros_EC_HWMON_TEMP_PARAMS,
++			   cros_EC_HWMON_TEMP_PARAMS),
++	NULL
++};
++
++static const struct hwmon_ops cros_ec_hwmon_ops = {
++	.read = cros_ec_hwmon_read,
++	.read_string = cros_ec_hwmon_read_string,
++	.write = cros_ec_hwmon_write,
++	.is_visible = cros_ec_hwmon_is_visible,
++};
++
++static const struct hwmon_chip_info cros_ec_hwmon_chip_info = {
++	.ops = &cros_ec_hwmon_ops,
++	.info = cros_ec_hwmon_info,
++};
++
++static void cros_ec_hwmon_probe_temp_sensors(struct device *dev, struct cros_ec_hwmon_priv *priv,
++					     u8 thermal_version)
++{
++	struct ec_params_temp_sensor_get_info req = {};
++	struct ec_response_temp_sensor_get_info resp;
++	size_t candidates, i, sensor_name_size;
++	int ret;
++	u32 threshold;
++	u8 temp;
++
++	ret = cros_ec_hwmon_read_temp_threshold(priv->cros_ec, 0, EC_TEMP_THRESH_HIGH, &threshold);
++	if (ret == 0)
++		priv->has_temp_threshold = 1;
++
++	if (thermal_version < 2)
++		candidates = EC_TEMP_SENSOR_ENTRIES;
++	else
++		candidates = ARRAY_SIZE(priv->temp_sensor_names);
++
++	for (i = 0; i < candidates; i++) {
++		if (cros_ec_hwmon_read_temp(priv->cros_ec, i, &temp) < 0)
++			continue;
++
++		if (temp == EC_TEMP_SENSOR_NOT_PRESENT)
++			continue;
++
++		req.id = i;
++		ret = cros_ec_cmd(priv->cros_ec, 0, EC_CMD_TEMP_SENSOR_GET_INFO,
++				  &req, sizeof(req), &resp, sizeof(resp));
++		if (ret < 0)
++			continue;
++
++		sensor_name_size = strnlen(resp.sensor_name, sizeof(resp.sensor_name));
++		priv->temp_sensor_names[i] = devm_kasprintf(dev, GFP_KERNEL, "%.*s",
++							    (int)sensor_name_size,
++							    resp.sensor_name);
++	}
++}
++
++static void cros_ec_hwmon_probe_fans(struct cros_ec_hwmon_priv *priv)
++{
++	u16 speed;
++	size_t i;
++	int ret;
++
++	//ret = cros_ec_cmd_versions(priv->cros_ec, EC_CMD_PWM_SET_FAN_DUTY);
++	//if (ret >= 0 && ret & EC_VER_MASK(1))
++		priv->has_fan_pwm = 1;
++
++	for (i = 0; i < EC_FAN_SPEED_ENTRIES; i++) {
++		ret = cros_ec_hwmon_read_fan_speed(priv->cros_ec, i, &speed);
++		//if (ret == 0 && speed != EC_FAN_SPEED_NOT_PRESENT)
++		//	priv->usable_fans |= BIT(i);
++
++		if (ret < 0)
++			continue;
++		if (speed == EC_FAN_SPEED_NOT_PRESENT)
++			continue;
++		priv->usable_fans |= BIT(i);
++		if (priv->has_fan_pwm) {
++			priv->fan_mode[i] = cros_ec_hwmon_fan_mode_auto;
++			ret = cros_ec_hwmon_set_fan_auto(priv->cros_ec, i);
++			if (ret != 0)
++				priv->has_fan_pwm = 0;
++		}
++	}
++}
++
++static int cros_ec_hwmon_probe(struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	struct cros_ec_dev *ec_dev = dev_get_drvdata(dev->parent);
++	struct cros_ec_device *cros_ec = ec_dev->ec_dev;
++	struct cros_ec_hwmon_priv *priv;
++	struct device *hwmon_dev;
++	u8 thermal_version;
++	int ret;
++
++#if 0
++	ret = cros_ec_cmd_readmem(ec_dev, EC_MEMMAP_THERMAL_VERSION, 1, &thermal_version);
++	if (ret < 0)
++		return ret;
++
++	/* Covers both fan and temp sensors */
++	if (thermal_version == 0)
++		return -ENODEV;
++#else
++	ret = 0;
++	thermal_version = 3;
++#endif
++
++	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
++	if (!priv)
++		return -ENOMEM;
++	priv->cros_ec = cros_ec;
++
++	cros_ec_hwmon_probe_temp_sensors(dev, priv, thermal_version);
++	cros_ec_hwmon_probe_fans(priv);
++
++	hwmon_dev = devm_hwmon_device_register_with_info(dev, "cros_ec", priv,
++							 &cros_ec_hwmon_chip_info, NULL);
++	return PTR_ERR_OR_ZERO(hwmon_dev);
++}
++
++static const struct platform_device_id cros_ec_hwmon_id[] = {
++	{ DRV_NAME, 0 },
++	{}
++};
++
++static struct platform_driver cros_ec_hwmon_driver = {
++	.driver.name	= DRV_NAME,
++	.probe 		= cros_ec_hwmon_probe,
++	.id_table	= cros_ec_hwmon_id,
++};
++
++module_platform_driver(cros_ec_hwmon_driver);
++
++MODULE_DEVICE_TABLE(platform, cros_ec_hwmon_id);
++MODULE_DESCRIPTION("ChromeOS EC Hardware Monitoring Driver");
++MODULE_AUTHOR("Thomas Weißschuh <linux@weissschuh.net");
++MODULE_LICENSE("GPL");
+diff --git a/drivers/input/keyboard/cros_ec_keyb.c b/drivers/input/keyboard/cros_ec_keyb.c
+index e7ecfca838df..23c330f59b35 100644
+--- a/drivers/input/keyboard/cros_ec_keyb.c
++++ b/drivers/input/keyboard/cros_ec_keyb.c
+@@ -115,6 +115,16 @@ static const struct cros_ec_bs_map cros_ec_keyb_bs[] = {
+ 		.code           = KEY_SCREENLOCK,
+ 		.bit            = EC_MKBP_SCREEN_LOCK,
+ 	},
++	{
++		.ev_type	= EV_KEY,
++		.code		= KEY_MEDIA,
++		.bit		= EC_MKBP_MEDIA_BUTTON,
++	},
++	{
++		.ev_type	= EV_KEY,
++		.code		= KEY_RFKILL,
++		.bit		= EC_MKBP_RFKILL_BUTTON,
++	},
+ 
+ 	/* Switches */
+ 	{
+diff --git a/drivers/mfd/cros_ec_dev.c b/drivers/mfd/cros_ec_dev.c
+index 79d393b602bf..16f4d9667f75 100644
+--- a/drivers/mfd/cros_ec_dev.c
++++ b/drivers/mfd/cros_ec_dev.c
+@@ -4,7 +4,8 @@
+  *
+  * Copyright (C) 2014 Google, Inc.
+  */
+-
++#define DEBUG
++#define LOGD(fmt, args...) printk(KERN_INFO "DBG: %s:%d %s() " fmt, __FILE__, __LINE__, __FUNCTION__, ##args)
+ #include <linux/dmi.h>
+ #include <linux/kconfig.h>
+ #include <linux/mfd/core.h>
+@@ -113,6 +114,7 @@ static const struct mfd_cell cros_ec_platform_cells[] = {
+ 	{ .name = "cros-ec-chardev", },
+ 	{ .name = "cros-ec-debugfs", },
+ 	{ .name = "cros-ec-sysfs", },
++	{ .name = "cros-ec-hwmon", },
+ };
+ 
+ static const struct mfd_cell cros_ec_pchg_cells[] = {
+@@ -141,7 +143,7 @@ static int ec_device_probe(struct platform_device *pdev)
+ 	struct cros_ec_dev *ec = kzalloc(sizeof(*ec), GFP_KERNEL);
+ 	struct ec_response_pchg_count pchg_count;
+ 	int i;
+-
++	LOGD("\n");
+ 	if (!ec)
+ 		return retval;
+ 
+@@ -184,8 +186,10 @@ static int ec_device_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	retval = device_add(&ec->class_dev);
+-	if (retval)
++	if (retval) {
++		LOGD("\n");
+ 		goto failed;
++	}
+ 
+ 	/* check whether this EC is a sensor hub. */
+ 	if (cros_ec_get_sensor_count(ec) > 0) {
+@@ -202,7 +206,7 @@ static int ec_device_probe(struct platform_device *pdev)
+ 	 * EC_FEATURE_GET_CMD Embedded Controller device.
+ 	 */
+ 	for (i = 0; i < ARRAY_SIZE(cros_subdevices); i++) {
+-		if (cros_ec_check_features(ec, cros_subdevices[i].id)) {
++		//if (cros_ec_check_features(ec, cros_subdevices[i].id)) {
+ 			retval = mfd_add_hotplug_devices(ec->dev,
+ 						cros_subdevices[i].mfd_cells,
+ 						cros_subdevices[i].num_cells);
+@@ -211,7 +215,7 @@ static int ec_device_probe(struct platform_device *pdev)
+ 					"failed to add %s subdevice: %d\n",
+ 					cros_subdevices[i].mfd_cells->name,
+ 					retval);
+-		}
++		//}
+ 	}
+ 
+ 	/*
+@@ -234,7 +238,7 @@ static int ec_device_probe(struct platform_device *pdev)
+ 	 * device entry defined.
+ 	 */
+ 	if (IS_ENABLED(CONFIG_OF) && ec->ec_dev->dev->of_node) {
+-		if (cros_ec_check_features(ec, EC_FEATURE_USB_PD)) {
++		//if (cros_ec_check_features(ec, EC_FEATURE_USB_PD)) {
+ 			retval = mfd_add_hotplug_devices(ec->dev,
+ 					cros_usbpd_notify_cells,
+ 					ARRAY_SIZE(cros_usbpd_notify_cells));
+@@ -242,7 +246,7 @@ static int ec_device_probe(struct platform_device *pdev)
+ 				dev_err(ec->dev,
+ 					"failed to add PD notify devices: %d\n",
+ 					retval);
+-		}
++		//}
+ 	}
+ 
+ 	/*
+@@ -281,9 +285,11 @@ static int ec_device_probe(struct platform_device *pdev)
+ 				 retval);
+ 	}
+ 
++	LOGD("done!\n");
+ 	return 0;
+ 
+ failed:
++	LOGD("failed\n");
+ 	put_device(&ec->class_dev);
+ 	return retval;
+ }
+diff --git a/drivers/platform/chrome/Kconfig b/drivers/platform/chrome/Kconfig
+index 7d82a0946e1c..d53ef21c1ba7 100644
+--- a/drivers/platform/chrome/Kconfig
++++ b/drivers/platform/chrome/Kconfig
+@@ -5,7 +5,7 @@
+ 
+ menuconfig CHROME_PLATFORMS
+ 	bool "Platform support for Chrome hardware"
+-	depends on X86 || ARM || ARM64 || COMPILE_TEST
++	depends on X86 || ARM || ARM64 || RISCV || COMPILE_TEST
+ 	help
+ 	  Say Y here to get to see options for platform support for
+ 	  various Chromebooks and Chromeboxes. This option alone does
+@@ -64,7 +64,7 @@ config CHROMEOS_TBMC
+ config CROS_EC
+ 	tristate "ChromeOS Embedded Controller"
+ 	select CROS_EC_PROTO
+-	depends on X86 || ARM || ARM64 || COMPILE_TEST
++	depends on X86 || ARM || ARM64 || RISCV || COMPILE_TEST
+ 	help
+ 	  If you say Y here you get support for the ChromeOS Embedded
+ 	  Controller (EC) providing keyboard, battery and power services.
+diff --git a/drivers/platform/chrome/cros_ec.c b/drivers/platform/chrome/cros_ec.c
+index 47d19f7e295a..cacfbd9ef782 100644
+--- a/drivers/platform/chrome/cros_ec.c
++++ b/drivers/platform/chrome/cros_ec.c
+@@ -214,7 +214,7 @@ int cros_ec_register(struct cros_ec_device *ec_dev)
+ 		err = devm_request_threaded_irq(dev, ec_dev->irq,
+ 						cros_ec_irq_handler,
+ 						cros_ec_irq_thread,
+-						IRQF_TRIGGER_LOW | IRQF_ONESHOT,
++						IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+ 						"chromeos-ec", ec_dev);
+ 		if (err) {
+ 			dev_err(dev, "Failed to request IRQ %d: %d\n",
+diff --git a/drivers/platform/chrome/cros_ec_spi.c b/drivers/platform/chrome/cros_ec_spi.c
+index 3e88cc92e819..8ae5cdfbad18 100644
+--- a/drivers/platform/chrome/cros_ec_spi.c
++++ b/drivers/platform/chrome/cros_ec_spi.c
+@@ -2,7 +2,7 @@
+ // SPI interface for ChromeOS Embedded Controller
+ //
+ // Copyright (C) 2012 Google, Inc
+-
++#define DEBUG
+ #include <linux/delay.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+@@ -100,6 +100,8 @@ struct cros_ec_xfer_work_params {
+ 	int ret;
+ };
+ 
++static bool debug_en = false;
++
+ static void debug_packet(struct device *dev, const char *name, u8 *ptr,
+ 			 int len)
+ {
+@@ -168,6 +170,18 @@ static int receive_n_bytes(struct cros_ec_device *ec_dev, u8 *buf, int n)
+ 	if (ret < 0)
+ 		dev_err(ec_dev->dev, "spi transfer failed: %d\n", ret);
+ 
++	if (debug_en) {
++		int ii;
++		u8 *rx_buf, *tx_buf;
++		rx_buf = (u8 *)trans.rx_buf;
++		//tx_buf = (u8 *)trans.tx_buf;
++
++		printk("%s len = %d\n", __func__, trans.len);
++		for (ii = 0; ii < trans.len; ii++)
++			printk("%s rx_buf[%d] : 0x%02x\n",
++			       __func__, ii, rx_buf[ii]);
++	}
++
+ 	return ret;
+ }
+ 
+@@ -264,8 +278,8 @@ static int cros_ec_spi_receive_packet(struct cros_ec_device *ec_dev,
+ 		 * maximum-supported transfer size.
+ 		 */
+ 		todo = min(need_len, 256);
+-		dev_dbg(ec_dev->dev, "loop, todo=%d, need_len=%d, ptr=%zd\n",
+-			todo, need_len, ptr - ec_dev->din);
++		//dev_dbg(ec_dev->dev, "loop, todo=%d, need_len=%d, ptr=%zd\n",
++		//	todo, need_len, ptr - ec_dev->din);
+ 
+ 		ret = receive_n_bytes(ec_dev, ptr, todo);
+ 		if (ret < 0)
+@@ -277,6 +291,8 @@ static int cros_ec_spi_receive_packet(struct cros_ec_device *ec_dev,
+ 
+ 	dev_dbg(ec_dev->dev, "loop done, ptr=%zd\n", ptr - ec_dev->din);
+ 
++	//dev_dbg(ec_dev->dev, "%s() Additional read-in 4 bytes\n", __func__);
++	receive_n_bytes(ec_dev, (u8 *)&ret, 4);
+ 	return 0;
+ }
+ 
+@@ -344,8 +360,8 @@ static int cros_ec_spi_receive_response(struct cros_ec_device *ec_dev,
+ 	todo = min(todo, need_len);
+ 	memmove(ec_dev->din, ptr, todo);
+ 	ptr = ec_dev->din + todo;
+-	dev_dbg(ec_dev->dev, "need %d, got %d bytes from preamble\n",
+-		 need_len, todo);
++	//dev_dbg(ec_dev->dev, "need %d, got %d bytes from preamble\n",
++	//	 need_len, todo);
+ 	need_len -= todo;
+ 
+ 	/* Receive data until we have it all */
+@@ -371,6 +387,9 @@ static int cros_ec_spi_receive_response(struct cros_ec_device *ec_dev,
+ 
+ 	dev_dbg(ec_dev->dev, "loop done, ptr=%zd\n", ptr - ec_dev->din);
+ 
++	// fixme
++	dev_dbg(ec_dev->dev, "%s() Additional read-in 4 bytes\n", __func__);
++	receive_n_bytes(ec_dev, (u8 *)&ret, 4);
+ 	return 0;
+ }
+ 
+@@ -432,6 +451,18 @@ static int do_cros_ec_pkt_xfer_spi(struct cros_ec_device *ec_dev,
+ 	spi_message_add_tail(&trans, &msg);
+ 	ret = spi_sync_locked(ec_spi->spi, &msg);
+ 
++	if (debug_en) {
++		int ii;
++		u8 *rx_buf, *tx_buf;
++		rx_buf = (u8 *)trans.rx_buf;
++		tx_buf = (u8 *)trans.tx_buf;
++
++		printk("%s len = %d\n", __func__, trans.len);
++		for (ii = 0; ii < trans.len; ii++)
++			printk("%s rx_buf[%d] : 0x%02x, tx_buf[%d] : 0x%02x\n",
++			       __func__, ii, rx_buf[ii], ii, tx_buf[ii]);
++	}
++
+ 	/* Get the response */
+ 	if (!ret) {
+ 		/* Verify that EC can process command */
+@@ -567,6 +598,18 @@ static int do_cros_ec_cmd_xfer_spi(struct cros_ec_device *ec_dev,
+ 	spi_message_add_tail(&trans, &msg);
+ 	ret = spi_sync_locked(ec_spi->spi, &msg);
+ 
++	if (debug_en) {
++		int ii;
++		u8 *rx_buf, *tx_buf;
++		rx_buf = (u8 *)trans.rx_buf;
++		tx_buf = (u8 *)trans.tx_buf;
++
++		printk("%s len = %d\n", __func__, trans.len);
++		for (ii = 0; ii < trans.len; ii++)
++			printk("%s rx_buf[%d] : 0x%02x, tx_buf[%d] : 0x%02x\n", 
++				__func__, ii, rx_buf[ii], ii, tx_buf[ii]);
++	}
++
+ 	/* Get the response */
+ 	if (!ret) {
+ 		/* Verify that EC can process command */
+@@ -738,8 +781,23 @@ static int cros_ec_spi_probe(struct spi_device *spi)
+ 	struct device *dev = &spi->dev;
+ 	struct cros_ec_device *ec_dev;
+ 	struct cros_ec_spi *ec_spi;
++	struct gpio_desc *irq_gpio;
++	int irq;
+ 	int err;
+ 
++	irq_gpio = devm_gpiod_get_optional(dev, "irq", GPIOD_IN);
++	if (IS_ERR(irq_gpio)) {
++		dev_err(dev, "failed to get irq gpio\n");
++		return -ENODEV;
++	}
++	gpiod_direction_input(irq_gpio);
++
++	irq = gpiod_to_irq(irq_gpio);
++	if (irq <= 0) {
++		dev_err(dev, "get irq fail\n");
++		return -ENODEV;
++	}
++
+ 	spi->rt = true;
+ 	err = spi_setup(spi);
+ 	if (err < 0)
+@@ -752,6 +810,7 @@ static int cros_ec_spi_probe(struct spi_device *spi)
+ 	ec_dev = devm_kzalloc(dev, sizeof(*ec_dev), GFP_KERNEL);
+ 	if (!ec_dev)
+ 		return -ENOMEM;
++	dev_dbg(dev, "%s ec_dev = %p\n", __func__, ec_dev);
+ 
+ 	/* Check for any DT properties */
+ 	cros_ec_spi_dt_probe(ec_spi, dev);
+@@ -759,7 +818,8 @@ static int cros_ec_spi_probe(struct spi_device *spi)
+ 	spi_set_drvdata(spi, ec_dev);
+ 	ec_dev->dev = dev;
+ 	ec_dev->priv = ec_spi;
+-	ec_dev->irq = spi->irq;
++	ec_dev->irq = irq; // spi->irq
++	
+ 	ec_dev->cmd_xfer = cros_ec_cmd_xfer_spi;
+ 	ec_dev->pkt_xfer = cros_ec_pkt_xfer_spi;
+ 	ec_dev->phys_name = dev_name(&ec_spi->spi->dev);
+@@ -839,3 +899,4 @@ module_spi_driver(cros_ec_driver_spi);
+ 
+ MODULE_LICENSE("GPL v2");
+ MODULE_DESCRIPTION("SPI interface for ChromeOS Embedded Controller");
++module_param(debug_en, bool, 0444);
+diff --git a/drivers/platform/chrome/cros_ec_sysfs.c b/drivers/platform/chrome/cros_ec_sysfs.c
+index 09e3bf5e8ec6..2fb7c66c2467 100644
+--- a/drivers/platform/chrome/cros_ec_sysfs.c
++++ b/drivers/platform/chrome/cros_ec_sysfs.c
+@@ -128,11 +128,14 @@ static ssize_t version_show(struct device *dev,
+ 	msg->command = EC_CMD_GET_VERSION + ec->cmd_offset;
+ 	msg->insize = sizeof(*r_ver);
+ 	msg->outsize = 0;
++	printk("Get versions: ret = 0x%x\n", ret);
+ 	ret = cros_ec_cmd_xfer_status(ec->ec_dev, msg);
+ 	if (ret < 0) {
+ 		count = ret;
+ 		goto exit;
+ 	}
++	msleep(100);
++
+ 	r_ver = (struct ec_response_get_version *)msg->data;
+ 	/* Strings should be null-terminated, but let's be sure. */
+ 	r_ver->version_string_ro[sizeof(r_ver->version_string_ro) - 1] = '\0';
+@@ -147,6 +150,7 @@ static ssize_t version_show(struct device *dev,
+ 	msg->command = EC_CMD_GET_BUILD_INFO + ec->cmd_offset;
+ 	msg->insize = EC_HOST_PARAM_SIZE;
+ 	ret = cros_ec_cmd_xfer_status(ec->ec_dev, msg);
++	printk("Get build info: ret = 0x%x\n", ret);
+ 	if (ret < 0) {
+ 		count += sysfs_emit_at(buf, count,
+ 				   "Build info:    XFER / EC ERROR %d / %d\n",
+@@ -155,11 +159,13 @@ static ssize_t version_show(struct device *dev,
+ 		msg->data[EC_HOST_PARAM_SIZE - 1] = '\0';
+ 		count += sysfs_emit_at(buf, count, "Build info:    %s\n", msg->data);
+ 	}
++	msleep(100);
+ 
+ 	/* Get chip info. */
+ 	msg->command = EC_CMD_GET_CHIP_INFO + ec->cmd_offset;
+ 	msg->insize = sizeof(*r_chip);
+ 	ret = cros_ec_cmd_xfer_status(ec->ec_dev, msg);
++	printk("Get chip info: ret = 0x%x\n", ret);
+ 	if (ret < 0) {
+ 		count += sysfs_emit_at(buf, count,
+ 				   "Chip info:     XFER / EC ERROR %d / %d\n",
+@@ -179,6 +185,7 @@ static ssize_t version_show(struct device *dev,
+ 	msg->command = EC_CMD_GET_BOARD_VERSION + ec->cmd_offset;
+ 	msg->insize = sizeof(*r_board);
+ 	ret = cros_ec_cmd_xfer_status(ec->ec_dev, msg);
++	printk("Get board version: ret = 0x%x\n", ret);
+ 	if (ret < 0) {
+ 		count += sysfs_emit_at(buf, count,
+ 				   "Board version: XFER / EC ERROR %d / %d\n",
+diff --git a/include/linux/platform_data/cros_ec_commands.h b/include/linux/platform_data/cros_ec_commands.h
+index ab721cf13a98..470d35ad90fd 100644
+--- a/include/linux/platform_data/cros_ec_commands.h
++++ b/include/linux/platform_data/cros_ec_commands.h
+@@ -3484,6 +3484,8 @@ struct ec_response_get_next_event_v1 {
+ #define EC_MKBP_BRI_UP		4
+ #define EC_MKBP_BRI_DOWN	5
+ #define EC_MKBP_SCREEN_LOCK	6
++#define EC_MKBP_MEDIA_BUTTON	7
++#define EC_MKBP_RFKILL_BUTTON	8
+ 
+ /* Switches */
+ #define EC_MKBP_LID_OPEN	0
+-- 
+2.47.0
+

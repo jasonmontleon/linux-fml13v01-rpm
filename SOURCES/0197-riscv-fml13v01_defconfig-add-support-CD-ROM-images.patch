@@ -1,0 +1,29 @@
+From 5b11ac234efaa1b2de9a236a698ca0cec7ab42a4 Mon Sep 17 00:00:00 2001
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Date: Mon, 6 Jan 2025 11:25:21 +0100
+Subject: [PATCH 197/210] riscv: fml13v01_defconfig: add support CD-ROM images
+
+Some distros use this format for installer images.
+
+Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+---
+ arch/riscv/configs/fml13v01_defconfig | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/arch/riscv/configs/fml13v01_defconfig b/arch/riscv/configs/fml13v01_defconfig
+index d01e3073c201..4bc2885ea05b 100644
+--- a/arch/riscv/configs/fml13v01_defconfig
++++ b/arch/riscv/configs/fml13v01_defconfig
+@@ -377,6 +377,9 @@ CONFIG_CUSE=y
+ CONFIG_VIRTIO_FS=y
+ CONFIG_FSCACHE=y
+ CONFIG_FSCACHE_STATS=y
++CONFIG_ISO9660_FS=m
++CONFIG_JOLIET=y
++CONFIG_ZISOFS=y
+ CONFIG_MSDOS_FS=y
+ CONFIG_VFAT_FS=y
+ CONFIG_FAT_DEFAULT_UTF8=y
+-- 
+2.47.0
+

@@ -1,0 +1,25 @@
+From 78b2c1a99ee4c3fc4daaf4e902cd369597bb5a57 Mon Sep 17 00:00:00 2001
+From: Jason Montleon <jmontleo@redhat.com>
+Date: Mon, 17 Feb 2025 08:29:07 -0500
+Subject: [PATCH 209/210] .NOTINTERMEDIATE not .SECONDARY
+
+---
+ drivers/gpu/drm/img/img-rogue/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/img/img-rogue/Makefile b/drivers/gpu/drm/img/img-rogue/Makefile
+index ee37ef8cadbf..d31a357acabf 100644
+--- a/drivers/gpu/drm/img/img-rogue/Makefile
++++ b/drivers/gpu/drm/img/img-rogue/Makefile
+@@ -73,7 +73,7 @@ WINDOW_SYSTEM=nulldrmws
+ #include $(OUT)/config_kernel.mk
+ include $(srctree)/$(src)/config_kernel.mk
+ 
+-.SECONDARY:
++.NOTINTERMEDIATE:
+ 
+ define symlink-source-file
+ @if [ ! -e $(dir $@) ]; then mkdir -p $(dir $@); fi
+-- 
+2.47.0
+

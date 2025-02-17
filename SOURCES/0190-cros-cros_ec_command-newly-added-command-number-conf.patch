@@ -1,0 +1,31 @@
+From 1af5540de22a69878353c6b691be3ba8778f6d14 Mon Sep 17 00:00:00 2001
+From: "yang.wang" <yang.wang@deepcomputing.io>
+Date: Mon, 25 Nov 2024 11:48:53 +0800
+Subject: [PATCH 190/210] cros: cros_ec_command: newly added command number
+ conflicted with EC-MCU, corrected to unused command number.
+
+Signed-off-by: yang.wang <yang.wang@deepcomputing.io>
+---
+ include/linux/platform_data/cros_ec_commands.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/include/linux/platform_data/cros_ec_commands.h b/include/linux/platform_data/cros_ec_commands.h
+index 97cf575fbba1..00ac1d572b22 100644
+--- a/include/linux/platform_data/cros_ec_commands.h
++++ b/include/linux/platform_data/cros_ec_commands.h
+@@ -1708,10 +1708,10 @@ struct ec_params_flash_select {
+ 
+ /*****************************************************************************/
+ /* Get touch board HW version */
+-#define EC_CMD_GET_TOUCHPAD_VERSION 0x001A
++#define EC_CMD_GET_TOUCHPAD_VERSION 0x001D
+ 
+ /* Get audio board HW version */
+-#define EC_CMD_GET_AUDIO_EXP_VERSION 0x001B
++#define EC_CMD_GET_AUDIO_EXP_VERSION 0x001E
+ 
+ /*****************************************************************************/
+ /* PWM commands */
+-- 
+2.47.0
+

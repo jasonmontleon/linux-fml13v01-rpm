@@ -1,0 +1,25 @@
+From 59b8dd295a2ec4572b13dce0b74771be52c46dfa Mon Sep 17 00:00:00 2001
+From: Jason Montleon <jmontleo@redhat.com>
+Date: Wed, 12 Feb 2025 15:24:15 -0500
+Subject: [PATCH 208/210] add missing bool type
+
+---
+ include/uapi/drm/vs_drm.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/include/uapi/drm/vs_drm.h b/include/uapi/drm/vs_drm.h
+index a66458beecf7..1c980c47536d 100644
+--- a/include/uapi/drm/vs_drm.h
++++ b/include/uapi/drm/vs_drm.h
+@@ -8,6 +8,8 @@
+ 
+ #include "drm.h"
+ 
++typedef _Bool                   bool;
++
+ enum drm_vs_degamma_mode {
+     VS_DEGAMMA_DISABLE = 0,
+     VS_DEGAMMA_BT709 = 1,
+-- 
+2.47.0
+

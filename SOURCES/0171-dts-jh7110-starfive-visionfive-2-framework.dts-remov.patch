@@ -1,0 +1,27 @@
+From fee7d75818dc054a7d7305db1ae2d624670a53a4 Mon Sep 17 00:00:00 2001
+From: "yang.wang" <yang.wang@deepcomputing.io>
+Date: Thu, 19 Sep 2024 15:58:06 +0800
+Subject: [PATCH 171/210] dts: jh7110-starfive-visionfive-2-framework.dts
+ remove interrupts configs.
+
+Signed-off-by: yang.wang <yang.wang@deepcomputing.io>
+---
+ .../dts/starfive/jh7110-starfive-visionfive-2-framework.dts     | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+index 83793ccadb16..9519536552c9 100755
+--- a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
++++ b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+@@ -517,8 +517,6 @@ touchpad: hid@2c {
+ 		reg = <0x2c>;
+ 		hid-descr-addr = <0x0020>;
+ 		post-power-on-delay-ms = <200>;
+-		interrupt-parent = <&sysgpio>;
+-		interrupts = <30>;
+ 		irq-gpio = <&sysgpio 30 0>;
+ 		status = "okay";
+ 	};
+-- 
+2.47.0
+

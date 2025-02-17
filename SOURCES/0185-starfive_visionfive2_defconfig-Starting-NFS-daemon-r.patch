@@ -1,0 +1,26 @@
+From 2e521c308a320312e8fa080db6a9c5ecaea27cd4 Mon Sep 17 00:00:00 2001
+From: "yang.wang" <yang.wang@deepcomputing.io>
+Date: Thu, 31 Oct 2024 09:45:46 +0800
+Subject: [PATCH 185/210] starfive_visionfive2_defconfig: Starting NFS daemon:
+ rpc.nfsd: Unable to access /proc/fs/nfsd errno 2 (No such file or directory).
+
+Signed-off-by: yang.wang <yang.wang@deepcomputing.io>
+---
+ arch/riscv/configs/starfive_visionfive2_defconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/riscv/configs/starfive_visionfive2_defconfig b/arch/riscv/configs/starfive_visionfive2_defconfig
+index 0d201e5301f3..65a611b4b826 100644
+--- a/arch/riscv/configs/starfive_visionfive2_defconfig
++++ b/arch/riscv/configs/starfive_visionfive2_defconfig
+@@ -410,6 +410,7 @@ CONFIG_NFS_V4=y
+ CONFIG_NFS_V4_1=y
+ CONFIG_NFS_V4_2=y
+ CONFIG_ROOT_NFS=y
++CONFIG_NFSD=y
+ CONFIG_CIFS=m
+ # CONFIG_CIFS_STATS2 is not set
+ CONFIG_CIFS_UPCALL=y
+-- 
+2.47.0
+

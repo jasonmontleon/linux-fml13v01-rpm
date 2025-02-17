@@ -1,0 +1,98 @@
+From 91969aa29ddf941a1a6a7721d59118c9e938d007 Mon Sep 17 00:00:00 2001
+From: "yang.wang" <yang.wang@deepcomputing.io>
+Date: Fri, 13 Sep 2024 09:46:29 +0800
+Subject: [PATCH 168/210] dts: add framework EC SPI interface.
+
+Signed-off-by: yang.wang <yang.wang@deepcomputing.io>
+---
+ ...jh7110-starfive-visionfive-2-framework.dts | 63 +++++++++++++++++++
+ 1 file changed, 63 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+index 9cbed9c5a82d..83793ccadb16 100755
+--- a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
++++ b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+@@ -671,6 +671,24 @@ spi_dev0: spi@0 {
+ 	};
+ };
+ 
++&spi1 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&spi1_pins>;
++	status = "okay";
++
++	fwos_ec: spi@1 {
++		compatible = "google,cros-ec-spi";
++		irq-gpio = <&sysgpio 25 0>;
++		pl022,interface = <0>;
++		pl022,com-mode = <1>;
++		spi-max-frequency = <8250000>;
++		reg = <0>;
++		google,fwos-ec-spi-pre-delay = <10>;
++		google,fwos-ec-spi-msg-delay = <30>;
++		status = "okay";
++	};
++};
++
+ &sysgpio {
+ 	i2c0_pins: i2c0-0 {
+ 		i2c-pins {
+@@ -948,6 +966,44 @@ GPOEN_ENABLE,
+ 		};
+ 	};
+ 
++	spi1_pins: spi1-0 {
++		mosi-pins {
++			pinmux = <GPIOMUX(39, GPOUT_SYS_SPI1_TXD,
++					      GPOEN_ENABLE,
++					      GPI_NONE)>;
++			bias-disable;
++			input-disable;
++			input-schmitt-disable;
++		};
++
++		miso-pins {
++			pinmux = <GPIOMUX(36, GPOUT_LOW,
++					      GPOEN_DISABLE,
++					      GPI_SYS_SPI1_RXD)>;
++			bias-pull-up;
++			input-enable;
++			input-schmitt-enable;
++		};
++
++		sck-pins {
++			pinmux = <GPIOMUX(58, GPOUT_SYS_SPI1_CLK,
++					      GPOEN_ENABLE,
++					      GPI_SYS_SPI1_CLK)>;
++			bias-disable;
++			input-disable;
++			input-schmitt-disable;
++		};
++
++		ss-pins {
++			pinmux = <GPIOMUX(57, GPOUT_SYS_SPI1_FSS,
++					      GPOEN_ENABLE,
++					      GPI_SYS_SPI1_FSS)>;
++			bias-disable;
++			input-disable;
++			input-schmitt-disable;
++		};
++	};
++
+ 	tdm_pins: tdm-0 {
+ 		tx-pins {
+ 			pinmux = <GPIOMUX(44, GPOUT_SYS_TDM_TXD,
+@@ -1304,3 +1360,10 @@ sndcodec1: codec {
+ 		};
+ 	};
+ };
++
++&fwos_ec {
++	keyboard-controller {
++		compatible = "google,cros-ec-keyb-switches";
++		status = "okay";
++	};
++};
+-- 
+2.47.0
+

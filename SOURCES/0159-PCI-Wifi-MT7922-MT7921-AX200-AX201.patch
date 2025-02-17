@@ -1,0 +1,53 @@
+From ae1a0854b7e98cc9b8a1b406f7e510c5c90ed6d7 Mon Sep 17 00:00:00 2001
+From: "yang.wang" <yang.wang@deepcomputing.io>
+Date: Tue, 3 Sep 2024 17:05:26 +0800
+Subject: [PATCH 159/210] PCI Wifi: MT7922 MT7921 AX200/AX201.
+
+Signed-off-by: yang.wang <yang.wang@deepcomputing.io>
+---
+ .../dts/starfive/jh7110-starfive-visionfive-2-framework.dts   | 4 ++--
+ arch/riscv/configs/starfive_visionfive2_defconfig             | 2 ++
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+index c41882f70bd5..b6c14cd0d0f0 100755
+--- a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
++++ b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+@@ -561,7 +561,7 @@ &pcie0 {
+ };
+ 
+ &pcie1 {
+-	perst-gpios = <&sysgpio 28 GPIO_ACTIVE_LOW>;
++	perst-gpios = <&sysgpio 21 GPIO_ACTIVE_LOW>;
+ 	phys = <&pciephy1>;
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pcie1_pins>;
+@@ -827,7 +827,7 @@ GPOEN_DISABLE,
+ 		};
+ 
+ 		wake-pins {
+-			pinmux = <GPIOMUX(21, GPOUT_LOW,
++			pinmux = <GPIOMUX(28, GPOUT_HIGH,
+ 					      GPOEN_DISABLE,
+ 					      GPI_NONE)>;
+ 			bias-pull-up;
+diff --git a/arch/riscv/configs/starfive_visionfive2_defconfig b/arch/riscv/configs/starfive_visionfive2_defconfig
+index 7e043788a76c..ac93c16c8166 100644
+--- a/arch/riscv/configs/starfive_visionfive2_defconfig
++++ b/arch/riscv/configs/starfive_visionfive2_defconfig
+@@ -155,10 +155,12 @@ CONFIG_MICROCHIP_PHY=y
+ CONFIG_MOTORCOMM_PHY=y
+ CONFIG_IPMS_CAN=y
+ CONFIG_USB_RTL8152=y
++CONFIG_IPW2100=y
+ CONFIG_IWLWIFI=y
+ CONFIG_IWLDVM=y
+ CONFIG_IWLMVM=y
+ CONFIG_HOSTAP=y
++CONFIG_MT7921E=y
+ # CONFIG_RTL_CARDS is not set
+ CONFIG_USB_WIFI_ECR6600U=y
+ CONFIG_AIC_WLAN_SUPPORT=y
+-- 
+2.47.0
+

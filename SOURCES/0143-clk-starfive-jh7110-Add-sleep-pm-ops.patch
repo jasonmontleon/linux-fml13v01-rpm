@@ -1,0 +1,226 @@
+From 6f799003515daa112c003fa7675ffd816b295fbf Mon Sep 17 00:00:00 2001
+From: Hal Feng <hal.feng@starfivetech.com>
+Date: Tue, 16 Apr 2024 14:41:24 +0800
+Subject: [PATCH 143/210] clk: starfive: jh7110: Add sleep pm ops
+
+Save and restore the clock registers in sleep pm ops.
+
+Signed-off-by: Xingyu Wu <xingyu.wu@starfivetech.com>
+Signed-off-by: Hal Feng <hal.feng@starfivetech.com>
+---
+ .../clk/starfive/clk-starfive-jh7110-sys.c    | 16 +++
+ drivers/clk/starfive/clk-starfive-jh71x0.c    | 98 +++++++++++++++++++
+ drivers/clk/starfive/clk-starfive-jh71x0.h    |  1 +
+ 3 files changed, 115 insertions(+)
+
+diff --git a/drivers/clk/starfive/clk-starfive-jh7110-sys.c b/drivers/clk/starfive/clk-starfive-jh7110-sys.c
+index 1f42faaaaf55..9c0204a449f5 100644
+--- a/drivers/clk/starfive/clk-starfive-jh7110-sys.c
++++ b/drivers/clk/starfive/clk-starfive-jh7110-sys.c
+@@ -411,6 +411,21 @@ static int jh7110_pll0_clk_notifier_cb(struct notifier_block *nb,
+ 	return notifier_from_errno(ret);
+ }
+ 
++static int jh7110_syscrg_suspend(struct device *dev)
++{
++	return clk_save_context();
++}
++
++static int jh7110_syscrg_resume(struct device *dev)
++{
++	clk_restore_context();
++	return 0;
++}
++
++static const struct dev_pm_ops jh7110_syscrg_pm_ops = {
++	LATE_SYSTEM_SLEEP_PM_OPS(jh7110_syscrg_suspend, jh7110_syscrg_resume)
++};
++
+ static int __init jh7110_syscrg_probe(struct platform_device *pdev)
+ {
+ 	struct jh71x0_clk_priv *priv;
+@@ -587,6 +602,7 @@ static struct platform_driver jh7110_syscrg_driver = {
+ 	.driver = {
+ 		.name = "clk-starfive-jh7110-sys",
+ 		.of_match_table = jh7110_syscrg_match,
++		.pm = pm_sleep_ptr(&jh7110_syscrg_pm_ops),
+ 		.suppress_bind_attrs = true,
+ 	},
+ };
+diff --git a/drivers/clk/starfive/clk-starfive-jh71x0.c b/drivers/clk/starfive/clk-starfive-jh71x0.c
+index 834945d84331..0a023cf226a4 100644
+--- a/drivers/clk/starfive/clk-starfive-jh71x0.c
++++ b/drivers/clk/starfive/clk-starfive-jh71x0.c
+@@ -236,11 +236,95 @@ static void jh71x0_clk_debug_init(struct clk_hw *hw, struct dentry *dentry)
+ #define jh71x0_clk_debug_init NULL
+ #endif
+ 
++#ifdef CONFIG_PM_SLEEP
++static int jh7110_clk_save_context(struct clk_hw *hw)
++{
++	struct jh71x0_clk *clk = jh71x0_clk_from(hw);
++	struct jh71x0_clk_priv *priv = jh71x0_priv_from(clk);
++
++	if (!clk || !priv)
++		return 0;
++
++	spin_lock(&priv->rmw_lock);
++	clk->saved_reg = jh71x0_clk_reg_get(clk);
++	spin_unlock(&priv->rmw_lock);
++
++	return 0;
++}
++
++static void jh7110_clk_gate_restore_context(struct clk_hw *hw)
++{
++	struct jh71x0_clk *clk = jh71x0_clk_from(hw);
++
++	if (!clk)
++		return;
++
++	jh71x0_clk_reg_rmw(clk, JH71X0_CLK_ENABLE, clk->saved_reg);
++}
++
++static void jh7110_clk_div_restore_context(struct clk_hw *hw)
++{
++	struct jh71x0_clk *clk = jh71x0_clk_from(hw);
++
++	if (!clk)
++		return;
++
++	jh71x0_clk_reg_rmw(clk, JH71X0_CLK_DIV_MASK, clk->saved_reg);
++}
++
++static void jh7110_clk_mux_restore_context(struct clk_hw *hw)
++{
++	struct jh71x0_clk *clk = jh71x0_clk_from(hw);
++
++	if (!clk)
++		return;
++
++	jh71x0_clk_reg_rmw(clk, JH71X0_CLK_MUX_MASK, clk->saved_reg);
++}
++
++static void jh7110_clk_inv_restore_context(struct clk_hw *hw)
++{
++	struct jh71x0_clk *clk = jh71x0_clk_from(hw);
++
++	if (!clk)
++		return;
++
++	jh71x0_clk_reg_rmw(clk, JH71X0_CLK_INVERT, clk->saved_reg);
++}
++
++static void jh7110_clk_gdiv_restore_context(struct clk_hw *hw)
++{
++	jh7110_clk_div_restore_context(hw);
++	jh7110_clk_gate_restore_context(hw);
++}
++
++static void jh7110_clk_gmux_restore_context(struct clk_hw *hw)
++{
++	jh7110_clk_mux_restore_context(hw);
++	jh7110_clk_gate_restore_context(hw);
++}
++
++static void jh7110_clk_mdiv_restore_context(struct clk_hw *hw)
++{
++	jh7110_clk_mux_restore_context(hw);
++	jh7110_clk_div_restore_context(hw);
++}
++
++static void jh7110_clk_gmd_restore_context(struct clk_hw *hw)
++{
++	jh7110_clk_mux_restore_context(hw);
++	jh7110_clk_div_restore_context(hw);
++	jh7110_clk_gate_restore_context(hw);
++}
++#endif
++
+ static const struct clk_ops jh71x0_clk_gate_ops = {
+ 	.enable = jh71x0_clk_enable,
+ 	.disable = jh71x0_clk_disable,
+ 	.is_enabled = jh71x0_clk_is_enabled,
+ 	.debug_init = jh71x0_clk_debug_init,
++	.save_context = pm_sleep_ptr(jh7110_clk_save_context),
++	.restore_context = pm_sleep_ptr(jh7110_clk_gate_restore_context),
+ };
+ 
+ static const struct clk_ops jh71x0_clk_div_ops = {
+@@ -248,6 +332,8 @@ static const struct clk_ops jh71x0_clk_div_ops = {
+ 	.determine_rate = jh71x0_clk_determine_rate,
+ 	.set_rate = jh71x0_clk_set_rate,
+ 	.debug_init = jh71x0_clk_debug_init,
++	.save_context = pm_sleep_ptr(jh7110_clk_save_context),
++	.restore_context = pm_sleep_ptr(jh7110_clk_div_restore_context),
+ };
+ 
+ static const struct clk_ops jh71x0_clk_fdiv_ops = {
+@@ -265,6 +351,8 @@ static const struct clk_ops jh71x0_clk_gdiv_ops = {
+ 	.determine_rate = jh71x0_clk_determine_rate,
+ 	.set_rate = jh71x0_clk_set_rate,
+ 	.debug_init = jh71x0_clk_debug_init,
++	.save_context = pm_sleep_ptr(jh7110_clk_save_context),
++	.restore_context = pm_sleep_ptr(jh7110_clk_gdiv_restore_context),
+ };
+ 
+ static const struct clk_ops jh71x0_clk_mux_ops = {
+@@ -272,6 +360,8 @@ static const struct clk_ops jh71x0_clk_mux_ops = {
+ 	.set_parent = jh71x0_clk_set_parent,
+ 	.get_parent = jh71x0_clk_get_parent,
+ 	.debug_init = jh71x0_clk_debug_init,
++	.save_context = pm_sleep_ptr(jh7110_clk_save_context),
++	.restore_context = pm_sleep_ptr(jh7110_clk_mux_restore_context),
+ };
+ 
+ static const struct clk_ops jh71x0_clk_gmux_ops = {
+@@ -282,6 +372,8 @@ static const struct clk_ops jh71x0_clk_gmux_ops = {
+ 	.set_parent = jh71x0_clk_set_parent,
+ 	.get_parent = jh71x0_clk_get_parent,
+ 	.debug_init = jh71x0_clk_debug_init,
++	.save_context = pm_sleep_ptr(jh7110_clk_save_context),
++	.restore_context = pm_sleep_ptr(jh7110_clk_gmux_restore_context),
+ };
+ 
+ static const struct clk_ops jh71x0_clk_mdiv_ops = {
+@@ -291,6 +383,8 @@ static const struct clk_ops jh71x0_clk_mdiv_ops = {
+ 	.set_parent = jh71x0_clk_set_parent,
+ 	.set_rate = jh71x0_clk_set_rate,
+ 	.debug_init = jh71x0_clk_debug_init,
++	.save_context = pm_sleep_ptr(jh7110_clk_save_context),
++	.restore_context = pm_sleep_ptr(jh7110_clk_mdiv_restore_context),
+ };
+ 
+ static const struct clk_ops jh71x0_clk_gmd_ops = {
+@@ -303,12 +397,16 @@ static const struct clk_ops jh71x0_clk_gmd_ops = {
+ 	.set_parent = jh71x0_clk_set_parent,
+ 	.set_rate = jh71x0_clk_set_rate,
+ 	.debug_init = jh71x0_clk_debug_init,
++	.save_context = pm_sleep_ptr(jh7110_clk_save_context),
++	.restore_context = pm_sleep_ptr(jh7110_clk_gmd_restore_context),
+ };
+ 
+ static const struct clk_ops jh71x0_clk_inv_ops = {
+ 	.get_phase = jh71x0_clk_get_phase,
+ 	.set_phase = jh71x0_clk_set_phase,
+ 	.debug_init = jh71x0_clk_debug_init,
++	.save_context = pm_sleep_ptr(jh7110_clk_save_context),
++	.restore_context = pm_sleep_ptr(jh7110_clk_inv_restore_context),
+ };
+ 
+ const struct clk_ops *starfive_jh71x0_clk_ops(u32 max)
+diff --git a/drivers/clk/starfive/clk-starfive-jh71x0.h b/drivers/clk/starfive/clk-starfive-jh71x0.h
+index ebc55b9ef837..a560dfc68265 100644
+--- a/drivers/clk/starfive/clk-starfive-jh71x0.h
++++ b/drivers/clk/starfive/clk-starfive-jh71x0.h
+@@ -107,6 +107,7 @@ struct jh71x0_clk {
+ 	struct clk_hw hw;
+ 	unsigned int idx;
+ 	unsigned int max_div;
++	u32 saved_reg;
+ };
+ 
+ struct jh71x0_clk_priv {
+-- 
+2.47.0
+

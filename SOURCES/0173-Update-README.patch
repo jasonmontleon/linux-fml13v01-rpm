@@ -1,0 +1,25 @@
+From 06f16ac35dd1eb74c93c3a13bdfa2c8cfb4f6d43 Mon Sep 17 00:00:00 2001
+From: "sixue.cheng" <sixue.cheng@xcalibyte.com>
+Date: Wed, 25 Sep 2024 05:46:47 +0000
+Subject: [PATCH 173/210] Update README
+
+---
+ README | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/README b/README
+index 669ac7c32292..61c6ae1e5c74 100644
+--- a/README
++++ b/README
+@@ -8,7 +8,7 @@ Documentation/admin-guide/README.rst first.
+ In order to build the documentation, use ``make htmldocs`` or
+ ``make pdfdocs``.  The formatted documentation can also be read online at:
+ 
+-    https://www.kernel.org/doc/html/latest/
++    https://www.kernel.org/doc/html/latest/ 
+ 
+ There are various text files in the Documentation/ subdirectory,
+ several of them using the Restructured Text markup notation.
+-- 
+2.47.0
+

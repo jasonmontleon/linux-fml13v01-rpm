@@ -1,0 +1,31 @@
+From 7f017348a7c062f8079fcb86a24aa9c20ff472fa Mon Sep 17 00:00:00 2001
+From: Colin Ian King <colin.i.king@gmail.com>
+Date: Fri, 24 Nov 2023 16:41:23 +0000
+Subject: [PATCH 114/210] media: chips-media: wave5: Fix spelling mistake
+ "bufferur" -> "buffer"
+
+There is a spelling mistake in a dev_dbg message. Fix it.
+
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+---
+ drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
+index 8b1417ece96e..ef227af72348 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
+@@ -1281,7 +1281,7 @@ static int fill_ringbuffer(struct vpu_instance *inst)
+ 
+ 		/* Don't write buffers passed the last one while draining. */
+ 		if (v4l2_m2m_is_last_draining_src_buf(m2m_ctx, vbuf)) {
+-			dev_dbg(inst->dev->dev, "last src buffer written to the ring bufferur\n");
++			dev_dbg(inst->dev->dev, "last src buffer written to the ring buffer\n");
+ 			break;
+ 		}
+ 	}
+-- 
+2.47.0
+

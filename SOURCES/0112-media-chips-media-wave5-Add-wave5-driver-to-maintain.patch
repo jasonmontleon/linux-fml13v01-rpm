@@ -1,0 +1,37 @@
+From 9c6bd0f3a0e18bcd7059cbd03a6b969bbe79dab5 Mon Sep 17 00:00:00 2001
+From: Robert Beckett <bob.beckett@collabora.com>
+Date: Wed, 8 Nov 2023 20:29:26 +0100
+Subject: [PATCH 112/210] media: chips-media: wave5: Add wave5 driver to
+ maintainers file
+
+Add the Chips&Media wave5 encoder/decoder driver to the maintainers file
+
+Signed-off-by: Robert Beckett <bob.beckett@collabora.com>
+Signed-off-by: Dafna Hirschfeld <dafna.hirschfeld@collabora.com>
+Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
+---
+ MAINTAINERS | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 9b078d76b925..7f7825190e61 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -23264,6 +23264,14 @@ F:	include/linux/watchdog.h
+ F:	include/trace/events/watchdog.h
+ F:	include/uapi/linux/watchdog.h
+ 
++WAVE5 VPU CODEC DRIVER
++M:	Nas Chung <nas.chung@chipsnmedia.com>
++M:	Jackson Lee <jackson.lee@chipsnmedia.com>
++L:	linux-media@vger.kernel.org
++S:	Maintained
++F:	Documentation/devicetree/bindings/media/cnm,wave5.yaml
++F:	drivers/media/platform/chips-media/wave5/
++
+ WHISKEYCOVE PMIC GPIO DRIVER
+ M:	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+ L:	linux-gpio@vger.kernel.org
+-- 
+2.47.0
+

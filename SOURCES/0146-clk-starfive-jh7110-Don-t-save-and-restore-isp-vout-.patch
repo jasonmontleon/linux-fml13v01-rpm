@@ -1,0 +1,209 @@
+From 3de1adb2fda0df91959591343203fb0354fc4113 Mon Sep 17 00:00:00 2001
+From: Hal Feng <hal.feng@starfivetech.com>
+Date: Tue, 23 Apr 2024 17:18:53 +0800
+Subject: [PATCH 146/210] clk: starfive: jh7110: Don't save and restore isp /
+ vout clock registers in sleep pm
+
+Add reg_flags to identify clocks.
+Don't save and restore isp / vout clocks in sleep pm.
+
+Signed-off-by: Hal Feng <hal.feng@starfivetech.com>
+---
+ drivers/clk/starfive/clk-starfive-jh7110-aon.c  |  3 ++-
+ drivers/clk/starfive/clk-starfive-jh7110-isp.c  |  3 ++-
+ drivers/clk/starfive/clk-starfive-jh7110-stg.c  |  3 ++-
+ drivers/clk/starfive/clk-starfive-jh7110-sys.c  |  3 ++-
+ drivers/clk/starfive/clk-starfive-jh7110-vout.c |  3 ++-
+ drivers/clk/starfive/clk-starfive-jh71x0.c      | 15 +++++++++++++++
+ drivers/clk/starfive/clk-starfive-jh71x0.h      |  9 +++++++++
+ 7 files changed, 34 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/clk/starfive/clk-starfive-jh7110-aon.c b/drivers/clk/starfive/clk-starfive-jh7110-aon.c
+index 62954eb7b50a..ad898b9eeb9c 100644
+--- a/drivers/clk/starfive/clk-starfive-jh7110-aon.c
++++ b/drivers/clk/starfive/clk-starfive-jh7110-aon.c
+@@ -121,6 +121,7 @@ static int jh7110_aoncrg_probe(struct platform_device *pdev)
+ 		clk->hw.init = &init;
+ 		clk->idx = idx;
+ 		clk->max_div = max & JH71X0_CLK_DIV_MASK;
++		clk->reg_flags = JH7110_CLK_AON_FLAG;
+ 
+ 		ret = devm_clk_hw_register(&pdev->dev, &clk->hw);
+ 		if (ret)
+@@ -131,7 +132,7 @@ static int jh7110_aoncrg_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
+-	return jh7110_reset_controller_register(priv, "rst-aon", 1);
++	return jh7110_reset_controller_register(priv, "rst-aon", JH7110_CLK_AON_FLAG);
+ }
+ 
+ static const struct of_device_id jh7110_aoncrg_match[] = {
+diff --git a/drivers/clk/starfive/clk-starfive-jh7110-isp.c b/drivers/clk/starfive/clk-starfive-jh7110-isp.c
+index ce034ed28532..046a975aeac3 100644
+--- a/drivers/clk/starfive/clk-starfive-jh7110-isp.c
++++ b/drivers/clk/starfive/clk-starfive-jh7110-isp.c
+@@ -180,6 +180,7 @@ static int jh7110_ispcrg_probe(struct platform_device *pdev)
+ 		clk->hw.init = &init;
+ 		clk->idx = idx;
+ 		clk->max_div = max & JH71X0_CLK_DIV_MASK;
++		clk->reg_flags = JH7110_CLK_ISP_FLAG;
+ 
+ 		ret = devm_clk_hw_register(&pdev->dev, &clk->hw);
+ 		if (ret)
+@@ -190,7 +191,7 @@ static int jh7110_ispcrg_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_exit;
+ 
+-	ret = jh7110_reset_controller_register(priv, "rst-isp", 3);
++	ret = jh7110_reset_controller_register(priv, "rst-isp", JH7110_CLK_ISP_FLAG);
+ 	if (ret)
+ 		goto err_exit;
+ 
+diff --git a/drivers/clk/starfive/clk-starfive-jh7110-stg.c b/drivers/clk/starfive/clk-starfive-jh7110-stg.c
+index dafcb7190592..4b8918d8124a 100644
+--- a/drivers/clk/starfive/clk-starfive-jh7110-stg.c
++++ b/drivers/clk/starfive/clk-starfive-jh7110-stg.c
+@@ -139,6 +139,7 @@ static int jh7110_stgcrg_probe(struct platform_device *pdev)
+ 		clk->hw.init = &init;
+ 		clk->idx = idx;
+ 		clk->max_div = max & JH71X0_CLK_DIV_MASK;
++		clk->reg_flags = JH7110_CLK_STG_FLAG;
+ 
+ 		ret = devm_clk_hw_register(&pdev->dev, &clk->hw);
+ 		if (ret)
+@@ -149,7 +150,7 @@ static int jh7110_stgcrg_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
+-	return jh7110_reset_controller_register(priv, "rst-stg", 2);
++	return jh7110_reset_controller_register(priv, "rst-stg", JH7110_CLK_STG_FLAG);
+ }
+ 
+ static const struct of_device_id jh7110_stgcrg_match[] = {
+diff --git a/drivers/clk/starfive/clk-starfive-jh7110-sys.c b/drivers/clk/starfive/clk-starfive-jh7110-sys.c
+index 9c0204a449f5..27230f0450fd 100644
+--- a/drivers/clk/starfive/clk-starfive-jh7110-sys.c
++++ b/drivers/clk/starfive/clk-starfive-jh7110-sys.c
+@@ -535,6 +535,7 @@ static int __init jh7110_syscrg_probe(struct platform_device *pdev)
+ 		clk->hw.init = &init;
+ 		clk->idx = idx;
+ 		clk->max_div = max & JH71X0_CLK_DIV_MASK;
++		clk->reg_flags = JH7110_CLK_SYS_FLAG;
+ 
+ 		ret = devm_clk_hw_register(&pdev->dev, &clk->hw);
+ 		if (ret)
+@@ -545,7 +546,7 @@ static int __init jh7110_syscrg_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = jh7110_reset_controller_register(priv, "rst-sys", 0);
++	ret = jh7110_reset_controller_register(priv, "rst-sys", JH7110_CLK_SYS_FLAG);
+ 	if (ret)
+ 		return ret;
+ 
+diff --git a/drivers/clk/starfive/clk-starfive-jh7110-vout.c b/drivers/clk/starfive/clk-starfive-jh7110-vout.c
+index 36340ca42cc7..dc4cf8d80abb 100644
+--- a/drivers/clk/starfive/clk-starfive-jh7110-vout.c
++++ b/drivers/clk/starfive/clk-starfive-jh7110-vout.c
+@@ -187,6 +187,7 @@ static int jh7110_voutcrg_probe(struct platform_device *pdev)
+ 		clk->hw.init = &init;
+ 		clk->idx = idx;
+ 		clk->max_div = max & JH71X0_CLK_DIV_MASK;
++		clk->reg_flags = JH7110_CLK_VOUT_FLAG;
+ 
+ 		ret = devm_clk_hw_register(&pdev->dev, &clk->hw);
+ 		if (ret)
+@@ -197,7 +198,7 @@ static int jh7110_voutcrg_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_exit;
+ 
+-	ret = jh7110_reset_controller_register(priv, "rst-vo", 4);
++	ret = jh7110_reset_controller_register(priv, "rst-vo", JH7110_CLK_VOUT_FLAG);
+ 	if (ret)
+ 		goto err_exit;
+ 
+diff --git a/drivers/clk/starfive/clk-starfive-jh71x0.c b/drivers/clk/starfive/clk-starfive-jh71x0.c
+index 0a023cf226a4..8fe1f06c7e7f 100644
+--- a/drivers/clk/starfive/clk-starfive-jh71x0.c
++++ b/drivers/clk/starfive/clk-starfive-jh71x0.c
+@@ -245,6 +245,9 @@ static int jh7110_clk_save_context(struct clk_hw *hw)
+ 	if (!clk || !priv)
+ 		return 0;
+ 
++	if (clk->reg_flags == JH7110_CLK_ISP_FLAG || clk->reg_flags == JH7110_CLK_VOUT_FLAG)
++		return 0;
++
+ 	spin_lock(&priv->rmw_lock);
+ 	clk->saved_reg = jh71x0_clk_reg_get(clk);
+ 	spin_unlock(&priv->rmw_lock);
+@@ -259,6 +262,9 @@ static void jh7110_clk_gate_restore_context(struct clk_hw *hw)
+ 	if (!clk)
+ 		return;
+ 
++	if (clk->reg_flags == JH7110_CLK_ISP_FLAG || clk->reg_flags == JH7110_CLK_VOUT_FLAG)
++		return;
++
+ 	jh71x0_clk_reg_rmw(clk, JH71X0_CLK_ENABLE, clk->saved_reg);
+ }
+ 
+@@ -269,6 +275,9 @@ static void jh7110_clk_div_restore_context(struct clk_hw *hw)
+ 	if (!clk)
+ 		return;
+ 
++	if (clk->reg_flags == JH7110_CLK_ISP_FLAG || clk->reg_flags == JH7110_CLK_VOUT_FLAG)
++		return;
++
+ 	jh71x0_clk_reg_rmw(clk, JH71X0_CLK_DIV_MASK, clk->saved_reg);
+ }
+ 
+@@ -279,6 +288,9 @@ static void jh7110_clk_mux_restore_context(struct clk_hw *hw)
+ 	if (!clk)
+ 		return;
+ 
++	if (clk->reg_flags == JH7110_CLK_ISP_FLAG || clk->reg_flags == JH7110_CLK_VOUT_FLAG)
++		return;
++
+ 	jh71x0_clk_reg_rmw(clk, JH71X0_CLK_MUX_MASK, clk->saved_reg);
+ }
+ 
+@@ -289,6 +301,9 @@ static void jh7110_clk_inv_restore_context(struct clk_hw *hw)
+ 	if (!clk)
+ 		return;
+ 
++	if (clk->reg_flags == JH7110_CLK_ISP_FLAG || clk->reg_flags == JH7110_CLK_VOUT_FLAG)
++		return;
++
+ 	jh71x0_clk_reg_rmw(clk, JH71X0_CLK_INVERT, clk->saved_reg);
+ }
+ 
+diff --git a/drivers/clk/starfive/clk-starfive-jh71x0.h b/drivers/clk/starfive/clk-starfive-jh71x0.h
+index a560dfc68265..842ffbbb6e05 100644
+--- a/drivers/clk/starfive/clk-starfive-jh71x0.h
++++ b/drivers/clk/starfive/clk-starfive-jh71x0.h
+@@ -7,6 +7,14 @@
+ #include <linux/device.h>
+ #include <linux/spinlock.h>
+ 
++enum JH7110_CLOCK_FLAGS {
++	JH7110_CLK_SYS_FLAG = 0,
++	JH7110_CLK_AON_FLAG,
++	JH7110_CLK_STG_FLAG,
++	JH7110_CLK_ISP_FLAG,
++	JH7110_CLK_VOUT_FLAG,
++};
++
+ /* register fields */
+ #define JH71X0_CLK_ENABLE	BIT(31)
+ #define JH71X0_CLK_INVERT	BIT(30)
+@@ -107,6 +115,7 @@ struct jh71x0_clk {
+ 	struct clk_hw hw;
+ 	unsigned int idx;
+ 	unsigned int max_div;
++	unsigned int reg_flags;
+ 	u32 saved_reg;
+ };
+ 
+-- 
+2.47.0
+

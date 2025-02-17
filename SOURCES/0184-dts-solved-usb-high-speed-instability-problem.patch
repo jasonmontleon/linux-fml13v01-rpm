@@ -1,0 +1,53 @@
+From ca788b807c7ddb9ca12fc423722dfc0fbfa23865 Mon Sep 17 00:00:00 2001
+From: "yang.wang" <yang.wang@deepcomputing.io>
+Date: Wed, 30 Oct 2024 10:57:23 +0800
+Subject: [PATCH 184/210] dts: solved usb high speed instability problem.
+
+Signed-off-by: yang.wang <yang.wang@deepcomputing.io>
+---
+ .../jh7110-starfive-visionfive-2-framework.dts         |  3 ---
+ arch/riscv/boot/dts/starfive/jh7110.dtsi               | 10 ++++++----
+ 2 files changed, 6 insertions(+), 7 deletions(-)
+
+diff --git a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+index 37832034467b..aedd0dda74cd 100755
+--- a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
++++ b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+@@ -414,10 +414,7 @@ &mmc1 {
+ };
+ 
+ &pcie0 {
+-	perst-gpios = <&sysgpio 26 GPIO_ACTIVE_LOW>;
+ 	phys = <&pciephy0>;
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&pcie0_pins>;
+ 	status = "disabled";
+ };
+ 
+diff --git a/arch/riscv/boot/dts/starfive/jh7110.dtsi b/arch/riscv/boot/dts/starfive/jh7110.dtsi
+index d1e286b2d56f..d93ded2ffd26 100644
+--- a/arch/riscv/boot/dts/starfive/jh7110.dtsi
++++ b/arch/riscv/boot/dts/starfive/jh7110.dtsi
+@@ -676,13 +676,15 @@ usb0: usb@10100000 {
+ 				 <&stgcrg JH7110_STGCLK_USB0_STB>,
+ 				 <&stgcrg JH7110_STGCLK_USB0_APB>,
+ 				 <&stgcrg JH7110_STGCLK_USB0_AXI>,
+-				 <&stgcrg JH7110_STGCLK_USB0_UTMI_APB>;
+-			clock-names = "lpm", "stb", "apb", "axi", "utmi_apb";
++				 <&stgcrg JH7110_STGCLK_USB0_UTMI_APB>,
++				 <&stgcrg JH7110_STGCLK_PCIE0_APB>;
++			clock-names = "lpm", "stb", "apb", "axi", "utmi_apb", "phy";
+ 			resets = <&stgcrg JH7110_STGRST_USB0_PWRUP>,
+ 				 <&stgcrg JH7110_STGRST_USB0_APB>,
+ 				 <&stgcrg JH7110_STGRST_USB0_AXI>,
+-				 <&stgcrg JH7110_STGRST_USB0_UTMI_APB>;
+-			reset-names = "pwrup", "apb", "axi", "utmi_apb";
++				 <&stgcrg JH7110_STGRST_USB0_UTMI_APB>,
++				 <&stgcrg JH7110_STGRST_PCIE0_APB>;
++			reset-names = "pwrup", "apb", "axi", "utmi_apb", "phy";
+ 			status = "disabled";
+ 
+ 			usb_cdns3: usb@0 {
+-- 
+2.47.0
+

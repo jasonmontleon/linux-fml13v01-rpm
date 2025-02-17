@@ -1,0 +1,33 @@
+From 032a1cb8ecc97a3a8e50e688e2262288990df8b4 Mon Sep 17 00:00:00 2001
+From: "yang.wang" <yang.wang@deepcomputing.io>
+Date: Thu, 5 Dec 2024 17:40:51 +0800
+Subject: [PATCH 192/210] device-tree:
+ jh7110-starfive-visionfive-2-framework.dts
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Adjust “google,cros-ec-spi-pre-delay” to 10us.
+When the delay parameter is greater than 10us, the spi-pl022 driver spi_transfer_delay_exec function will call usleep_range, and the delay time error will be larger, which will lead to EC communication failure.
+
+Signed-off-by: yang.wang <yang.wang@deepcomputing.io>
+---
+ .../dts/starfive/jh7110-starfive-visionfive-2-framework.dts     | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+index aedd0dda74cd..4012d0e550b4 100755
+--- a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
++++ b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+@@ -486,7 +486,7 @@ fwos_ec: spi@1 {
+ 		pl022,com-mode = <1>;
+ 		spi-max-frequency = <1000000>;//<8250000>;
+ 		reg = <0>;
+-		google,cros-ec-spi-pre-delay = <30>;
++		google,cros-ec-spi-pre-delay = <10>;
+ 		google,cros-ec-spi-msg-delay = <10>;
+ 		status = "okay";
+ 	};
+-- 
+2.47.0
+

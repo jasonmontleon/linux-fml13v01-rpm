@@ -1,0 +1,73 @@
+From 1da8ad9ed73d2d9559c9d5ce8272bc1aead22a23 Mon Sep 17 00:00:00 2001
+From: "yang.wang" <yang.wang@deepcomputing.io>
+Date: Tue, 24 Sep 2024 18:35:39 +0800
+Subject: [PATCH 172/210] add gpio_keys config.
+
+Signed-off-by: yang.wang <yang.wang@deepcomputing.io>
+---
+ ...jh7110-starfive-visionfive-2-framework.dts | 23 +++++++++++++++++++
+ .../configs/starfive_visionfive2_defconfig    |  3 +--
+ 2 files changed, 24 insertions(+), 2 deletions(-)
+
+diff --git a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+index 9519536552c9..d97d07289fc4 100755
+--- a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
++++ b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+@@ -9,6 +9,7 @@
+ #include "jh7110-pinfunc.h"
+ #include <dt-bindings/leds/common.h>
+ #include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/input/linux-event-codes.h>
+ 
+ / {
+ 	model = "StarFive VisionFive 2 framework";
+@@ -211,6 +212,28 @@ clk_ext_camera: clk-ext-camera {
+ //		#clock-cells = <0>;
+ //		clock-frequency = <24576000>;
+ //	};
++
++	gpio_keys: gpio-keys {
++		status = "okay";
++		compatible = "gpio-keys";
++		autorepeat;
++
++		camera-en-sw {
++			label = "camera en switch";
++			debounce-interval = <10>;
++			linux,input-type = <EV_SW>;
++			linux,code = <SW_CAMERA_LENS_COVER>;
++			gpios = <&sysgpio 56 GPIO_ACTIVE_LOW>;
++		};
++
++		mic-mute-sw {
++			label = "mic mute switch";
++			debounce-interval = <10>;
++			linux,input-type = <EV_SW>;
++			linux,code = <SW_MUTE_DEVICE>;
++			gpios = <&sysgpio 59 GPIO_ACTIVE_LOW>;
++		};
++	};
+ };
+ 
+ &dvp_clk {
+diff --git a/arch/riscv/configs/starfive_visionfive2_defconfig b/arch/riscv/configs/starfive_visionfive2_defconfig
+index 185c2a3613f9..81b675ea3dd3 100644
+--- a/arch/riscv/configs/starfive_visionfive2_defconfig
++++ b/arch/riscv/configs/starfive_visionfive2_defconfig
+@@ -176,12 +176,11 @@ CONFIG_AIC_WLAN_SUPPORT=y
+ CONFIG_AIC8800_WLAN_SUPPORT=m
+ CONFIG_AIC_LOADFW_SUPPORT=m
+ CONFIG_INPUT_EVDEV=y
+-# CONFIG_INPUT_KEYBOARD is not set
++CONFIG_KEYBOARD_GPIO=y
+ # CONFIG_INPUT_MOUSE is not set
+ CONFIG_INPUT_TOUCHSCREEN=y
+ CONFIG_TOUCHSCREEN_GOODIX=y
+ CONFIG_TOUCHSCREEN_TINKER_FT5406=y
+-CONFIG_SERIO_LIBPS2=y
+ CONFIG_SERIAL_8250=y
+ CONFIG_SERIAL_8250_CONSOLE=y
+ CONFIG_SERIAL_8250_NR_UARTS=6
+-- 
+2.47.0
+

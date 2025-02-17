@@ -1,0 +1,28 @@
+From ab9ab8f709374433d8b5176aec77913d63518c57 Mon Sep 17 00:00:00 2001
+From: Changhuang Liang <changhuang.liang@starfivetech.com>
+Date: Mon, 6 Feb 2023 11:37:14 +0800
+Subject: [PATCH 151/210] riscv: dts: starfive: Add goodix gt911 touchscreen
+ support
+
+Add goodix gt911 touchscreen support.
+
+Signed-off-by: Changhuang Liang <changhuang.liang@starfivetech.com>
+---
+ arch/riscv/boot/dts/starfive/jh7110.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/riscv/boot/dts/starfive/jh7110.dtsi b/arch/riscv/boot/dts/starfive/jh7110.dtsi
+index ef3dfe05ba51..3e6786bdc414 100644
+--- a/arch/riscv/boot/dts/starfive/jh7110.dtsi
++++ b/arch/riscv/boot/dts/starfive/jh7110.dtsi
+@@ -8,6 +8,7 @@
+ #include <dt-bindings/clock/starfive,jh7110-crg.h>
+ #include <dt-bindings/power/starfive,jh7110-pmu.h>
+ #include <dt-bindings/reset/starfive,jh7110-crg.h>
++#include <dt-bindings/interrupt-controller/irq.h>
+ #include <dt-bindings/thermal/thermal.h>
+ 
+ / {
+-- 
+2.47.0
+

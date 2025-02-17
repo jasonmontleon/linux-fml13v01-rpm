@@ -1,0 +1,39 @@
+From c6dc896a2db178cc6dd593309492a4a9a0c4018a Mon Sep 17 00:00:00 2001
+From: "yang.wang" <yang.wang@deepcomputing.io>
+Date: Wed, 13 Nov 2024 18:24:45 +0800
+Subject: [PATCH 189/210] defconfig: starfive_visionfive2_defconfig:
+ CONFIG_ZRAM
+
+Signed-off-by: yang.wang <yang.wang@deepcomputing.io>
+---
+ arch/riscv/configs/starfive_visionfive2_defconfig | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/arch/riscv/configs/starfive_visionfive2_defconfig b/arch/riscv/configs/starfive_visionfive2_defconfig
+index 45e13b01cad6..e59bdaeac172 100644
+--- a/arch/riscv/configs/starfive_visionfive2_defconfig
++++ b/arch/riscv/configs/starfive_visionfive2_defconfig
+@@ -110,6 +110,7 @@ CONFIG_MTD_CFI=y
+ CONFIG_MTD_CFI_ADV_OPTIONS=y
+ CONFIG_MTD_SPI_NOR=y
+ CONFIG_OF_CONFIGFS=y
++CONFIG_ZRAM=y
+ CONFIG_BLK_DEV_LOOP=y
+ CONFIG_VIRTIO_BLK=y
+ CONFIG_BLK_DEV_NVME=y
+@@ -424,6 +425,12 @@ CONFIG_NLS_ISO8859_1=y
+ CONFIG_INIT_STACK_NONE=y
+ CONFIG_CRYPTO_USER=y
+ CONFIG_CRYPTO_TEST=m
++CONFIG_CRYPTO_DEFLATE=y
++CONFIG_CRYPTO_LZO=y
++CONFIG_CRYPTO_842=y
++CONFIG_CRYPTO_LZ4=y
++CONFIG_CRYPTO_LZ4HC=y
++CONFIG_CRYPTO_ZSTD=y
+ CONFIG_CRYPTO_USER_API_HASH=y
+ CONFIG_CRYPTO_USER_API_SKCIPHER=y
+ CONFIG_CRYPTO_USER_API_RNG=y
+-- 
+2.47.0
+

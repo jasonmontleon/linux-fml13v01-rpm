@@ -1,0 +1,41 @@
+From 665f005d5554597fa39c0389cb9d44c02c57eeef Mon Sep 17 00:00:00 2001
+From: "yang.wang" <yang.wang@deepcomputing.io>
+Date: Wed, 4 Sep 2024 14:32:12 +0800
+Subject: [PATCH 160/210] USB: Fix USB3.0 not turned on.
+
+Signed-off-by: yang.wang <yang.wang@deepcomputing.io>
+---
+ .../jh7110-starfive-visionfive-2-framework.dts         | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+index b6c14cd0d0f0..3c83a03da5ae 100755
+--- a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
++++ b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+@@ -568,6 +568,11 @@ &pcie1 {
+ 	status = "okay";
+ };
+ 
++&pciephy0 {
++	starfive,sys-syscon = <&sys_syscon 0x18>;
++	starfive,stg-syscon = <&stg_syscon 0x148 0x1f4>;
++};
++
+ &pwm {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pwm_pins>;
+@@ -1015,6 +1020,11 @@ &usb0 {
+ 	status = "okay";
+ };
+ 
++&usb_cdns3 {
++	phys = <&usbphy0>, <&pciephy0>;
++	phy-names = "cdns3,usb2-phy", "cdns3,usb3-phy";
++};
++
+ &U74_1 {
+ 	cpu-supply = <&vdd_cpu>;
+ };
+-- 
+2.47.0
+

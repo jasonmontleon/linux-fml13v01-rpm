@@ -1,0 +1,32 @@
+--- a/include/uapi/linux/jh7110-isp.h	2025-02-10 09:22:49.903826284 -0500
++++ b/include/uapi/linux/jh7110-isp.h	2025-02-10 09:23:51.826522130 -0500
+@@ -331,11 +331,11 @@
+ 
+ struct jh7110_isp_outss_setting {
+ 	__u8 which;
+-	__u16 stride;	// Output Image Stride Register, 8-byte(64bit) granularity.
+-	__u8 hsm;		// horizontal scale mode
+-	__u32 hsf;		// horizontal scale factor (time 4096)
+-	__u8 vsm;		// vertical scale mode
+-	__u32 vsf;		// vertical scale factor (time 4096)
++	__u16 stride;	/* Output Image Stride Register, 8-byte(64bit) granularity. */
++	__u8 hsm;		/* horizontal scale mode */
++	__u32 hsf;		/* horizontal scale factor (time 4096) */
++	__u8 vsm;		/* vertical scale mode */
++	__u32 vsf;		/* vertical scale factor (time 4096) */
+ };
+ 
+ struct jh7110_isp_sc_buffer {
+diff --git a/include/uapi/drm/vs_drm.h b/include/uapi/drm/vs_drm.h
+index a66458beecf7..1c980c47536d 100644
+--- a/include/uapi/drm/vs_drm.h
++++ b/include/uapi/drm/vs_drm.h
+@@ -8,6 +8,8 @@
+ 
+ #include "drm.h"
+ 
++typedef _Bool                   bool;
++
+ enum drm_vs_degamma_mode {
+     VS_DEGAMMA_DISABLE = 0,
+     VS_DEGAMMA_BT709 = 1,

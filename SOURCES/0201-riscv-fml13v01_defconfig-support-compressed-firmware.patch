@@ -1,0 +1,29 @@
+From cb578d7ba485a63059d64d4fb4b1fd66ebd14696 Mon Sep 17 00:00:00 2001
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Date: Mon, 6 Jan 2025 13:34:05 +0100
+Subject: [PATCH 201/210] riscv: fml13v01_defconfig: support compressed
+ firmware
+
+Ubuntu compresses firmware with ZSTD.
+
+Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+---
+ arch/riscv/configs/fml13v01_defconfig | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/arch/riscv/configs/fml13v01_defconfig b/arch/riscv/configs/fml13v01_defconfig
+index c6d89a2bdc9e..34ed4ab49ffd 100644
+--- a/arch/riscv/configs/fml13v01_defconfig
++++ b/arch/riscv/configs/fml13v01_defconfig
+@@ -113,6 +113,8 @@ CONFIG_PCI=y
+ CONFIG_PCIE_STARFIVE_HOST=y
+ CONFIG_DEVTMPFS=y
+ CONFIG_DEVTMPFS_MOUNT=y
++CONFIG_FW_LOADER_COMPRESS=y
++CONFIG_FW_LOADER_COMPRESS_ZSTD=y
+ CONFIG_MTD=y
+ CONFIG_MTD_BLOCK=y
+ CONFIG_MTD_CFI=y
+-- 
+2.47.0
+

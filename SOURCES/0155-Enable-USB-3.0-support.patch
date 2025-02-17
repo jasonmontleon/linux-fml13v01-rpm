@@ -1,0 +1,102 @@
+From 26f35218d47381c567eed06af708e6488bfdf243 Mon Sep 17 00:00:00 2001
+From: "yang.wang" <yang.wang@deepcomputing.io>
+Date: Wed, 14 Aug 2024 09:54:35 +0800
+Subject: [PATCH 155/210] Enable USB 3.0 support.
+
+Signed-off-by: yang.wang <yang.wang@deepcomputing.io>
+---
+ .../jh7110-starfive-visionfive-2-framework.dts  |  4 ++--
+ arch/riscv/boot/dts/starfive/jh7110.dtsi        |  6 ++++++
+ drivers/usb/cdns3/cdns3-starfive.c              | 17 +++++++++++++++++
+ 3 files changed, 25 insertions(+), 2 deletions(-)
+
+diff --git a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+index f764b76eac5a..1a73f9ad2049 100755
+--- a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
++++ b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+@@ -502,7 +502,7 @@ &pcie0 {
+ 	phys = <&pciephy0>;
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pcie0_pins>;
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &pcie1 {
+@@ -959,7 +959,7 @@ &uart0 {
+ };
+ 
+ &usb0 {
+-	dr_mode = "peripheral";
++	dr_mode = "host"; /*host or peripheral*/
+ 	status = "okay";
+ };
+ 
+diff --git a/arch/riscv/boot/dts/starfive/jh7110.dtsi b/arch/riscv/boot/dts/starfive/jh7110.dtsi
+index 3e6786bdc414..d1e286b2d56f 100644
+--- a/arch/riscv/boot/dts/starfive/jh7110.dtsi
++++ b/arch/riscv/boot/dts/starfive/jh7110.dtsi
+@@ -387,6 +387,11 @@ soc {
+ 		#size-cells = <2>;
+ 		ranges;
+ 
++		sys_iomux: sys_iomux@13040000 {
++			compatible = "syscon";
++			reg = <0x0 0x13040000 0x0 0x1000>;
++		};
++
+ 		clint: timer@2000000 {
+ 			compatible = "starfive,jh7110-clint", "sifive,clint0";
+ 			reg = <0x0 0x2000000 0x0 0x10000>;
+@@ -666,6 +671,7 @@ usb0: usb@10100000 {
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+ 			starfive,stg-syscon = <&stg_syscon 0x4>;
++			starfive,sys-iomux = <&sys_iomux 0x80>;
+ 			clocks = <&stgcrg JH7110_STGCLK_USB0_LPM>,
+ 				 <&stgcrg JH7110_STGCLK_USB0_STB>,
+ 				 <&stgcrg JH7110_STGCLK_USB0_APB>,
+diff --git a/drivers/usb/cdns3/cdns3-starfive.c b/drivers/usb/cdns3/cdns3-starfive.c
+index a7265b86e427..60ec029a90f1 100644
+--- a/drivers/usb/cdns3/cdns3-starfive.c
++++ b/drivers/usb/cdns3/cdns3-starfive.c
+@@ -32,12 +32,17 @@
+ #define USB_PLL_EN			BIT(22)
+ #define USB_REFCLK_MODE			BIT(23)
+ 
++#define USB_OVER_CURRENT_MASK   0x007f0000 //0XFF0000
++#define USB_OVER_CURRENT        0x00010000 //0X7F00000
++
+ struct cdns_starfive {
+ 	struct device *dev;
+ 	struct regmap *stg_syscon;
++	struct regmap *sys_iomux;
+ 	struct reset_control *resets;
+ 	struct clk_bulk_data *clks;
+ 	int num_clks;
++	u32 iomux_offset;
+ 	u32 stg_usb_mode;
+ };
+ 
+@@ -137,6 +142,18 @@ static int cdns_starfive_probe(struct platform_device *pdev)
+ 		return dev_err_probe(data->dev, PTR_ERR(data->resets),
+ 				     "Failed to get resets");
+ 
++	// enable USB3.0: 0x13040080[22:16] = 7'h1
++	data->sys_iomux =
++		syscon_regmap_lookup_by_phandle_args(pdev->dev.of_node,
++							"starfive,sys-iomux", 1, &args);
++	if (IS_ERR(data->sys_iomux)) {
++		return dev_err_probe(dev, PTR_ERR(data->sys_iomux),
++				     "Failed to parse starfive,sys-iomux\n");
++	}
++	data->iomux_offset = args;
++	regmap_update_bits(data->sys_iomux, data->iomux_offset,
++			USB_OVER_CURRENT_MASK, USB_OVER_CURRENT);
++
+ 	cdns_mode_init(pdev, data);
+ 	ret = cdns_clk_rst_init(data);
+ 	if (ret)
+-- 
+2.47.0
+

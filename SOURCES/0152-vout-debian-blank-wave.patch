@@ -1,0 +1,164 @@
+From f3c7767dd96b5f6265047d30c927c812c3697533 Mon Sep 17 00:00:00 2001
+From: "keith.zhao" <keith.zhao@starfivetech.com>
+Date: Sun, 28 Apr 2024 16:12:25 +0800
+Subject: [PATCH 152/210] vout:debian: blank wave
+
+open menu 'setting', there is some blank waves in the diag
+
+Signed-off-by: keith.zhao <keith.zhao@starfivetech.com>
+---
+ drivers/gpu/drm/verisilicon/Kconfig    | 10 ++++++++
+ drivers/gpu/drm/verisilicon/vs_drv.c   | 32 +++++++++++++++++++++++++-
+ drivers/gpu/drm/verisilicon/vs_plane.c | 18 +++++++++++++--
+ 3 files changed, 57 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/gpu/drm/verisilicon/Kconfig b/drivers/gpu/drm/verisilicon/Kconfig
+index 20bb67fbcadf..ad737f780401 100644
+--- a/drivers/gpu/drm/verisilicon/Kconfig
++++ b/drivers/gpu/drm/verisilicon/Kconfig
+@@ -7,12 +7,21 @@ config DRM_VERISILICON
+ 	select DRM_GEM_DMA_HELPER
+ 	select CMA
+ 	select DMA_CMA
++	select SOC_STARFIVE_EVB_VOUT
+ 	help
+ 	  Choose this option if you have a VeriSilicon soc chipset.
+ 	  This driver provides VeriSilicon kernel mode
+ 	  setting and buffer management. It does not
+ 	  provide 2D or 3D acceleration.
+ 
++config SOC_STARFIVE_EVB_VOUT
++	bool
++	default n
++
++config SOC_STARFIVE_VF2_VOUT
++	bool
++	default n
++
+ config VERISILICON_VIRTUAL_DISPLAY
+ 	bool "display content output to debugfs file"
+ 	depends on DRM_VERISILICON
+@@ -45,6 +54,7 @@ config STARFIVE_INNO_HDMI
+ 	  This selects support for Rockchip SoC specific extensions
+ 	  for the Innosilicon HDMI driver. If you want to enable
+ 	  HDMI on RK3036 based SoC, you should select this option.
++
+ config STARFIVE_DSI
+ 	bool "Starfive MIPI DSI Select"
+ 	depends on DRM_VERISILICON
+diff --git a/drivers/gpu/drm/verisilicon/vs_drv.c b/drivers/gpu/drm/verisilicon/vs_drv.c
+index 7c50b304008f..6e3362badee6 100644
+--- a/drivers/gpu/drm/verisilicon/vs_drv.c
++++ b/drivers/gpu/drm/verisilicon/vs_drv.c
+@@ -27,8 +27,11 @@
+ #endif
+ #include <linux/of_reserved_mem.h>
+ #include <drm/drm_aperture.h>
++
++#ifdef CONFIG_SOC_STARFIVE_EVB_VOUT
+ #include <drm/drm_gem_atomic_helper.h>
+ #include <drm/drm_gem_dma_helper.h>
++#endif
+ 
+ #include "vs_drv.h"
+ #include "vs_fb.h"
+@@ -54,6 +57,21 @@ extern struct platform_driver starfive_encoder_driver;
+ static bool has_iommu = true;
+ static struct platform_driver vs_drm_platform_driver;
+ 
++#ifdef CONFIG_SOC_STARFIVE_VF2_VOUT
++static const struct file_operations fops = {
++	.owner			= THIS_MODULE,
++	.open			= drm_open,
++	.release		= drm_release,
++	.unlocked_ioctl	= drm_ioctl,
++	.compat_ioctl	= drm_compat_ioctl,
++	.poll			= drm_poll,
++	.read			= drm_read,
++	.llseek			= noop_llseek,
++	.mmap			= drm_gem_mmap,
++};
++#endif
++
++#ifdef CONFIG_SOC_STARFIVE_EVB_VOUT
+ static int vs_drm_gem_dma_dumb_create(struct drm_file *file, struct drm_device *dev,
+ 			      struct drm_mode_create_dumb *args)
+ {
+@@ -66,6 +84,7 @@ static int vs_drm_gem_dma_dumb_create(struct drm_file *file, struct drm_device *
+ }
+ 
+ DEFINE_DRM_GEM_FOPS(vs_drm_fops);
++#endif
+ 
+ 
+ #ifdef CONFIG_DEBUG_FS
+@@ -131,12 +150,23 @@ static int vs_debugfs_init(struct drm_minor *minor)
+ static struct drm_driver vs_drm_driver = {
+ 	.driver_features	= DRIVER_MODESET | DRIVER_ATOMIC | DRIVER_GEM,
+ 
++#ifdef CONFIG_SOC_STARFIVE_VF2_VOUT
++	.lastclose		= drm_fb_helper_lastclose,
++	.gem_prime_import	= vs_gem_prime_import,
++	.gem_prime_import_sg_table = vs_gem_prime_import_sg_table,
++	.dumb_create		= vs_gem_dumb_create,
++	.fops			= &fops,
++#endif
++
+ #ifdef CONFIG_DEBUG_FS
+ 	.debugfs_init		= vs_debugfs_init,
+ #endif
+-	DRM_GEM_DMA_DRIVER_OPS_WITH_DUMB_CREATE(vs_drm_gem_dma_dumb_create),
+ 
++
++#ifdef CONFIG_SOC_STARFIVE_EVB_VOUT
++	DRM_GEM_DMA_DRIVER_OPS_WITH_DUMB_CREATE(vs_drm_gem_dma_dumb_create),
+ 	.fops			= &vs_drm_fops,
++#endif
+ 	.name			= DRV_NAME,
+ 	.desc			= DRV_DESC,
+ 	.date			= DRV_DATE,
+diff --git a/drivers/gpu/drm/verisilicon/vs_plane.c b/drivers/gpu/drm/verisilicon/vs_plane.c
+index 89de491aef58..24d70fe861b3 100644
+--- a/drivers/gpu/drm/verisilicon/vs_plane.c
++++ b/drivers/gpu/drm/verisilicon/vs_plane.c
+@@ -290,10 +290,17 @@ static void vs_plane_atomic_update(struct drm_plane *plane,
+ 	num_planes = vs_get_plane_number(fb);
+ 
+ 	for (i = 0; i < num_planes; i++) {
++#ifdef CONFIG_SOC_STARFIVE_EVB_VOUT
+ 		dma_addr_t dma_addr;
+-
+ 		dma_addr = drm_fb_dma_get_gem_addr(new_state->fb, new_state, i);
+ 		vs_plane->dma_addr[i] = dma_addr;
++#endif
++
++#ifdef CONFIG_SOC_STARFIVE_VF2_VOUT
++		struct vs_gem_object *vs_obj;
++		vs_obj = vs_fb_get_gem_obj(fb, i);
++		vs_plane->dma_addr[i] = vs_obj->iova + fb->offsets[i];
++#endif
+ 	}
+ 
+ 	plane_state->status.src = drm_plane_state_src(new_state);
+@@ -334,10 +341,17 @@ static void vs_cursor_plane_atomic_update(struct drm_plane *plane,
+ 	 num_planes = vs_get_plane_number(fb);
+ 
+ 	 for (i = 0; i < num_planes; i++) {
++#ifdef CONFIG_SOC_STARFIVE_EVB_VOUT
+ 		 dma_addr_t dma_addr;
+-
+ 		 dma_addr = drm_fb_dma_get_gem_addr(new_state->fb, new_state, i);
+ 		 vs_plane->dma_addr[i] = dma_addr;
++#endif
++
++#ifdef CONFIG_SOC_STARFIVE_VF2_VOUT
++		 struct vs_gem_object *vs_obj;
++		 vs_obj = vs_fb_get_gem_obj(fb, i);
++		 vs_plane->dma_addr[i] = vs_obj->iova + fb->offsets[i];
++#endif
+ 	 }
+ 
+ 	 plane_state->status.src = drm_plane_state_src(new_state);
+-- 
+2.47.0
+

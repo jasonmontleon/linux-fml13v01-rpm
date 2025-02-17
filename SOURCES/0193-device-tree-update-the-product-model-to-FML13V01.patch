@@ -1,0 +1,49 @@
+From 342a0beb61a0bf01af24e078b261a7c9cb1068fb Mon Sep 17 00:00:00 2001
+From: "yang.wang" <yang.wang@deepcomputing.io>
+Date: Fri, 3 Jan 2025 17:04:46 +0800
+Subject: [PATCH 193/210] device-tree:: update the product model to FML13V01.
+
+Signed-off-by: yang.wang <yang.wang@deepcomputing.io>
+---
+ arch/riscv/boot/dts/starfive/Makefile                         | 2 +-
+ ...ramework.dts => jh7110-starfive-visionfive-2-fml13v01.dts} | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+ rename arch/riscv/boot/dts/starfive/{jh7110-starfive-visionfive-2-framework.dts => jh7110-starfive-visionfive-2-fml13v01.dts} (99%)
+ mode change 100755 => 100644
+
+diff --git a/arch/riscv/boot/dts/starfive/Makefile b/arch/riscv/boot/dts/starfive/Makefile
+index a37f24d2ac7c..66d32f1eca68 100644
+--- a/arch/riscv/boot/dts/starfive/Makefile
++++ b/arch/riscv/boot/dts/starfive/Makefile
+@@ -15,7 +15,7 @@ dtb-$(CONFIG_ARCH_STARFIVE) += jh7110-starfive-visionfive-2-v1.3b.dtb	\
+ 						jh7110-starfive-visionfive-2-ac108.dtb	\
+ 						jh7110-starfive-visionfive-2-tdm.dtb	\
+ 						jh7110-starfive-visionfive-2-wm8960.dtb \
+-						jh7110-starfive-visionfive-2-framework.dtb
++						jh7110-starfive-visionfive-2-fml13v01.dtb
+ 
+ subdir-y += evb-overlay
+ dtb-$(CONFIG_ARCH_STARFIVE) += jh7110-evb.dtb			\
+diff --git a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-fml13v01.dts
+old mode 100755
+new mode 100644
+similarity index 99%
+rename from arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+rename to arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-fml13v01.dts
+index 4012d0e550b4..09f8668cc2a6
+--- a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
++++ b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-fml13v01.dts
+@@ -12,8 +12,8 @@
+ #include <dt-bindings/input/linux-event-codes.h>
+ 
+ / {
+-	model = "StarFive VisionFive 2 framework";
+-	compatible = "starfive,visionfive-2-framework", "starfive,jh7110";
++	model = "DeepComputing FML13V01";
++	compatible = "deepcomputing,fml13v01", "starfive,jh7110";
+ 
+ 	aliases {
+ //		ethernet0 = &gmac0;
+-- 
+2.47.0
+

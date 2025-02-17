@@ -1,0 +1,47 @@
+From 8574d583d5ade8d61b262f4826fad5521986d311 Mon Sep 17 00:00:00 2001
+From: "yang.wang" <yang.wang@deepcomputing.io>
+Date: Fri, 25 Oct 2024 18:35:39 +0800
+Subject: [PATCH 182/210] cros-ec-spi: cs signals add support:
+ 'google,cros-ec-spi-pre-delay' and 'google,cros-ec-spi-msg-delay'
+
+Signed-off-by: yang.wang <yang.wang@deepcomputing.io>
+---
+ .../dts/starfive/jh7110-starfive-visionfive-2-framework.dts | 4 ++--
+ drivers/spi/spi-pl022.c                                     | 6 +++---
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+index 1f3498a38ac0..37832034467b 100755
+--- a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
++++ b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+@@ -489,8 +489,8 @@ fwos_ec: spi@1 {
+ 		pl022,com-mode = <1>;
+ 		spi-max-frequency = <1000000>;//<8250000>;
+ 		reg = <0>;
+-		google,fwos-ec-spi-pre-delay = <10>;
+-		google,fwos-ec-spi-msg-delay = <30>;
++		google,cros-ec-spi-pre-delay = <30>;
++		google,cros-ec-spi-msg-delay = <10>;
+ 		status = "okay";
+ 	};
+ };
+diff --git a/drivers/spi/spi-pl022.c b/drivers/spi/spi-pl022.c
+index 1420c40fa815..10be3d93992c 100644
+--- a/drivers/spi/spi-pl022.c
++++ b/drivers/spi/spi-pl022.c
+@@ -1561,9 +1561,9 @@ static void do_polling_transfer(struct pl022 *pl022)
+ 		message->actual_length += pl022->cur_transfer->len;
+ 		/* Move to next transfer */
+ 		message->state = next_transfer(pl022);
+-		if (message->state != STATE_DONE
+-		    && pl022->cur_transfer->cs_change)
+-			pl022_cs_control(pl022, SSP_CHIP_DESELECT);
++		//if (message->state != STATE_DONE &&
++		//    pl022->cur_transfer->cs_change)
++		//	pl022_cs_control(pl022, SSP_CHIP_DESELECT);
+ 	}
+ out:
+ 	/* Handle end of message */
+-- 
+2.47.0
+

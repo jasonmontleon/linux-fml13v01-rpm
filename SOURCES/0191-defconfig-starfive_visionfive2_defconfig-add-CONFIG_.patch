@@ -1,0 +1,26 @@
+From 8ffa4331516830ec4fc71eb9dcec5f40f742686c Mon Sep 17 00:00:00 2001
+From: "yang.wang" <yang.wang@deepcomputing.io>
+Date: Thu, 5 Dec 2024 11:36:52 +0800
+Subject: [PATCH 191/210] defconfig: starfive_visionfive2_defconfig: add
+ CONFIG_AUDIT.
+
+Signed-off-by: yang.wang <yang.wang@deepcomputing.io>
+---
+ arch/riscv/configs/starfive_visionfive2_defconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/riscv/configs/starfive_visionfive2_defconfig b/arch/riscv/configs/starfive_visionfive2_defconfig
+index e59bdaeac172..6b0dd55c3769 100644
+--- a/arch/riscv/configs/starfive_visionfive2_defconfig
++++ b/arch/riscv/configs/starfive_visionfive2_defconfig
+@@ -4,6 +4,7 @@ CONFIG_DEFAULT_HOSTNAME="StarFive"
+ CONFIG_SYSVIPC=y
+ CONFIG_POSIX_MQUEUE=y
+ CONFIG_USELIB=y
++CONFIG_AUDIT=y
+ CONFIG_NO_HZ_IDLE=y
+ CONFIG_HIGH_RES_TIMERS=y
+ CONFIG_BPF_SYSCALL=y
+-- 
+2.47.0
+

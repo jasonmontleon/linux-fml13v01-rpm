@@ -1,0 +1,91 @@
+From d0738782cb3624f8397b1d7ee65581cb61d3bf07 Mon Sep 17 00:00:00 2001
+From: Ziv Xu <ziv.xu@starfivetech.com>
+Date: Wed, 13 Mar 2024 18:45:30 +0800
+Subject: [PATCH 124/210] driver: vout: vout support kernel 6.6
+
+vout support kernel 6.6
+
+Signed-off-by: Ziv Xu <ziv.xu@starfivetech.com>
+---
+ drivers/gpu/drm/verisilicon/vs_dc.c |  6 +++---
+ drivers/gpu/drm/verisilicon/vs_dc.h |  2 ++
+ drivers/phy/m31/phy-m31-dphy-tx0.c  | 19 ++++++++++---------
+ 3 files changed, 15 insertions(+), 12 deletions(-)
+
+diff --git a/drivers/gpu/drm/verisilicon/vs_dc.c b/drivers/gpu/drm/verisilicon/vs_dc.c
+index 5cd68a5c8af2..9a74f2458028 100644
+--- a/drivers/gpu/drm/verisilicon/vs_dc.c
++++ b/drivers/gpu/drm/verisilicon/vs_dc.c
+@@ -659,7 +659,7 @@ static int dc_init(struct device *dev)
+ 	  to set value*/
+ 	clk_set_rate(dc->dc8200_pix0, 1000);
+ 	clk_set_parent(dc->dc8200_clk_pix1, dc->hdmitx0_pixelclk);
+-	clk_set_parent(dc->vout_top_lcd, dc->dc8200_clk_pix0);
++	clk_set_parent(dc->vout_top_lcd, dc->dc8200_clk_pix0_out);
+ 	clk_set_parent(dc->dc8200_clk_pix0, dc->dc8200_pix0);
+ 
+ 	return 0;
+@@ -749,7 +749,7 @@ static void vs_dc_enable(struct device *dev, struct drm_crtc *crtc)
+ 	{
+ 		clk_set_rate(dc->dc8200_pix0, mode->clock * 1000);
+ 		clk_set_parent(dc->dc8200_clk_pix1, dc->dc8200_pix0);
+-		clk_set_parent(dc->vout_top_lcd, dc->dc8200_clk_pix1);
++		clk_set_parent(dc->vout_top_lcd, dc->dc8200_clk_pix1_out);
+ 	}else{
+ 		clk_set_parent(dc->dc8200_clk_pix0, dc->hdmitx0_pixelclk);
+ 	}
+@@ -800,7 +800,7 @@ static void vs_dc_disable(struct device *dev, struct drm_crtc *crtc)
+ 		clk_set_rate(dc->dc8200_pix0, 1000);
+ 		/*reset the parent pixclk  channel*/
+ 		clk_set_parent(dc->dc8200_clk_pix1, dc->hdmitx0_pixelclk);
+-		clk_set_parent(dc->vout_top_lcd, dc->dc8200_clk_pix0);
++		clk_set_parent(dc->vout_top_lcd, dc->dc8200_clk_pix0_out);
+ 		clk_set_parent(dc->dc8200_clk_pix0, dc->dc8200_pix0);
+ 
+ 	}
+diff --git a/drivers/gpu/drm/verisilicon/vs_dc.h b/drivers/gpu/drm/verisilicon/vs_dc.h
+index 299b7cea6782..8e18bd7e7f5b 100644
+--- a/drivers/gpu/drm/verisilicon/vs_dc.h
++++ b/drivers/gpu/drm/verisilicon/vs_dc.h
+@@ -65,6 +65,8 @@ struct vs_dc {
+ 	struct clk *vout_top_lcd;
+ 	struct clk *hdmitx0_pixelclk;
+ 	struct clk *dc8200_pix0;
++	struct clk *dc8200_clk_pix0_out;
++	struct clk *dc8200_clk_pix1_out;
+ 	struct reset_control *vout_resets;
+ 	struct reset_control *dc8200_rst_axi;
+ 	struct reset_control *dc8200_rst_core;
+diff --git a/drivers/phy/m31/phy-m31-dphy-tx0.c b/drivers/phy/m31/phy-m31-dphy-tx0.c
+index f86fd8d83a7a..02be2df1b4ec 100644
+--- a/drivers/phy/m31/phy-m31-dphy-tx0.c
++++ b/drivers/phy/m31/phy-m31-dphy-tx0.c
+@@ -578,15 +578,16 @@ static int sys_m31_dphy_tx_configure(struct phy *phy, union phy_configure_opts *
+ 							AON_POWER_READY_N_SHIFT, AON_POWER_READY_N_MASK);
+ 
+ 			sf_dphy_set_reg(dphy->topsys, 0x0,
+-							CFG_L0_SWAP_SEL_SHIFT, CFG_L0_SWAP_SEL_MASK);//Lane setting
+-			sf_dphy_set_reg(dphy->topsys, 0x1,
+-							CFG_L1_SWAP_SEL_SHIFT, CFG_L1_SWAP_SEL_MASK);
+-			sf_dphy_set_reg(dphy->topsys, 0x4,
+-							CFG_L2_SWAP_SEL_SHIFT, CFG_L2_SWAP_SEL_MASK);
+-			sf_dphy_set_reg(dphy->topsys, 0x2,
+-							CFG_L3_SWAP_SEL_SHIFT, CFG_L3_SWAP_SEL_MASK);
+-			sf_dphy_set_reg(dphy->topsys, 0x3,
+-							CFG_L4_SWAP_SEL_SHIFT, CFG_L4_SWAP_SEL_MASK);
++                            CFG_L0_SWAP_SEL_SHIFT, CFG_L0_SWAP_SEL_MASK);//Lane setting
++            sf_dphy_set_reg(dphy->topsys, 0x1,
++                            CFG_L1_SWAP_SEL_SHIFT, CFG_L1_SWAP_SEL_MASK);
++            sf_dphy_set_reg(dphy->topsys, 0x2,
++                            CFG_L2_SWAP_SEL_SHIFT, CFG_L2_SWAP_SEL_MASK);
++            sf_dphy_set_reg(dphy->topsys, 0x3,
++                            CFG_L3_SWAP_SEL_SHIFT, CFG_L3_SWAP_SEL_MASK);
++            sf_dphy_set_reg(dphy->topsys, 0x4,
++                            CFG_L4_SWAP_SEL_SHIFT, CFG_L4_SWAP_SEL_MASK);
++
+ 			//PLL setting
+ 			sf_dphy_set_reg(dphy->topsys + 0x1c, 0x0,
+ 							RG_CDTX_PLL_SSC_EN_SHIFT, RG_CDTX_PLL_SSC_EN_MASK);
+-- 
+2.47.0
+

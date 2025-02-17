@@ -1,0 +1,165 @@
+From 438c325f5d7fbb8d9e2f2fe84dba0a92ab512ff9 Mon Sep 17 00:00:00 2001
+From: "yang.wang" <yang.wang@deepcomputing.io>
+Date: Thu, 5 Sep 2024 11:46:27 +0800
+Subject: [PATCH 161/210] support i2c hid touchpad.
+
+Signed-off-by: yang.wang <yang.wang@deepcomputing.io>
+---
+ ...jh7110-starfive-visionfive-2-framework.dts | 22 ++++++++++++++++---
+ .../configs/starfive_visionfive2_defconfig    |  3 +++
+ drivers/hid/i2c-hid/i2c-hid-core.c            |  4 ++++
+ drivers/hid/i2c-hid/i2c-hid-of.c              | 18 +++++++++++++++
+ 4 files changed, 44 insertions(+), 3 deletions(-)
+
+diff --git a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+index 3c83a03da5ae..13d8eb581e81 100755
+--- a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
++++ b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+@@ -327,6 +327,7 @@ &i2c2 {
+ 	tinker_ft5406: tinker_ft5406@38 {
+ 		compatible = "tinker_ft5406";
+ 		reg = <0x38>;
++		status = "disabled";
+ 	};
+ 
+ 	touchscreen@14 {
+@@ -334,6 +335,7 @@ touchscreen@14 {
+ 		reg = <0x14>;
+ 		irq-gpios = <&sysgpio 30 GPIO_ACTIVE_HIGH>;
+ 		reset-gpios = <&sysgpio 31 GPIO_ACTIVE_HIGH>;
++		status = "disabled";
+ 	};
+ 
+ //	panel_radxa@19 {
+@@ -452,6 +454,7 @@ imx219: imx219@10 {
+ 		reset-gpio = <&sysgpio 18 0>;
+ 		rotation = <0>;
+ 		orientation = <1>; //CAMERA_ORIENTATION_BACK
++		status = "disabled";
+ 
+ 		port {
+ 			/* CSI2 bus endpoint */
+@@ -471,6 +474,7 @@ imx708: imx708@1a {
+ 		reg = <0x1a>;
+ 		clocks = <&clk_ext_camera>;
+ 		reset-gpio = <&sysgpio 18 0>;
++		status = "disabled";
+ 
+ 		port {
+ 			imx708_to_csi2rx0: endpoint {
+@@ -488,6 +492,7 @@ ov4689: ov4689@36 {
+ 		clocks = <&clk_ext_camera>;
+ 		clock-names = "xclk";
+ 		rotation = <180>;
++		status = "disabled";
+ 
+ 		port {
+ 			/* Parallel bus endpoint */
+@@ -499,6 +504,17 @@ ov4689_to_csi2rx0: endpoint {
+ 			};
+ 		};
+ 	};
++
++	touchpad: hid@2c {
++		compatible = "hid-over-i2c";
++		reg = <0x2c>;
++		hid-descr-addr = <0x0020>;
++		post-power-on-delay-ms = <200>;
++		interrupt-parent = <&sysgpio>;
++		interrupts = <30>;
++		irq-gpio = <&sysgpio 30 0>;
++		status = "okay";
++	};
+ };
+ 
+ &i2srx {
+@@ -1218,7 +1234,7 @@ csi2rx0_from_imx219: endpoint@0 {
+ 				clock-lanes = <4>;
+ 				data-lanes = <0 1>;
+ 				lane-polarities = <0 0 0>;
+-				status = "okay";
++				status = "disabled";
+ 			};
+ 
+ 			csi2rx0_from_imx708: endpoint@1 {
+@@ -1228,7 +1244,7 @@ csi2rx0_from_imx708: endpoint@1 {
+ 				clock-lanes = <4>;
+ 				data-lanes = <0 1>;
+ 				lane-polarities = <0 0 0>;
+-				status = "okay";
++				status = "disabled";
+ 			};
+ 
+ 			csi2rx0_from_ov4689: endpoint@2 {
+@@ -1237,7 +1253,7 @@ csi2rx0_from_ov4689: endpoint@2 {
+ 				bus-type = <4>;      /* MIPI CSI-2 D-PHY */
+ 				clock-lanes = <4>;
+ 				data-lanes = <0 1>;
+-				status = "okay";
++				status = "disabled";
+ 			};
+ 		};
+ 	};
+diff --git a/arch/riscv/configs/starfive_visionfive2_defconfig b/arch/riscv/configs/starfive_visionfive2_defconfig
+index ac93c16c8166..5ddcc77aadf5 100644
+--- a/arch/riscv/configs/starfive_visionfive2_defconfig
++++ b/arch/riscv/configs/starfive_visionfive2_defconfig
+@@ -251,6 +251,9 @@ CONFIG_SND_SOC_ES8326=y
+ CONFIG_SND_SOC_WM8960=y
+ CONFIG_SND_SIMPLE_CARD=y
+ CONFIG_UHID=y
++CONFIG_HID_MULTITOUCH=y
++CONFIG_USB_HIDDEV=y
++CONFIG_I2C_HID_OF=y
+ CONFIG_USB=y
+ CONFIG_USB_OTG=y
+ CONFIG_USB_XHCI_HCD=y
+diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
+index 045db6f0fb4c..8a6e8e609875 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-core.c
++++ b/drivers/hid/i2c-hid/i2c-hid-core.c
+@@ -847,8 +847,12 @@ static int i2c_hid_init_irq(struct i2c_client *client)
+ 
+ 	i2c_hid_dbg(ihid, "Requesting IRQ: %d\n", client->irq);
+ 
++#ifdef CONFIG_SOC_STARFIVE
++	irqflags = IRQF_TRIGGER_FALLING;
++#else
+ 	if (!irq_get_trigger_type(client->irq))
+ 		irqflags = IRQF_TRIGGER_LOW;
++#endif
+ 
+ 	ret = request_threaded_irq(client->irq, NULL, i2c_hid_irq,
+ 				   irqflags | IRQF_ONESHOT | IRQF_NO_AUTOEN,
+diff --git a/drivers/hid/i2c-hid/i2c-hid-of.c b/drivers/hid/i2c-hid/i2c-hid-of.c
+index 8be4d576da77..4b8bd2789f03 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-of.c
++++ b/drivers/hid/i2c-hid/i2c-hid-of.c
+@@ -131,6 +131,24 @@ static int i2c_hid_of_probe(struct i2c_client *client)
+ 	if (device_property_read_bool(dev, "touchscreen-inverted-y"))
+ 		quirks |= HID_QUIRK_Y_INVERT;
+ 
++#ifdef CONFIG_SOC_STARFIVE
++	{
++		struct gpio_desc *irq_gpio;
++		irq_gpio = devm_gpiod_get_optional(dev, "irq", GPIOD_IN);
++		if (IS_ERR(irq_gpio))
++		{
++			dev_err(dev, "failed to get irq gpio\n");
++			return -ENODEV;
++		}
++		client->irq = gpiod_to_irq(irq_gpio);
++		if (client->irq <= 0)
++		{
++			dev_err(dev, "get irq fail\n");
++			return -ENODEV;
++		}
++	}
++#endif
++
+ 	return i2c_hid_core_probe(client, &ihid_of->ops,
+ 				  hid_descriptor_address, quirks);
+ }
+-- 
+2.47.0
+

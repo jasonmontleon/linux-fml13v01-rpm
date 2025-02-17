@@ -1,0 +1,28 @@
+From 6791fbc3a8032aca361e29ffe72cae500486210d Mon Sep 17 00:00:00 2001
+From: Changhuang Liang <changhuang.liang@starfivetech.com>
+Date: Wed, 20 Mar 2024 10:55:10 +0800
+Subject: [PATCH 127/210] media: starfive: put off VIN register
+
+put off VIN register.
+
+Signed-off-by: Changhuang Liang <changhuang.liang@starfivetech.com>
+---
+ drivers/media/platform/starfive/v4l2_driver/stfcamss.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/media/platform/starfive/v4l2_driver/stfcamss.c b/drivers/media/platform/starfive/v4l2_driver/stfcamss.c
+index 431801e7a6ed..24bfe8da9c9a 100644
+--- a/drivers/media/platform/starfive/v4l2_driver/stfcamss.c
++++ b/drivers/media/platform/starfive/v4l2_driver/stfcamss.c
+@@ -1362,7 +1362,7 @@ static void __exit stfcamss_cleanup(void)
+ 	platform_driver_unregister(&stfcamss_driver);
+ }
+ 
+-module_init(stfcamss_init);
++late_initcall(stfcamss_init);
+ //fs_initcall(stfcamss_init);
+ module_exit(stfcamss_cleanup);
+ 
+-- 
+2.47.0
+

@@ -1,0 +1,28 @@
+From 9f679383dfcfe3a551b133d8019f01d871ab85d0 Mon Sep 17 00:00:00 2001
+From: "keith.zhao" <keith.zhao@starfivetech.com>
+Date: Sun, 28 Apr 2024 16:17:50 +0800
+Subject: [PATCH 153/210] vout:debian: blank wave
+
+open menu 'setting', there is some blank waves in the diag
+
+Signed-off-by: keith.zhao <keith.zhao@starfivetech.com>
+---
+ drivers/gpu/drm/verisilicon/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/verisilicon/Kconfig b/drivers/gpu/drm/verisilicon/Kconfig
+index ad737f780401..8f0a04bd0fc0 100644
+--- a/drivers/gpu/drm/verisilicon/Kconfig
++++ b/drivers/gpu/drm/verisilicon/Kconfig
+@@ -7,7 +7,7 @@ config DRM_VERISILICON
+ 	select DRM_GEM_DMA_HELPER
+ 	select CMA
+ 	select DMA_CMA
+-	select SOC_STARFIVE_EVB_VOUT
++	select SOC_STARFIVE_VF2_VOUT
+ 	help
+ 	  Choose this option if you have a VeriSilicon soc chipset.
+ 	  This driver provides VeriSilicon kernel mode
+-- 
+2.47.0
+

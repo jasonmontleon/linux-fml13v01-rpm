@@ -1,0 +1,25 @@
+From fd0e221d83cabeb435fc3d4b907a4984c949437a Mon Sep 17 00:00:00 2001
+From: "yang.wang" <yang.wang@deepcomputing.io>
+Date: Wed, 18 Sep 2024 14:43:56 +0800
+Subject: [PATCH 170/210] kernel: CONFIG_BT_HIDP=y
+
+Signed-off-by: yang.wang <yang.wang@deepcomputing.io>
+---
+ arch/riscv/configs/starfive_visionfive2_defconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/riscv/configs/starfive_visionfive2_defconfig b/arch/riscv/configs/starfive_visionfive2_defconfig
+index 2267abc5323a..185c2a3613f9 100644
+--- a/arch/riscv/configs/starfive_visionfive2_defconfig
++++ b/arch/riscv/configs/starfive_visionfive2_defconfig
+@@ -86,6 +86,7 @@ CONFIG_BT_RFCOMM_TTY=y
+ CONFIG_BT_BNEP=y
+ CONFIG_BT_BNEP_MC_FILTER=y
+ CONFIG_BT_BNEP_PROTO_FILTER=y
++CONFIG_BT_HIDP=y
+ CONFIG_BT_HCIBTUSB=y
+ # CONFIG_BT_HCIBTUSB_BCM is not set
+ CONFIG_BT_HCIBTUSB_MTK=y
+-- 
+2.47.0
+

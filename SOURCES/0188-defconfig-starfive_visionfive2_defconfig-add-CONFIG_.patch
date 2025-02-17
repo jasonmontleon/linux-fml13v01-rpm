@@ -1,0 +1,42 @@
+From 10568cb7043b7556a33db9917eefe7a59c0047c2 Mon Sep 17 00:00:00 2001
+From: "yang.wang" <yang.wang@deepcomputing.io>
+Date: Tue, 12 Nov 2024 10:54:14 +0800
+Subject: [PATCH 188/210] defconfig: starfive_visionfive2_defconfig: add
+ CONFIG_SECCOMP & CONFIG_SECCOMP_FILTER
+
+Signed-off-by: yang.wang <yang.wang@deepcomputing.io>
+---
+ arch/riscv/configs/starfive_visionfive2_defconfig | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/arch/riscv/configs/starfive_visionfive2_defconfig b/arch/riscv/configs/starfive_visionfive2_defconfig
+index 65a611b4b826..45e13b01cad6 100644
+--- a/arch/riscv/configs/starfive_visionfive2_defconfig
++++ b/arch/riscv/configs/starfive_visionfive2_defconfig
+@@ -38,7 +38,6 @@ CONFIG_CPU_FREQ_GOV_USERSPACE=y
+ CONFIG_CPU_FREQ_GOV_CONSERVATIVE=y
+ CONFIG_CPU_FREQ_GOV_SCHEDUTIL=y
+ CONFIG_CPUFREQ_DT=y
+-# CONFIG_SECCOMP is not set
+ CONFIG_MODULES=y
+ CONFIG_MODULE_UNLOAD=y
+ CONFIG_BINFMT_MISC=y
+@@ -432,6 +431,7 @@ CONFIG_CRYPTO_USER_API_AEAD=y
+ CONFIG_CRYPTO_DEV_VIRTIO=y
+ CONFIG_CRYPTO_DEV_JH7110=y
+ CONFIG_PRINTK_TIME=y
++CONFIG_HEADERS_INSTALL=y
+ CONFIG_DEBUG_FS=y
+ CONFIG_SOFTLOCKUP_DETECTOR=y
+ CONFIG_WQ_WATCHDOG=y
+@@ -445,5 +445,7 @@ CONFIG_DEBUG_SG=y
+ # CONFIG_RCU_TRACE is not set
+ CONFIG_RCU_EQS_DEBUG=y
+ # CONFIG_FTRACE is not set
++CONFIG_SAMPLES=y
++CONFIG_SAMPLE_SECCOMP=y
+ # CONFIG_RUNTIME_TESTING_MENU is not set
+ CONFIG_MEMTEST=y
+-- 
+2.47.0
+

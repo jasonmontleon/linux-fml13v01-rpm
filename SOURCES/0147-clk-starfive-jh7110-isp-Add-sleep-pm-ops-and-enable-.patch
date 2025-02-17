@@ -1,0 +1,65 @@
+From a874423426eddc63b8066c202f3a15f3ebdc49d9 Mon Sep 17 00:00:00 2001
+From: Hal Feng <hal.feng@starfivetech.com>
+Date: Tue, 23 Apr 2024 18:08:06 +0800
+Subject: [PATCH 147/210] clk: starfive: jh7110-isp: Add sleep pm ops and
+ enable runtime autosuspend
+
+Add sleep pm ops and enable runtime autosuspend for isp clock driver.
+
+Signed-off-by: Hal Feng <hal.feng@starfivetech.com>
+---
+ drivers/clk/starfive/clk-starfive-jh7110-isp.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+diff --git a/drivers/clk/starfive/clk-starfive-jh7110-isp.c b/drivers/clk/starfive/clk-starfive-jh7110-isp.c
+index 046a975aeac3..5fe8260b4de2 100644
+--- a/drivers/clk/starfive/clk-starfive-jh7110-isp.c
++++ b/drivers/clk/starfive/clk-starfive-jh7110-isp.c
+@@ -86,6 +86,18 @@ static struct clk_hw *jh7110_ispclk_get(struct of_phandle_args *clkspec, void *d
+ 	return ERR_PTR(-EINVAL);
+ }
+ 
++#ifdef CONFIG_PM_SLEEP
++static int jh7110_ispcrg_sleep_suspend(struct device *dev)
++{
++	return pm_runtime_force_suspend(dev);
++}
++
++static int jh7110_ispcrg_sleep_resume(struct device *dev)
++{
++	return pm_runtime_force_resume(dev);
++}
++#endif
++
+ #ifdef CONFIG_PM
+ static int jh7110_ispcrg_suspend(struct device *dev)
+ {
+@@ -105,6 +117,7 @@ static int jh7110_ispcrg_resume(struct device *dev)
+ 
+ static const struct dev_pm_ops jh7110_ispcrg_pm_ops = {
+ 	RUNTIME_PM_OPS(jh7110_ispcrg_suspend, jh7110_ispcrg_resume, NULL)
++	LATE_SYSTEM_SLEEP_PM_OPS(jh7110_ispcrg_sleep_suspend, jh7110_ispcrg_sleep_resume)
+ };
+ #endif
+ 
+@@ -138,6 +151,8 @@ static int jh7110_ispcrg_probe(struct platform_device *pdev)
+ 		return dev_err_probe(priv->dev, ret, "failed to get main clocks\n");
+ 	dev_set_drvdata(priv->dev, top);
+ 
++	pm_runtime_use_autosuspend(priv->dev);
++	pm_runtime_set_autosuspend_delay(priv->dev, 50);
+ 	/* enable power domain and clocks */
+ 	pm_runtime_enable(priv->dev);
+ 	ret = pm_runtime_get_sync(priv->dev);
+@@ -195,6 +210,8 @@ static int jh7110_ispcrg_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_exit;
+ 
++	pm_runtime_put_sync(&pdev->dev);
++
+ 	return 0;
+ 
+ err_exit:
+-- 
+2.47.0
+

@@ -1,0 +1,28 @@
+From 6892298cb72c487ce67ae7200f1c7b6306a602f5 Mon Sep 17 00:00:00 2001
+From: Changhuang Liang <changhuang.liang@starfivetech.com>
+Date: Thu, 28 Mar 2024 09:35:03 +0800
+Subject: [PATCH 139/210] media: starfive: Initialize struct v4l2_subdev_format
+
+Initialize struct v4l2_subdev_format make the stream be zero.
+
+Signed-off-by: Changhuang Liang <changhuang.liang@starfivetech.com>
+---
+ drivers/media/platform/starfive/v4l2_driver/stf_isp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/media/platform/starfive/v4l2_driver/stf_isp.c b/drivers/media/platform/starfive/v4l2_driver/stf_isp.c
+index e867605caaa4..954759682d25 100644
+--- a/drivers/media/platform/starfive/v4l2_driver/stf_isp.c
++++ b/drivers/media/platform/starfive/v4l2_driver/stf_isp.c
+@@ -1266,7 +1266,7 @@ static int isp_match_sensor_format_get_index(struct stf_isp_dev *isp_dev)
+ 	int ret, idx;
+ 	struct media_entity *sensor;
+ 	struct v4l2_subdev *subdev;
+-	struct v4l2_subdev_format fmt;
++	struct v4l2_subdev_format fmt = { 0 };
+ 	const struct isp_format_table *formats;
+ 
+ 	if (!isp_dev)
+-- 
+2.47.0
+

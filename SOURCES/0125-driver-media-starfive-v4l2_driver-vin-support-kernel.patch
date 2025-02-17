@@ -1,0 +1,193 @@
+From f9b6955e447160abae68419bda386808102933b3 Mon Sep 17 00:00:00 2001
+From: Ziv Xu <ziv.xu@starfivetech.com>
+Date: Wed, 13 Mar 2024 18:47:59 +0800
+Subject: [PATCH 125/210] driver: media: starfive: v4l2_driver: vin support
+ kernel 6.6
+
+vin support kernel 6.6
+
+Signed-off-by: Ziv Xu <ziv.xu@starfivetech.com>
+---
+ .../platform/starfive/v4l2_driver/Readme.txt   |  5 ++---
+ .../platform/starfive/v4l2_driver/sc2235.c     |  2 +-
+ .../platform/starfive/v4l2_driver/stf_common.h |  2 +-
+ .../platform/starfive/v4l2_driver/stf_csi.c    |  6 +-----
+ .../platform/starfive/v4l2_driver/stf_csi.h    |  1 -
+ .../starfive/v4l2_driver/stf_csi_hw_ops.c      | 18 ++----------------
+ .../starfive/v4l2_driver/stf_csiphy_hw_ops.c   | 12 +++++-------
+ .../platform/starfive/v4l2_driver/stf_video.c  |  5 +++--
+ 8 files changed, 15 insertions(+), 36 deletions(-)
+
+diff --git a/drivers/media/platform/starfive/v4l2_driver/Readme.txt b/drivers/media/platform/starfive/v4l2_driver/Readme.txt
+index fc3dad63d10f..b291f1cb3a7b 100644
+--- a/drivers/media/platform/starfive/v4l2_driver/Readme.txt
++++ b/drivers/media/platform/starfive/v4l2_driver/Readme.txt
+@@ -4,8 +4,7 @@
+ 
+ ensure linux/arch/riscv/configs/starfive_jh7110_defconfig:
+ CONFIG_VIDEO_STF_VIN=y
+-CONFIG_VIN_SENSOR_SC2235=y
+-CONFIG_VIN_SENSOR_OV4689=y
++CONFIG_VIN_SENSOR_IMX219=y
+ 
+-Only support the lane0/lane5 of dphy as clock lane, lane1/lane2/lane3/lane4
++Only support the lane4/lane5 of dphy as clock lane, lane0/lane1/lane2/lane3
+ as data lane.
+diff --git a/drivers/media/platform/starfive/v4l2_driver/sc2235.c b/drivers/media/platform/starfive/v4l2_driver/sc2235.c
+index 0e6e9502f7f5..ffc548ec8c47 100644
+--- a/drivers/media/platform/starfive/v4l2_driver/sc2235.c
++++ b/drivers/media/platform/starfive/v4l2_driver/sc2235.c
+@@ -1904,7 +1904,7 @@ static struct i2c_driver sc2235_i2c_driver = {
+ 		.pm = &sc2235_pm_ops,
+ 	},
+ 	.id_table = sc2235_id,
+-	.probe = sc2235_probe,
++	.probe_new = sc2235_probe,
+ 	.remove   = sc2235_remove,
+ };
+ 
+diff --git a/drivers/media/platform/starfive/v4l2_driver/stf_common.h b/drivers/media/platform/starfive/v4l2_driver/stf_common.h
+index aafc821b0283..efd2678467af 100644
+--- a/drivers/media/platform/starfive/v4l2_driver/stf_common.h
++++ b/drivers/media/platform/starfive/v4l2_driver/stf_common.h
+@@ -11,7 +11,7 @@
+ 
+ // #define STF_DEBUG
+ 
+-// #define USE_CSIDPHY_ONE_CLK_MODE 1
++#define USE_CSIDPHY_ONE_CLK_MODE 1
+ 
+ enum {
+ 	ST_DVP = 0x0001,
+diff --git a/drivers/media/platform/starfive/v4l2_driver/stf_csi.c b/drivers/media/platform/starfive/v4l2_driver/stf_csi.c
+index d204cd111140..c25730f3406b 100644
+--- a/drivers/media/platform/starfive/v4l2_driver/stf_csi.c
++++ b/drivers/media/platform/starfive/v4l2_driver/stf_csi.c
+@@ -411,11 +411,7 @@ int stf_csi_register(struct stf_csi_dev *csi_dev, struct v4l2_device *v4l2_dev)
+ 	struct media_pad *pads = csi_dev->pads;
+ 	int ret;
+ 
+-	csi_dev->mipirx_1p8 = devm_regulator_get(dev, "mipirx_1p8");
+-	if (IS_ERR(csi_dev->mipirx_1p8))
+-		return PTR_ERR(csi_dev->mipirx_1p8);
+-
+-	csi_dev->mipirx_0p9 = devm_regulator_get(dev, "mipirx_0p9");
++	csi_dev->mipirx_0p9 = devm_regulator_get(dev, "mipi_0p9");
+ 	if (IS_ERR(csi_dev->mipirx_0p9))
+ 		return PTR_ERR(csi_dev->mipirx_0p9);
+ 
+diff --git a/drivers/media/platform/starfive/v4l2_driver/stf_csi.h b/drivers/media/platform/starfive/v4l2_driver/stf_csi.h
+index f55b67b7ddba..690d2b5fe2e9 100644
+--- a/drivers/media/platform/starfive/v4l2_driver/stf_csi.h
++++ b/drivers/media/platform/starfive/v4l2_driver/stf_csi.h
+@@ -47,7 +47,6 @@ struct stf_csi_dev {
+ 	struct csi_hw_ops *hw_ops;
+ 	struct mutex stream_lock;
+ 	int stream_count;
+-	struct regulator *mipirx_1p8;
+ 	struct regulator *mipirx_0p9;
+ };
+ 
+diff --git a/drivers/media/platform/starfive/v4l2_driver/stf_csi_hw_ops.c b/drivers/media/platform/starfive/v4l2_driver/stf_csi_hw_ops.c
+index ff8c2f33ad7a..8141feccbbff 100644
+--- a/drivers/media/platform/starfive/v4l2_driver/stf_csi_hw_ops.c
++++ b/drivers/media/platform/starfive/v4l2_driver/stf_csi_hw_ops.c
+@@ -42,32 +42,18 @@ static int stf_csi_power_on(struct stf_csi_dev *csi_dev, u8 on)
+ 	int ret;
+ 
+ 	if (on) {
+-		ret = regulator_enable(csi_dev->mipirx_1p8);
+-		if (ret) {
+-			st_err(ST_CSI, "Cannot enable mipirx_1p8 regulator\n");
+-			goto err_1p8;
+-		}
+-
+ 		ret = regulator_enable(csi_dev->mipirx_0p9);
+ 		if (ret) {
+ 			st_err(ST_CSI, "Cannot enable mipirx_0p9 regulator\n");
+-			goto err_0p9;
++			return ret;
+ 		}
+-	} else {
+-		regulator_disable(csi_dev->mipirx_1p8);
++	} else
+ 		regulator_disable(csi_dev->mipirx_0p9);
+-	}
+ 
+ 	regmap_update_bits(stfcamss->stf_aon_syscon, stfcamss->aon_gp_reg,
+ 				BIT(31), BIT(31));
+ 
+ 	return 0;
+-
+-err_0p9:
+-	regulator_disable(csi_dev->mipirx_1p8);
+-err_1p8:
+-	return ret;
+-
+ }
+ 
+ static int stf_csi_clk_enable(struct stf_csi_dev *csi_dev)
+diff --git a/drivers/media/platform/starfive/v4l2_driver/stf_csiphy_hw_ops.c b/drivers/media/platform/starfive/v4l2_driver/stf_csiphy_hw_ops.c
+index 50beebab436f..2b8f15a04be6 100644
+--- a/drivers/media/platform/starfive/v4l2_driver/stf_csiphy_hw_ops.c
++++ b/drivers/media/platform/starfive/v4l2_driver/stf_csiphy_hw_ops.c
+@@ -67,12 +67,12 @@ int try_cfg(struct csi2phy_cfg2 *cfg, struct csi2phy_cfg *cfg0,
+ {
+ 	int i = 0;
+ 
+-	cfg->clock_lane = 0;
++	cfg->clock_lane = 4;
+ 	cfg->clock1_lane = 5;
+-	cfg->data_lanes[0] = 1;
+-	cfg->data_lanes[1] = 2;
+-	cfg->data_lanes[2] = 3;
+-	cfg->data_lanes[3] = 4;
++	cfg->data_lanes[0] = 0;
++	cfg->data_lanes[1] = 1;
++	cfg->data_lanes[2] = 2;
++	cfg->data_lanes[3] = 3;
+ 
+ 	if (cfg0 && cfg1) {
+ 		st_debug(ST_CSIPHY, "CSIPHY use 2 clk mode\n");
+@@ -101,7 +101,6 @@ int try_cfg(struct csi2phy_cfg2 *cfg, struct csi2phy_cfg *cfg0,
+ 		st_debug(ST_CSIPHY, "CSIPHY cfg0 use 1 clk mode\n");
+ 		cfg->num_clks = 1;
+ 		cfg->num_data_lanes = cfg0->num_data_lanes;
+-		cfg->clock_lane = cfg->clock1_lane  = cfg0->clock_lane;
+ 		cfg->lane_polarities[0] = cfg->lane_polarities[1] =
+ 						cfg0->lane_polarities[0];
+ 		for (i = 0; i < cfg0->num_data_lanes; i++) {
+@@ -112,7 +111,6 @@ int try_cfg(struct csi2phy_cfg2 *cfg, struct csi2phy_cfg *cfg0,
+ 		st_debug(ST_CSIPHY, "CSIPHY cfg1 use 1 clk mode\n");
+ 		cfg->num_clks = 1;
+ 		cfg->num_data_lanes = cfg1->num_data_lanes;
+-		cfg->clock_lane = cfg->clock1_lane  = cfg1->clock_lane;
+ 		cfg->lane_polarities[0] = cfg->lane_polarities[1] =
+ 						cfg1->lane_polarities[0];
+ 		for (i = 0; i < cfg1->num_data_lanes; i++) {
+diff --git a/drivers/media/platform/starfive/v4l2_driver/stf_video.c b/drivers/media/platform/starfive/v4l2_driver/stf_video.c
+index 49fcecdbc3e4..d1c7a921f1e8 100644
+--- a/drivers/media/platform/starfive/v4l2_driver/stf_video.c
++++ b/drivers/media/platform/starfive/v4l2_driver/stf_video.c
+@@ -457,7 +457,9 @@ static int video_get_subdev_format(struct stfcamss_video *video,
+ 	struct v4l2_pix_format *pix = &video->active_fmt.fmt.pix;
+ 	struct v4l2_pix_format_mplane *pix_mp =
+ 				&video->active_fmt.fmt.pix_mp;
+-	struct v4l2_subdev_format fmt;
++	struct v4l2_subdev_format fmt = {
++		.which = V4L2_SUBDEV_FORMAT_ACTIVE,
++	};
+ 	struct v4l2_subdev *subdev;
+ 	u32 pixelformat;
+ 	u32 pad;
+@@ -468,7 +470,6 @@ static int video_get_subdev_format(struct stfcamss_video *video,
+ 		return -EPIPE;
+ 
+ 	fmt.pad = pad;
+-	fmt.which = V4L2_SUBDEV_FORMAT_ACTIVE;
+ 
+ 	ret = v4l2_subdev_call(subdev, pad, get_fmt, NULL, &fmt);
+ 	if (ret)
+-- 
+2.47.0
+

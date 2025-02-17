@@ -1,0 +1,32 @@
+From a7065371b95d5e125304d316fa9e16351a60f5df Mon Sep 17 00:00:00 2001
+From: "yang.wang" <yang.wang@deepcomputing.io>
+Date: Wed, 12 Feb 2025 09:32:40 +0800
+Subject: [PATCH 205/210] riscv: fml13v01: Update defconfig.
+
+Signed-off-by: yang.wang <yang.wang@deepcomputing.io>
+---
+ arch/riscv/configs/fml13v01_defconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/riscv/configs/fml13v01_defconfig b/arch/riscv/configs/fml13v01_defconfig
+index 13b9f5aa0488..b82bf9caab1c 100644
+--- a/arch/riscv/configs/fml13v01_defconfig
++++ b/arch/riscv/configs/fml13v01_defconfig
+@@ -462,6 +462,7 @@ CONFIG_SECURITY_APPARMOR=y
+ CONFIG_SECURITY_SAFESETID=y
+ CONFIG_LSM="landlock,lockdown,yama,integrity,apparmor"
+ CONFIG_INIT_STACK_NONE=y
++CONFIG_RANDSTRUCT_NONE=y
+ CONFIG_CRYPTO_USER=y
+ CONFIG_CRYPTO_TEST=m
+ CONFIG_CRYPTO_DEFLATE=y
+@@ -491,6 +492,5 @@ CONFIG_DEBUG_SG=y
+ CONFIG_RCU_EQS_DEBUG=y
+ # CONFIG_FTRACE is not set
+ CONFIG_SAMPLES=y
+-CONFIG_SAMPLE_SECCOMP=y
+ # CONFIG_RUNTIME_TESTING_MENU is not set
+ CONFIG_MEMTEST=y
+-- 
+2.47.0
+

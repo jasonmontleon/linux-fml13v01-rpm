@@ -1,0 +1,42 @@
+From 7174a5d6203e430774096bdaf7d14aefeff642f5 Mon Sep 17 00:00:00 2001
+From: "yang.wang" <yang.wang@deepcomputing.io>
+Date: Fri, 18 Oct 2024 16:59:49 +0800
+Subject: [PATCH 179/210] dts: jh7110-starfive-visionfive-2-framework.dts: spi
+ keep cs asserted for multiple bytes.
+
+Signed-off-by: yang.wang <yang.wang@deepcomputing.io>
+---
+ .../jh7110-starfive-visionfive-2-framework.dts         | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
+
+diff --git a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+index 825d7fbd178b..f397d6be0116 100755
+--- a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
++++ b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+@@ -479,6 +479,7 @@ reserved-data@600000 {
+ &spi1 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&spi1_pins>;
++	cs-gpios = <&sysgpio 57 GPIO_ACTIVE_LOW>;
+ 	status = "okay";
+ 
+ 	fwos_ec: spi@1 {
+@@ -748,15 +749,6 @@ GPOEN_ENABLE,
+ 			input-disable;
+ 			input-schmitt-disable;
+ 		};
+-
+-		ss-pins {
+-			pinmux = <GPIOMUX(57, GPOUT_SYS_SPI1_FSS,
+-					      GPOEN_ENABLE,
+-					      GPI_SYS_SPI1_FSS)>;
+-			bias-disable;
+-			input-disable;
+-			input-schmitt-disable;
+-		};
+ 	};
+ 
+ 	tdm_pins: tdm-0 {
+-- 
+2.47.0
+

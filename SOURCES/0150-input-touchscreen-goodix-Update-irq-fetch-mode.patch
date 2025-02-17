@@ -1,0 +1,34 @@
+From 90b113955a7ca9a71f8a50b17e66245173e4f373 Mon Sep 17 00:00:00 2001
+From: Changhuang Liang <changhuang.liang@starfivetech.com>
+Date: Mon, 6 Feb 2023 11:31:14 +0800
+Subject: [PATCH 150/210] input: touchscreen: goodix: Update irq fetch mode
+
+Update irq fetch mode.
+
+Signed-off-by: Changhuang Liang <changhuang.liang@starfivetech.com>
+---
+ drivers/input/touchscreen/goodix.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/input/touchscreen/goodix.c b/drivers/input/touchscreen/goodix.c
+index b068ff8afbc9..b4d91d394c1b 100644
+--- a/drivers/input/touchscreen/goodix.c
++++ b/drivers/input/touchscreen/goodix.c
+@@ -515,12 +515,12 @@ static irqreturn_t goodix_ts_irq_handler(int irq, void *dev_id)
+ 
+ static void goodix_free_irq(struct goodix_ts_data *ts)
+ {
+-	devm_free_irq(&ts->client->dev, ts->client->irq, ts);
++	devm_free_irq(&ts->client->dev, gpiod_to_irq(ts->gpiod_int), ts);
+ }
+ 
+ static int goodix_request_irq(struct goodix_ts_data *ts)
+ {
+-	return devm_request_threaded_irq(&ts->client->dev, ts->client->irq,
++	return devm_request_threaded_irq(&ts->client->dev, gpiod_to_irq(ts->gpiod_int),
+ 					 NULL, goodix_ts_irq_handler,
+ 					 ts->irq_flags, ts->client->name, ts);
+ }
+-- 
+2.47.0
+

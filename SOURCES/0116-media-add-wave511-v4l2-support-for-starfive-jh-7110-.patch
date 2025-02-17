@@ -1,0 +1,708 @@
+From b3253e77cc3287ff40eca601f24741ebe008a4cd Mon Sep 17 00:00:00 2001
+From: Som Qin <som.qin@starfivetech.com>
+Date: Mon, 15 Jan 2024 11:32:24 +0800
+Subject: [PATCH 116/210] media: add wave511 v4l2 support for starfive jh 7110
+ platfrom
+
+Signed-off-by: Som Qin <som.qin@starfivetech.com>
+---
+ .../platform/chips-media/wave5/wave5-helper.c |   3 -
+ .../platform/chips-media/wave5/wave5-helper.h |   2 +-
+ .../platform/chips-media/wave5/wave5-hw.c     |  17 +-
+ .../chips-media/wave5/wave5-regdefine.h       |   2 +
+ .../platform/chips-media/wave5/wave5-vdi.c    |  15 ++
+ .../platform/chips-media/wave5/wave5-vdi.h    |   1 +
+ .../chips-media/wave5/wave5-vpu-dec.c         | 160 +++++++++++-------
+ .../platform/chips-media/wave5/wave5-vpu.c    |  53 ++++--
+ .../platform/chips-media/wave5/wave5-vpu.h    |   3 +
+ .../platform/chips-media/wave5/wave5-vpuapi.h |  20 +++
+ 10 files changed, 194 insertions(+), 82 deletions(-)
+
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-helper.c b/drivers/media/platform/chips-media/wave5/wave5-helper.c
+index 8433ecab230c..ec710b838dfe 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-helper.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-helper.c
+@@ -29,9 +29,6 @@ void wave5_cleanup_instance(struct vpu_instance *inst)
+ {
+ 	int i;
+ 
+-	if (list_is_singular(&inst->list))
+-		wave5_vdi_free_sram(inst->dev);
+-
+ 	for (i = 0; i < inst->fbc_buf_count; i++)
+ 		wave5_vpu_dec_reset_framebuffer(inst, i);
+ 
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-helper.h b/drivers/media/platform/chips-media/wave5/wave5-helper.h
+index 6cee1c14d3ce..b17c96670a3d 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-helper.h
++++ b/drivers/media/platform/chips-media/wave5/wave5-helper.h
+@@ -11,7 +11,7 @@
+ #include "wave5-vpu.h"
+ 
+ #define FMT_TYPES	2
+-#define MAX_FMTS	12
++#define MAX_FMTS	6
+ 
+ const char *state_to_str(enum vpu_instance_state state);
+ void wave5_cleanup_instance(struct vpu_instance *inst);
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-hw.c b/drivers/media/platform/chips-media/wave5/wave5-hw.c
+index 3fcb2d92add8..29e15888a21a 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-hw.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-hw.c
+@@ -186,12 +186,13 @@ unsigned int wave5_vpu_get_product_id(struct vpu_device *vpu_dev)
+ 	u32 val = vpu_read_reg(vpu_dev, W5_PRODUCT_NUMBER);
+ 
+ 	switch (val) {
++	case WAVE511_CODE:
++		return PRODUCT_ID_511;
+ 	case WAVE521C_CODE:
+ 		return PRODUCT_ID_521;
+ 	case WAVE521_CODE:
+ 	case WAVE521C_DUAL_CODE:
+ 	case WAVE521E1_CODE:
+-	case WAVE511_CODE:
+ 	case WAVE517_CODE:
+ 	case WAVE537_CODE:
+ 		dev_err(vpu_dev->dev, "Unsupported product id (%x)\n", val);
+@@ -607,6 +608,20 @@ static void wave5_get_dec_seq_result(struct vpu_instance *inst, struct dec_initi
+ 	info->pic_crop_rect.top = (reg_val >> 16) & 0xffff;
+ 	info->pic_crop_rect.bottom = reg_val & 0xffff;
+ 
++	info->f_rate_numerator = vpu_read_reg(inst->dev, W5_RET_DEC_FRAME_RATE_NR);
++	info->f_rate_denominator = vpu_read_reg(inst->dev, W5_RET_DEC_FRAME_RATE_DR);
++
++	if (info->f_rate_numerator > 0 && info->f_rate_denominator >0) {
++		if (inst->std == W_HEVC_DEC)
++			info->ns_per_frame = 1000000000 * (u64)info->f_rate_denominator / (u64)info->f_rate_numerator;
++		else if (inst->std == W_AVC_DEC)
++			info->ns_per_frame = 1000000000 * 2 * (u64)info->f_rate_denominator / (u64)info->f_rate_numerator;
++		else
++			info->ns_per_frame = 1000000000 / 30; //30fps
++	} else {
++		info->ns_per_frame = 1000000000 / 30; //30fps
++	}
++
+ 	reg_val = vpu_read_reg(inst->dev, W5_RET_DEC_COLOR_SAMPLE_INFO);
+ 	info->luma_bitdepth = reg_val & 0xf;
+ 	info->chroma_bitdepth = (reg_val >> 4) & 0xf;
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-regdefine.h b/drivers/media/platform/chips-media/wave5/wave5-regdefine.h
+index a15c6b2c3d8b..28c89b2f1888 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-regdefine.h
++++ b/drivers/media/platform/chips-media/wave5/wave5-regdefine.h
+@@ -204,6 +204,8 @@ enum query_opt {
+ #define W5_CODE_PARAM                           (W5_REG_BASE + 0x0118)
+ #define W5_ADDR_TEMP_BASE                       (W5_REG_BASE + 0x011C)
+ #define W5_TEMP_SIZE                            (W5_REG_BASE + 0x0120)
++#define W5_ADDR_SEC_AXI                         (W5_REG_BASE + 0x0124)
++#define W5_SEC_AXI_SIZE                         (W5_REG_BASE + 0x0128)
+ #define W5_HW_OPTION                            (W5_REG_BASE + 0x012C)
+ #define W5_SEC_AXI_PARAM                        (W5_REG_BASE + 0x0180)
+ 
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-vdi.c b/drivers/media/platform/chips-media/wave5/wave5-vdi.c
+index 3809f70bc0b4..beae8c747b3d 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-vdi.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vdi.c
+@@ -11,6 +11,17 @@
+ #include "wave5-regdefine.h"
+ #include <linux/delay.h>
+ 
++extern void sifive_l2_flush64_range(unsigned long start, unsigned long len);
++extern void sifive_ccache_flush_entire(void);
++
++void wave5_flush_l2_cache(unsigned long start, unsigned long len)
++{
++	if (len >= 0x80000)
++		sifive_ccache_flush_entire();
++	else
++		sifive_l2_flush64_range(start, len);
++}
++
+ static int wave5_vdi_allocate_common_memory(struct device *dev)
+ {
+ 	struct vpu_device *vpu_dev = dev_get_drvdata(dev);
+@@ -89,6 +100,7 @@ int wave5_vdi_clear_memory(struct vpu_device *vpu_dev, struct vpu_buf *vb)
+ 	}
+ 
+ 	memset(vb->vaddr, 0, vb->size);
++	wave5_flush_l2_cache(vb->daddr, vb->size);
+ 	return vb->size;
+ }
+ 
+@@ -106,6 +118,7 @@ int wave5_vdi_write_memory(struct vpu_device *vpu_dev, struct vpu_buf *vb, size_
+ 	}
+ 
+ 	memcpy(vb->vaddr + offset, data, len);
++	wave5_flush_l2_cache(vb->daddr + offset, len);
+ 
+ 	return len;
+ }
+@@ -126,6 +139,8 @@ int wave5_vdi_allocate_dma_memory(struct vpu_device *vpu_dev, struct vpu_buf *vb
+ 	vb->vaddr = vaddr;
+ 	vb->daddr = daddr;
+ 
++	wave5_flush_l2_cache(daddr, vb->size);
++
+ 	return 0;
+ }
+ 
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-vdi.h b/drivers/media/platform/chips-media/wave5/wave5-vdi.h
+index 3984ef3f1f96..3dbc3376c716 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-vdi.h
++++ b/drivers/media/platform/chips-media/wave5/wave5-vdi.h
+@@ -31,5 +31,6 @@ struct vpu_buf {
+ 
+ int wave5_vdi_init(struct device *dev);
+ int wave5_vdi_release(struct device *dev);	//this function may be called only at system off.
++void wave5_flush_l2_cache(unsigned long start, unsigned long len);
+ 
+ #endif //#ifndef _VDI_H_
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
+index ef227af72348..7a8d0ea9193c 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
+@@ -32,48 +32,6 @@ static const struct vpu_format dec_fmt_list[FMT_TYPES][MAX_FMTS] = {
+ 		},
+ 	},
+ 	[VPU_FMT_TYPE_RAW] = {
+-		{
+-			.v4l2_pix_fmt = V4L2_PIX_FMT_YUV420,
+-			.max_width = 8192,
+-			.min_width = 8,
+-			.max_height = 4320,
+-			.min_height = 8,
+-		},
+-		{
+-			.v4l2_pix_fmt = V4L2_PIX_FMT_NV12,
+-			.max_width = 8192,
+-			.min_width = 8,
+-			.max_height = 4320,
+-			.min_height = 8,
+-		},
+-		{
+-			.v4l2_pix_fmt = V4L2_PIX_FMT_NV21,
+-			.max_width = 8192,
+-			.min_width = 8,
+-			.max_height = 4320,
+-			.min_height = 8,
+-		},
+-		{
+-			.v4l2_pix_fmt = V4L2_PIX_FMT_YUV422P,
+-			.max_width = 8192,
+-			.min_width = 8,
+-			.max_height = 4320,
+-			.min_height = 8,
+-		},
+-		{
+-			.v4l2_pix_fmt = V4L2_PIX_FMT_NV16,
+-			.max_width = 8192,
+-			.min_width = 8,
+-			.max_height = 4320,
+-			.min_height = 8,
+-		},
+-		{
+-			.v4l2_pix_fmt = V4L2_PIX_FMT_NV61,
+-			.max_width = 8192,
+-			.min_width = 8,
+-			.max_height = 4320,
+-			.min_height = 8,
+-		},
+ 		{
+ 			.v4l2_pix_fmt = V4L2_PIX_FMT_YUV420M,
+ 			.max_width = 8192,
+@@ -96,21 +54,21 @@ static const struct vpu_format dec_fmt_list[FMT_TYPES][MAX_FMTS] = {
+ 			.min_height = 8,
+ 		},
+ 		{
+-			.v4l2_pix_fmt = V4L2_PIX_FMT_YUV422M,
++			.v4l2_pix_fmt = V4L2_PIX_FMT_YUV420,
+ 			.max_width = 8192,
+ 			.min_width = 8,
+ 			.max_height = 4320,
+ 			.min_height = 8,
+ 		},
+ 		{
+-			.v4l2_pix_fmt = V4L2_PIX_FMT_NV16M,
++			.v4l2_pix_fmt = V4L2_PIX_FMT_NV12,
+ 			.max_width = 8192,
+ 			.min_width = 8,
+ 			.max_height = 4320,
+ 			.min_height = 8,
+ 		},
+ 		{
+-			.v4l2_pix_fmt = V4L2_PIX_FMT_NV61M,
++			.v4l2_pix_fmt = V4L2_PIX_FMT_NV21,
+ 			.max_width = 8192,
+ 			.min_width = 8,
+ 			.max_height = 4320,
+@@ -187,6 +145,8 @@ static void wave5_handle_src_buffer(struct vpu_instance *inst, dma_addr_t rd_ptr
+ 	struct v4l2_m2m_ctx *m2m_ctx = inst->v4l2_fh.m2m_ctx;
+ 	struct v4l2_m2m_buffer *buf, *n;
+ 	size_t consumed_bytes = 0;
++	int i, j, ret;
++	u64 flag;
+ 
+ 	if (rd_ptr >= inst->last_rd_ptr) {
+ 		consumed_bytes = rd_ptr - inst->last_rd_ptr;
+@@ -213,7 +173,33 @@ static void wave5_handle_src_buffer(struct vpu_instance *inst, dma_addr_t rd_ptr
+ 		dev_dbg(inst->dev->dev, "%s: removing src buffer %i",
+ 			__func__, src_buf->vb2_buf.index);
+ 		src_buf = v4l2_m2m_src_buf_remove(m2m_ctx);
+-		inst->timestamp = src_buf->vb2_buf.timestamp;
++
++		if (!inst->monotonic_timestamp && !src_buf->vb2_buf.timestamp) {
++			inst->timestamp_zero_cnt++;
++			if (inst->timestamp_zero_cnt > 1) {
++				inst->monotonic_timestamp = TRUE;
++			}
++		}
++
++		if(!inst->monotonic_timestamp) {
++			ret = mutex_lock_interruptible(&inst->time_stamp.lock);
++			if (ret) {
++				dev_err(inst->dev->dev, "%s: lock err\n", __func__);
++				return;
++			}
++			inst->time_stamp.buf[inst->time_stamp.cnt] = src_buf->vb2_buf.timestamp;
++			inst->time_stamp.cnt++;
++
++			for (i = 1; i < inst->time_stamp.cnt; i++) {
++				flag = inst->time_stamp.buf[i];
++				for (j = i - 1; j >= 0 && inst->time_stamp.buf[j] < flag ; j--) {
++					inst->time_stamp.buf[j + 1] = inst->time_stamp.buf[j];
++				}
++				inst->time_stamp.buf[j + 1] = flag;
++			}
++			mutex_unlock(&inst->time_stamp.lock);
++		}
++
+ 		v4l2_m2m_buf_done(src_buf, VB2_BUF_STATE_DONE);
+ 		consumed_bytes -= src_size;
+ 
+@@ -295,8 +281,7 @@ static void wave5_update_pix_fmt(struct v4l2_pix_format_mplane *pix_mp, unsigned
+ 		pix_mp->width = width;
+ 		pix_mp->height = height;
+ 		pix_mp->plane_fmt[0].bytesperline = 0;
+-		pix_mp->plane_fmt[0].sizeimage = max(DEFAULT_SRC_SIZE(width, height),
+-						     pix_mp->plane_fmt[0].sizeimage);
++		pix_mp->plane_fmt[0].sizeimage = width * height;
+ 		break;
+ 	}
+ }
+@@ -395,8 +380,8 @@ static int handle_dynamic_resolution_change(struct vpu_instance *inst)
+ 		inst->conf_win.height = initial_info->pic_height -
+ 			initial_info->pic_crop_rect.top - initial_info->pic_crop_rect.bottom;
+ 
+-		wave5_update_pix_fmt(&inst->src_fmt, initial_info->pic_width,
+-				     initial_info->pic_height);
++		//wave5_update_pix_fmt(&inst->src_fmt, initial_info->pic_width,
++		//		     initial_info->pic_height);
+ 		wave5_update_pix_fmt(&inst->dst_fmt, initial_info->pic_width,
+ 				     initial_info->pic_height);
+ 	}
+@@ -415,6 +400,7 @@ static void wave5_vpu_dec_finish_decode(struct vpu_instance *inst)
+ 	struct vb2_v4l2_buffer *disp_buf = NULL;
+ 	struct vb2_queue *dst_vq = v4l2_m2m_get_dst_vq(m2m_ctx);
+ 	struct queue_status_info q_status;
++	u32 stride, height;
+ 
+ 	dev_dbg(inst->dev->dev, "%s: Fetch output info from firmware.", __func__);
+ 
+@@ -446,7 +432,6 @@ static void wave5_vpu_dec_finish_decode(struct vpu_instance *inst)
+ 						       dec_info.index_frame_decoded);
+ 		if (vb) {
+ 			dec_buf = to_vb2_v4l2_buffer(vb);
+-			dec_buf->vb2_buf.timestamp = inst->timestamp;
+ 		} else {
+ 			dev_warn(inst->dev->dev, "%s: invalid decoded frame index %i",
+ 				 __func__, dec_info.index_frame_decoded);
+@@ -463,27 +448,47 @@ static void wave5_vpu_dec_finish_decode(struct vpu_instance *inst)
+ 	/* If there is anything to display, do that now */
+ 	if (disp_buf) {
+ 		struct vpu_dst_buffer *dst_vpu_buf = wave5_to_vpu_dst_buf(disp_buf);
++		stride = dec_info.disp_frame.stride;
++		height = dec_info.disp_pic_height -
++				dec_info.rc_display.bottom;
++		dev_dbg(inst->dev->dev, "%s %d disp_pic_height %u rc_display.bottom %u\n",
++				__func__, __LINE__, dec_info.disp_pic_height, dec_info.rc_display.bottom);
++		dev_dbg(inst->dev->dev, "%s %d stride %u height %u num %d\n", __func__, __LINE__, stride, height,inst->dst_fmt.num_planes);
+ 
+ 		if (inst->dst_fmt.num_planes == 1) {
+ 			vb2_set_plane_payload(&disp_buf->vb2_buf, 0,
+-					      inst->dst_fmt.plane_fmt[0].sizeimage);
++					      (stride * height * 3 / 2));
+ 		} else if (inst->dst_fmt.num_planes == 2) {
+ 			vb2_set_plane_payload(&disp_buf->vb2_buf, 0,
+-					      inst->dst_fmt.plane_fmt[0].sizeimage);
++					      (stride * height));
+ 			vb2_set_plane_payload(&disp_buf->vb2_buf, 1,
+-					      inst->dst_fmt.plane_fmt[1].sizeimage);
++					      ((stride / 2) * height));
+ 		} else if (inst->dst_fmt.num_planes == 3) {
+ 			vb2_set_plane_payload(&disp_buf->vb2_buf, 0,
+-					      inst->dst_fmt.plane_fmt[0].sizeimage);
++					      (stride * height));
+ 			vb2_set_plane_payload(&disp_buf->vb2_buf, 1,
+-					      inst->dst_fmt.plane_fmt[1].sizeimage);
++					      ((stride / 2) * (height / 2)));
+ 			vb2_set_plane_payload(&disp_buf->vb2_buf, 2,
+-					      inst->dst_fmt.plane_fmt[2].sizeimage);
++					      ((stride / 2) * (height / 2)));
+ 		}
+ 
+ 		/* TODO implement interlace support */
+ 		disp_buf->field = V4L2_FIELD_NONE;
+ 		dst_vpu_buf->display = true;
++
++		if (!inst->monotonic_timestamp) {
++			ret = mutex_lock_interruptible(&inst->time_stamp.lock);
++			if (ret) {
++				dev_err(inst->dev->dev, "%s: lock err\n", __func__);
++				return;
++			}
++			disp_buf->vb2_buf.timestamp = inst->time_stamp.buf[inst->time_stamp.cnt - 1];
++			inst->time_stamp.cnt--;
++			mutex_unlock(&inst->time_stamp.lock);
++		} else {
++			disp_buf->vb2_buf.timestamp = inst->timestamp_cnt++ * inst->codec_info->dec_info.initial_info.ns_per_frame;
++		}
++
+ 		v4l2_m2m_buf_done(disp_buf, VB2_BUF_STATE_DONE);
+ 
+ 		dev_dbg(inst->dev->dev, "%s: frame_cycle %8u (payload %lu)\n",
+@@ -573,6 +578,7 @@ static int wave5_vpu_dec_try_fmt_cap(struct file *file, void *fh, struct v4l2_fo
+ {
+ 	struct vpu_instance *inst = wave5_to_vpu_inst(fh);
+ 	struct dec_info *p_dec_info = &inst->codec_info->dec_info;
++	struct dec_initial_info *initial_info;
+ 	const struct vpu_format *vpu_fmt;
+ 	int width, height;
+ 
+@@ -597,8 +603,10 @@ static int wave5_vpu_dec_try_fmt_cap(struct file *file, void *fh, struct v4l2_fo
+ 	}
+ 
+ 	if (p_dec_info->initial_info_obtained) {
++		initial_info = &inst->codec_info->dec_info.initial_info;
+ 		width = inst->dst_fmt.width;
+-		height = inst->dst_fmt.height;
++		height = initial_info->pic_height -
++			initial_info->pic_crop_rect.top - initial_info->pic_crop_rect.bottom;
+ 	}
+ 
+ 	wave5_update_pix_fmt(&f->fmt.pix_mp, width, height);
+@@ -975,6 +983,7 @@ static const struct v4l2_ioctl_ops wave5_vpu_dec_ioctl_ops = {
+ 	.vidioc_s_selection = wave5_vpu_dec_s_selection,
+ 
+ 	.vidioc_reqbufs = v4l2_m2m_ioctl_reqbufs,
++	.vidioc_create_bufs = v4l2_m2m_ioctl_create_bufs,
+ 	/*
+ 	 * Firmware does not support CREATE_BUFS for CAPTURE queue. Since
+ 	 * there is no immediate use-case for supporting CREATE_BUFS on
+@@ -1063,7 +1072,13 @@ static int wave5_prepare_fb(struct vpu_instance *inst)
+ 		struct frame_buffer *frame = &inst->frame_buf[i];
+ 		struct vpu_buf *vframe = &inst->frame_vbuf[i];
+ 
+-		fb_stride = inst->dst_fmt.width;
++		if (inst->codec_info->dec_info.initial_info.luma_bitdepth > 8 ||
++			inst->codec_info->dec_info.initial_info.chroma_bitdepth > 8) {
++			fb_stride = ALIGN(ALIGN(inst->dst_fmt.width, 16) * 5, 32) / 4;
++			fb_stride = ALIGN(fb_stride, 32);
++		} else {
++			fb_stride = inst->dst_fmt.width;
++		}
+ 		fb_height = ALIGN(inst->dst_fmt.height, 32);
+ 		luma_size = fb_stride * fb_height;
+ 
+@@ -1144,6 +1159,9 @@ static int wave5_prepare_fb(struct vpu_instance *inst)
+ 		frame->stride = fb_stride;
+ 		frame->map_type = LINEAR_FRAME_MAP;
+ 		frame->update_fb_info = true;
++
++		if (frame->size < inst->dev->l2_cache_size)
++			wave5_flush_l2_cache(frame->buf_y, frame->size);
+ 	}
+ 
+ 	ret = wave5_vpu_dec_register_frame_buffer_ex(inst, non_linear_num, linear_num,
+@@ -1232,6 +1250,9 @@ static int fill_ringbuffer(struct vpu_instance *inst)
+ 		dma_addr_t wr_ptr = 0;
+ 		size_t remain_size = 0;
+ 
++		if (src_size == vb2_plane_size(&vbuf->vb2_buf, 0))
++			src_size = 0;
++
+ 		if (vpu_buf->consumed) {
+ 			dev_dbg(inst->dev->dev, "already copied src buf (%u) to the ring buffer\n",
+ 				vbuf->vb2_buf.index);
+@@ -1307,6 +1328,7 @@ static void wave5_vpu_dec_buf_queue_dst(struct vb2_buffer *vb)
+ 	struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
+ 	struct vpu_instance *inst = vb2_get_drv_priv(vb->vb2_queue);
+ 	struct v4l2_m2m_ctx *m2m_ctx = inst->v4l2_fh.m2m_ctx;
++	struct frame_buffer *frame_buf;
+ 
+ 	vbuf->sequence = inst->queued_dst_buf_num++;
+ 
+@@ -1314,6 +1336,10 @@ static void wave5_vpu_dec_buf_queue_dst(struct vb2_buffer *vb)
+ 		struct vpu_dst_buffer *vpu_buf = wave5_to_vpu_dst_buf(vbuf);
+ 		int ret;
+ 
++		frame_buf = &inst->frame_buf[vb->index + inst->fbc_buf_count];
++		if (frame_buf->size < inst->dev->l2_cache_size)
++			wave5_flush_l2_cache(frame_buf->buf_y, frame_buf->size);
++
+ 		/*
+ 		 * The buffer is already registered just clear the display flag
+ 		 * to let the firmware know it can be used.
+@@ -1417,7 +1443,7 @@ static int wave5_vpu_dec_start_streaming(struct vb2_queue *q, unsigned int count
+ 			goto return_buffers;
+ 
+ 		if (inst->state == VPU_INST_STATE_INIT_SEQ) {
+-			if (initial_info->luma_bitdepth != 8) {
++			if (initial_info->luma_bitdepth != 8 && initial_info->luma_bitdepth != 10) {
+ 				dev_info(inst->dev->dev, "%s: no support for %d bit depth",
+ 					 __func__, initial_info->luma_bitdepth);
+ 				ret = -EINVAL;
+@@ -1584,21 +1610,25 @@ static int initialize_sequence(struct vpu_instance *inst)
+ 	struct dec_initial_info initial_info;
+ 	int ret = 0;
+ 
++	inst->time_stamp.cnt = 0;
++	mutex_init(&inst->time_stamp.lock);
++	memset(&inst->time_stamp.buf, 0, sizeof(MAX_TIMESTAMP_CIR_BUF));
++
+ 	memset(&initial_info, 0, sizeof(struct dec_initial_info));
+ 
+ 	ret = wave5_vpu_dec_issue_seq_init(inst);
+ 	if (ret) {
+-		dev_dbg(inst->dev->dev, "%s: wave5_vpu_dec_issue_seq_init, fail: %d\n",
++		dev_err(inst->dev->dev, "%s: wave5_vpu_dec_issue_seq_init, fail: %d\n",
+ 			__func__, ret);
+ 		return ret;
+ 	}
+ 
+ 	if (wave5_vpu_wait_interrupt(inst, VPU_DEC_TIMEOUT) < 0)
+-		dev_dbg(inst->dev->dev, "%s: failed to call vpu_wait_interrupt()\n", __func__);
++		dev_err(inst->dev->dev, "%s: failed to call vpu_wait_interrupt()\n", __func__);
+ 
+ 	ret = wave5_vpu_dec_complete_seq_init(inst, &initial_info);
+ 	if (ret) {
+-		dev_dbg(inst->dev->dev, "%s: vpu_dec_complete_seq_init, fail: %d, reason: %u\n",
++		dev_err(inst->dev->dev, "%s: vpu_dec_complete_seq_init, fail: %d, reason: %u\n",
+ 			__func__, ret, initial_info.seq_init_err_reason);
+ 		wave5_handle_src_buffer(inst, initial_info.rd_ptr);
+ 		return ret;
+@@ -1725,6 +1755,8 @@ static void wave5_vpu_dec_job_abort(void *priv)
+ 	if (ret)
+ 		dev_warn(inst->dev->dev,
+ 			 "Setting EOS for the bitstream, fail: %d\n", ret);
++
++	v4l2_m2m_job_finish(inst->v4l2_m2m_dev, inst->v4l2_fh.m2m_ctx);
+ }
+ 
+ static int wave5_vpu_dec_job_ready(void *priv)
+@@ -1865,8 +1897,6 @@ static int wave5_vpu_open_dec(struct file *filp)
+ 		goto cleanup_inst;
+ 	}
+ 
+-	wave5_vdi_allocate_sram(inst->dev);
+-
+ 	return 0;
+ 
+ cleanup_inst:
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-vpu.c b/drivers/media/platform/chips-media/wave5/wave5-vpu.c
+index bfe4caa79cc9..3a20bc1c0a8c 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpu.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpu.c
+@@ -8,6 +8,7 @@
+ #include <linux/module.h>
+ #include <linux/platform_device.h>
+ #include <linux/clk.h>
++#include <linux/reset.h>
+ #include <linux/firmware.h>
+ #include <linux/interrupt.h>
+ #include "wave5-vpu.h"
+@@ -117,11 +118,17 @@ static int wave5_vpu_load_firmware(struct device *dev, const char *fw_name,
+ 	return 0;
+ }
+ 
++static const struct of_device_id sifive_l2_ids[] = {
++	{ .compatible = "sifive,fu740-c000-ccache" },
++	{ /* end of table */ },
++};
++
+ static int wave5_vpu_probe(struct platform_device *pdev)
+ {
+ 	int ret;
+ 	struct vpu_device *dev;
+ 	const struct wave5_match_data *match_data;
++	struct device_node *np;
+ 	u32 fw_revision;
+ 
+ 	match_data = device_get_match_data(&pdev->dev);
+@@ -160,28 +167,32 @@ static int wave5_vpu_probe(struct platform_device *pdev)
+ 	}
+ 	dev->num_clks = ret;
+ 
++	dev->resets = devm_reset_control_array_get_exclusive(&pdev->dev);
++	if (IS_ERR(dev->resets)) {
++		dev_err(&pdev->dev, "faied to get vpu reset controls\n");
++		return -ENODEV;
++	}
++
++	dev->sram_buf.daddr = VDI_SRAM_BASE_ADDR;
++	dev->sram_buf.size = VDI_WAVE511_SRAM_SIZE;
++
+ 	ret = clk_bulk_prepare_enable(dev->num_clks, dev->clks);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "Enabling clocks, fail: %d\n", ret);
+ 		return ret;
+ 	}
+ 
+-	ret = of_property_read_u32(pdev->dev.of_node, "sram-size",
+-				   &dev->sram_size);
++	ret = reset_control_deassert(dev->resets);
+ 	if (ret) {
+-		dev_warn(&pdev->dev, "sram-size not found\n");
+-		dev->sram_size = 0;
++		dev_err(&pdev->dev, "Reset deassert, fail: %d\n", ret);
++		goto  err_clk_dis;
+ 	}
+ 
+-	dev->sram_pool = of_gen_pool_get(pdev->dev.of_node, "sram", 0);
+-	if (!dev->sram_pool)
+-		dev_warn(&pdev->dev, "sram node not found\n");
+-
+ 	dev->product_code = wave5_vdi_read_register(dev, VPU_PRODUCT_CODE_REGISTER);
+ 	ret = wave5_vdi_init(&pdev->dev);
+ 	if (ret < 0) {
+ 		dev_err(&pdev->dev, "wave5_vdi_init, fail: %d\n", ret);
+-		goto err_clk_dis;
++		goto err_rst_dis;
+ 	}
+ 	dev->product = wave5_vpu_get_product_id(dev);
+ 
+@@ -227,11 +238,21 @@ static int wave5_vpu_probe(struct platform_device *pdev)
+ 		goto err_enc_unreg;
+ 	}
+ 
+-	dev_info(&pdev->dev, "Added wave5 driver with caps: %s %s\n",
++	np = of_find_matching_node(NULL, sifive_l2_ids);
++	if (!np) {
++		dev_err(&pdev->dev, "find cache node, fail\n");
++		goto err_enc_unreg;
++	}
++
++	ret = of_property_read_u32(np, "cache-size", &dev->l2_cache_size);
++	if (ret)
++		dev->l2_cache_size = 0x200000;
++
++	dev_dbg(&pdev->dev, "Added wave5 driver with caps: %s %s\n",
+ 		 (match_data->flags & WAVE5_IS_ENC) ? "'ENCODE'" : "",
+ 		 (match_data->flags & WAVE5_IS_DEC) ? "'DECODE'" : "");
+-	dev_info(&pdev->dev, "Product Code:      0x%x\n", dev->product_code);
+-	dev_info(&pdev->dev, "Firmware Revision: %u\n", fw_revision);
++	dev_dbg(&pdev->dev, "Product Code:      0x%x\n", dev->product_code);
++	dev_dbg(&pdev->dev, "Firmware Revision: %u\n", fw_revision);
+ 	return 0;
+ 
+ err_enc_unreg:
+@@ -244,6 +265,8 @@ static int wave5_vpu_probe(struct platform_device *pdev)
+ 	v4l2_device_unregister(&dev->v4l2_dev);
+ err_vdi_release:
+ 	wave5_vdi_release(&pdev->dev);
++err_rst_dis:
++	reset_control_assert(dev->resets);
+ err_clk_dis:
+ 	clk_bulk_disable_unprepare(dev->num_clks, dev->clks);
+ 
+@@ -271,8 +294,14 @@ static const struct wave5_match_data ti_wave521c_data = {
+ 	.fw_name = "cnm/wave521c_k3_codec_fw.bin",
+ };
+ 
++static const struct wave5_match_data sfdec_match_data = {
++	.flags = WAVE5_IS_DEC,
++	.fw_name = "wave511_dec_fw.bin",
++};
++
+ static const struct of_device_id wave5_dt_ids[] = {
+ 	{ .compatible = "ti,k3-j721s2-wave521c", .data = &ti_wave521c_data },
++	{ .compatible = "starfive,vdec", .data = &sfdec_match_data },
+ 	{ /* sentinel */ }
+ };
+ MODULE_DEVICE_TABLE(of, wave5_dt_ids);
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-vpu.h b/drivers/media/platform/chips-media/wave5/wave5-vpu.h
+index 32b7fd3730b5..fe1de3e8a22c 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpu.h
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpu.h
+@@ -20,6 +20,9 @@
+ #define VPU_BUF_SYNC_TO_DEVICE 0
+ #define VPU_BUF_SYNC_FROM_DEVICE 1
+ 
++#define VDI_SRAM_BASE_ADDR          0x00000000
++#define VDI_WAVE511_SRAM_SIZE       0x2D000
++
+ struct vpu_src_buffer {
+ 	struct v4l2_m2m_buffer	v4l2_m2m_buf;
+ 	struct list_head	list;
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-vpuapi.h b/drivers/media/platform/chips-media/wave5/wave5-vpuapi.h
+index 352f6e904e50..3c70d4572455 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpuapi.h
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpuapi.h
+@@ -44,6 +44,8 @@ enum vpu_instance_state {
+ 
+ #define MAX_REG_FRAME (WAVE5_MAX_FBS * 2)
+ 
++#define MAX_TIMESTAMP_CIR_BUF 30
++
+ #define WAVE5_DEC_HEVC_BUF_SIZE(_w, _h) (DIV_ROUND_UP(_w, 64) * DIV_ROUND_UP(_h, 64) * 256 + 64)
+ #define WAVE5_DEC_AVC_BUF_SIZE(_w, _h) ((((ALIGN(_w, 256) / 16) * (ALIGN(_h, 16) / 16)) + 16) * 80)
+ 
+@@ -366,6 +368,9 @@ struct dec_open_param {
+ struct dec_initial_info {
+ 	u32 pic_width;
+ 	u32 pic_height;
++	s32 f_rate_numerator; /* the numerator part of frame rate fraction */
++	s32 f_rate_denominator; /* the denominator part of frame rate fraction */
++	u64 ns_per_frame;
+ 	struct vpu_rect pic_crop_rect;
+ 	u32 min_frame_buffer_count; /* between 1 to 16 */
+ 
+@@ -754,8 +759,10 @@ struct vpu_device {
+ 	struct vpu_buf sram_buf;
+ 	void __iomem *vdb_register;
+ 	u32 product_code;
++	u32 l2_cache_size;
+ 	struct ida inst_ida;
+ 	struct clk_bulk_data *clks;
++	struct reset_control *resets;
+ 	int num_clks;
+ };
+ 
+@@ -765,6 +772,15 @@ struct vpu_instance_ops {
+ 	void (*finish_process)(struct vpu_instance *inst);
+ };
+ 
++/* for support GStreamer ver 1.20 over
++ * too old frame, eos sent too early
++ */
++struct timestamp_circ_buf {
++	u64 buf[MAX_TIMESTAMP_CIR_BUF];
++	struct mutex lock;
++	int cnt;
++};
++
+ struct vpu_instance {
+ 	struct list_head list;
+ 	struct v4l2_fh v4l2_fh;
+@@ -800,6 +816,10 @@ struct vpu_instance {
+ 	struct list_head avail_dst_bufs;
+ 	struct v4l2_rect conf_win;
+ 	u64 timestamp;
++	struct timestamp_circ_buf time_stamp;
++	u64 timestamp_cnt;
++	u32 timestamp_zero_cnt;
++	bool monotonic_timestamp;
+ 	enum frame_buffer_format output_format;
+ 	bool cbcr_interleave;
+ 	bool nv21;
+-- 
+2.47.0
+

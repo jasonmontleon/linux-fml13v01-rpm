@@ -1,0 +1,88 @@
+From be894c4ea3497d388807eb4f3e788339565f399f Mon Sep 17 00:00:00 2001
+From: "yang.wang" <yang.wang@deepcomputing.io>
+Date: Thu, 5 Sep 2024 14:47:45 +0800
+Subject: [PATCH 163/210] iio: light: add cm32181/cm32183 support.
+
+Signed-off-by: yang.wang <yang.wang@deepcomputing.io>
+---
+ .../jh7110-starfive-visionfive-2-framework.dts    | 15 +++++++++++++++
+ arch/riscv/configs/starfive_visionfive2_defconfig |  2 +-
+ drivers/iio/light/cm32181.c                       |  3 +++
+ 3 files changed, 19 insertions(+), 1 deletion(-)
+
+diff --git a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+index 13d8eb581e81..b43070d7e123 100755
+--- a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
++++ b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-framework.dts
+@@ -515,6 +515,21 @@ touchpad: hid@2c {
+ 		irq-gpio = <&sysgpio 30 0>;
+ 		status = "okay";
+ 	};
++
++	light_sensor: cm32183@29 {
++		compatible = "capella,cm32183";
++		reg = <0x29>;
++//		interrupt-parent = <&sysgpio>;
++//		interrupts = <47>;
++//		irq-gpio = <&gpio 47 0>;
++		status = "okay";
++	};
++
++	light_sensor2: cm32181@10 {
++		compatible = "capella,cm32181";
++		reg = <0x10>;
++		status = "okay";
++	};
+ };
+ 
+ &i2srx {
+diff --git a/arch/riscv/configs/starfive_visionfive2_defconfig b/arch/riscv/configs/starfive_visionfive2_defconfig
+index 6acfb58cec4a..07e870650baa 100644
+--- a/arch/riscv/configs/starfive_visionfive2_defconfig
++++ b/arch/riscv/configs/starfive_visionfive2_defconfig
+@@ -1,6 +1,5 @@
+ CONFIG_COMPILE_TEST=y
+ # CONFIG_WERROR is not set
+-# CONFIG_RANDSTRUCT is not set
+ CONFIG_DEFAULT_HOSTNAME="StarFive"
+ CONFIG_SYSVIPC=y
+ CONFIG_POSIX_MQUEUE=y
+@@ -362,6 +361,7 @@ CONFIG_SIFIVE_CCACHE=y
+ CONFIG_PM_DEVFREQ=y
+ CONFIG_IIO=y
+ CONFIG_IIO_ST_ACCEL_3AXIS=y
++CONFIG_CM32181=y
+ CONFIG_PWM=y
+ CONFIG_PWM_OCORES=y
+ CONFIG_PHY_STARFIVE_JH7110_PCIE=y
+diff --git a/drivers/iio/light/cm32181.c b/drivers/iio/light/cm32181.c
+index 9df85b3999fa..08d46dfeb45a 100644
+--- a/drivers/iio/light/cm32181.c
++++ b/drivers/iio/light/cm32181.c
+@@ -191,6 +191,7 @@ static int cm32181_reg_init(struct cm32181_chip *cm32181)
+ 	ret = i2c_smbus_read_word_data(client, CM32181_REG_ADDR_ID);
+ 	if (ret < 0)
+ 		return ret;
++	dev_dbg(&client->dev, "%s: chip_id = 0x%x\n", __func__, ret & 0xff);
+ 
+ 	/* check device ID */
+ 	switch (ret & 0xFF) {
+@@ -201,6 +202,7 @@ static int cm32181_reg_init(struct cm32181_chip *cm32181)
+ 		break;
+ 	case 0x81: /* CM32181 */
+ 	case 0x82: /* CM32182, fully compat. with CM32181 */
++	case 0x83:
+ 		cm32181->num_als_it = ARRAY_SIZE(cm32181_als_it_bits);
+ 		cm32181->als_it_bits = cm32181_als_it_bits;
+ 		cm32181->als_it_values = cm32181_als_it_values;
+@@ -523,6 +525,7 @@ static DEFINE_SIMPLE_DEV_PM_OPS(cm32181_pm_ops, cm32181_suspend, cm32181_resume)
+ static const struct of_device_id cm32181_of_match[] = {
+ 	{ .compatible = "capella,cm3218" },
+ 	{ .compatible = "capella,cm32181" },
++	{ .compatible = "capella,cm32183" },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, cm32181_of_match);
+-- 
+2.47.0
+

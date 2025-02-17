@@ -1,0 +1,98 @@
+From 7e44abd335f8e735ac8173d36a823654037ef17c Mon Sep 17 00:00:00 2001
+From: Changhuang Liang <changhuang.liang@starfivetech.com>
+Date: Fri, 12 Jan 2024 17:27:46 +0800
+Subject: [PATCH 105/210] media: starfive: Update flush l2cache interface
+
+Improve l2cache flush performance. And adjust ISP sc buffer size
+in pixel format.
+
+Signed-off-by: Changhuang Liang <changhuang.liang@starfivetech.com>
+---
+ .../media/platform/starfive/v4l2_driver/stf_video.c | 10 +++++-----
+ .../media/platform/starfive/v4l2_driver/stf_vin.c   | 13 ++++++++++---
+ .../media/platform/starfive/v4l2_driver/stf_vin.h   |  3 +++
+ 3 files changed, 18 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/media/platform/starfive/v4l2_driver/stf_video.c b/drivers/media/platform/starfive/v4l2_driver/stf_video.c
+index 84d87cdded71..49fcecdbc3e4 100644
+--- a/drivers/media/platform/starfive/v4l2_driver/stf_video.c
++++ b/drivers/media/platform/starfive/v4l2_driver/stf_video.c
+@@ -216,6 +216,11 @@ static int __video_try_fmt(struct stfcamss_video *video,
+ 				pix->height, fi->bpp[0]);
+ 		st_info(ST_VIDEO, "i = %d, s = 0x%x\n", i, pix->sizeimage);
+ 	}
++
++	if (stf_vin_map_isp_pad(video->id, STF_ISP_PAD_SRC)
++		== STF_ISP_PAD_SRC_SCD_Y)
++		pix->sizeimage = ISP_SCD_Y_BUFFER_SIZE;
++
+ 	return 0;
+ }
+ 
+@@ -285,11 +290,6 @@ static int video_queue_setup(struct vb2_queue *q,
+ 		if (!sizes[0])
+ 			st_err(ST_VIDEO, "%s: error size is zero!!!\n", __func__);
+ 	}
+-	if ((stf_vin_map_isp_pad(video->id, STF_ISP_PAD_SRC)
+-		== STF_ISP_PAD_SRC_SCD_Y) &&
+-		sizes[0] < ISP_SCD_Y_BUFFER_SIZE) {
+-		sizes[0] = ISP_SCD_Y_BUFFER_SIZE;
+-	}
+ 
+ 	st_info(ST_VIDEO, "%s, planes = %d, size = %d\n",
+ 			__func__, *num_planes, sizes[0]);
+diff --git a/drivers/media/platform/starfive/v4l2_driver/stf_vin.c b/drivers/media/platform/starfive/v4l2_driver/stf_vin.c
+index 656096c94008..9cd0a5dc0296 100644
+--- a/drivers/media/platform/starfive/v4l2_driver/stf_vin.c
++++ b/drivers/media/platform/starfive/v4l2_driver/stf_vin.c
+@@ -362,7 +362,10 @@ static void vin_buf_l2cache_flush(struct vin_output *output)
+ 
+ 	if (!list_empty(&output->pending_bufs)) {
+ 		list_for_each_entry(buffer, &output->pending_bufs, queue) {
+-			sifive_l2_flush64_range(buffer->addr[0], buffer->sizeimage);
++			if (buffer->sizeimage > STF_VIN_CRITICAL_CACHE_SIZE)
++				sifive_ccache_flush_entire();
++			else
++				sifive_l2_flush64_range(buffer->addr[0], buffer->sizeimage);
+ 		}
+ 	}
+ }
+@@ -1171,8 +1174,12 @@ static void vin_buffer_done(struct vin_line *line, struct vin_params *params)
+ 		 * which will not update cache by default.
+ 		 * Flush L2 cache to make sure data is updated.
+ 		 */
+-		if (ready_buf->vb.vb2_buf.memory == VB2_MEMORY_MMAP)
+-			sifive_l2_flush64_range(ready_buf->addr[0], ready_buf->sizeimage);
++		if (ready_buf->vb.vb2_buf.memory == VB2_MEMORY_MMAP) {
++			if (ready_buf->sizeimage > STF_VIN_CRITICAL_CACHE_SIZE)
++				sifive_ccache_flush_entire();
++			else
++				sifive_l2_flush64_range(ready_buf->addr[0], ready_buf->sizeimage);
++		}
+ 
+ 		vb2_buffer_done(&ready_buf->vb.vb2_buf, VB2_BUF_STATE_DONE);
+ 	}
+diff --git a/drivers/media/platform/starfive/v4l2_driver/stf_vin.h b/drivers/media/platform/starfive/v4l2_driver/stf_vin.h
+index 6b331b738440..812e7a91ed9f 100644
+--- a/drivers/media/platform/starfive/v4l2_driver/stf_vin.h
++++ b/drivers/media/platform/starfive/v4l2_driver/stf_vin.h
+@@ -21,6 +21,8 @@
+ #define STF_VIN_PAD_SRC    1
+ #define STF_VIN_PADS_NUM   2
+ 
++#define STF_VIN_CRITICAL_CACHE_SIZE 0x80000
++
+ struct vin2_format {
+ 	u32 code;
+ 	u8 bpp;
+@@ -169,6 +171,7 @@ struct stf_vin2_dev {
+ };
+ 
+ extern void sifive_l2_flush64_range(unsigned long start, unsigned long len);
++extern void sifive_ccache_flush_entire(void);
+ extern int stf_vin_subdev_init(struct stfcamss *stfcamss);
+ extern int stf_vin_register(struct stf_vin2_dev *vin_dev,
+ 		struct v4l2_device *v4l2_dev);
+-- 
+2.47.0
+
