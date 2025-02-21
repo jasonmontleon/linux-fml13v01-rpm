@@ -1,4 +1,4 @@
-From b921287e11a929990ef435c3681591710a3a7bdb Mon Sep 17 00:00:00 2001
+From 0fd1e73c7d592ab7cab94e7aebb5fc5bcf822cca Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Sun, 25 Jun 2023 09:40:29 +0800
 Subject: [PATCH 066/210] uart: 8250: Add dw auto flow ctrl support
@@ -46,7 +46,7 @@ index eaf4a907380a..a9c24bf272c1 100644
  	data->clk = devm_clk_get_optional(dev, "baudclk");
  	if (data->clk == NULL)
 diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
-index 2b1b2928ef7b..30ace4a39c8e 100644
+index c2778300e151..9e2343a4f290 100644
 --- a/drivers/tty/serial/8250/8250_port.c
 +++ b/drivers/tty/serial/8250/8250_port.c
 @@ -330,6 +330,14 @@ static const struct serial8250_config uart_config[] = {
@@ -76,7 +76,7 @@ index 2b1b2928ef7b..30ace4a39c8e 100644
  }
  
  /*
-@@ -2814,7 +2827,6 @@ serial8250_do_set_termios(struct uart_port *port, struct ktermios *termios,
+@@ -2822,7 +2835,6 @@ serial8250_do_set_termios(struct uart_port *port, struct ktermios *termios,
  		if (termios->c_cflag & CRTSCTS)
  			up->mcr |= UART_MCR_AFE;
  	}

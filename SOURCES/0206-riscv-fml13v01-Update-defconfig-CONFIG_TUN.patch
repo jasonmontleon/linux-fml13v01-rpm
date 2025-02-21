@@ -1,4 +1,4 @@
-From 1a5cad52028e8d700e7ec25767d60c64ebbda0cb Mon Sep 17 00:00:00 2001
+From 61906e35e48e7bc84cd2229516a5b92c57f923ad Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Wed, 12 Feb 2025 11:05:56 +0800
 Subject: [PATCH 206/210] riscv: fml13v01: Update defconfig: CONFIG_TUN.

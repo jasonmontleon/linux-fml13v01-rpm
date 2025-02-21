@@ -1,4 +1,4 @@
-From d7255753eb75e009598dcfdb03729d062967d7af Mon Sep 17 00:00:00 2001
+From bc5d2be38665f5a245c004d59ef6dbd44d68108f Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:05:57 +0800
 Subject: [PATCH 020/210] PCI: microchip: Rename two setup functions

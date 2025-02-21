@@ -1,4 +1,4 @@
-From 38e72f39c3191aa889bf20e8c294e19899fc0a8f Mon Sep 17 00:00:00 2001
+From be69148d13eac9c49eacedb06461fb62fc3d46f2 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Mon, 11 Mar 2024 11:10:45 +0800
 Subject: [PATCH 126/210] riscv: dts: starfive: jh7110-evb: Add qspi norflash

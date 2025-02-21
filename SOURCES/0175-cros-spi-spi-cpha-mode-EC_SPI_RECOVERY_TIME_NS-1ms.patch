@@ -1,4 +1,4 @@
-From 4868fcb91a32888a27414870ebd2dbedb2a90a4e Mon Sep 17 00:00:00 2001
+From 8f8405b8caeb20202857dd6656f8b724e17f02da Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Sun, 29 Sep 2024 18:37:08 +0800
 Subject: [PATCH 175/210] cros-spi: spi-cpha mode, EC_SPI_RECOVERY_TIME_NS:

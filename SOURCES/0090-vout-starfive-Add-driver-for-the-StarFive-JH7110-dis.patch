@@ -1,4 +1,4 @@
-From e7b51bc5d3f7bd4617871971f2a96fa317046c6d Mon Sep 17 00:00:00 2001
+From a6611534db526d9b01562133c01723fbc64e93e8 Mon Sep 17 00:00:00 2001
 From: "shengyang.chen" <shengyang.chen@starfivetech.com>
 Date: Mon, 12 Jun 2023 15:31:38 +0800
 Subject: [PATCH 090/210] vout: starfive: Add driver for the StarFive JH7110

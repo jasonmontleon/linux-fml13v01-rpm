@@ -1,4 +1,4 @@
-From 9e883905156fccdaef8d7dd4b8a4921d0a1740d1 Mon Sep 17 00:00:00 2001
+From a3d35ffcaf12c7f2872c19984e5a00f04f32c626 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Mon, 14 Aug 2023 16:06:17 +0800
 Subject: [PATCH 036/210] ASoC: starfive: Add JH7110 PWM-DAC driver
