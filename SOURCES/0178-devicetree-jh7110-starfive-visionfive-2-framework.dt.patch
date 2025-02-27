@@ -1,4 +1,4 @@
-From e402e877a931c5f91832cab5d51cdec82803695a Mon Sep 17 00:00:00 2001
+From e85e34ff3db297f170f1f3005d2ee9665734adae Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Wed, 16 Oct 2024 17:59:51 +0800
 Subject: [PATCH 178/210] devicetree:

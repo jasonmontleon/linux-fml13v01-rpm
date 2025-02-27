@@ -1,4 +1,4 @@
-From 51279820a97f58c0d1b5d8192f62a229d3507d09 Mon Sep 17 00:00:00 2001
+From b8f51a23d15af80003219f0d8114d8e4ca25db76 Mon Sep 17 00:00:00 2001
 From: Xingyu Wu <xingyu.wu@starfivetech.com>
 Date: Tue, 17 Oct 2023 17:22:52 +0800
 Subject: [PATCH 053/210] ASoC: dwc: i2s: Add RX master support for StarFive

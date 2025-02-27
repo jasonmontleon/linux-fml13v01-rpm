@@ -1,4 +1,4 @@
-From 6b6aed3b5ddf1c158de65b2ab89a62fb98060e08 Mon Sep 17 00:00:00 2001
+From 1f05e61b53ffaccca03c92a3b8f5f21a67bb51b5 Mon Sep 17 00:00:00 2001
 From: William Qiu <william.qiu@starfivetech.com>
 Date: Fri, 22 Sep 2023 14:28:32 +0800
 Subject: [PATCH 004/210] dt-bindings: mmc: starfive: Remove properties from

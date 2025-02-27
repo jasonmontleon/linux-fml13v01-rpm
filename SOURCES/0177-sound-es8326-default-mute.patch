@@ -1,4 +1,4 @@
-From 1bf8d2542c49d0f98df508a5b3c5feca5a6678d7 Mon Sep 17 00:00:00 2001
+From 12c67c8fcb63a92ab33367a7bf89ad2a31fda52c Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Tue, 15 Oct 2024 11:31:49 +0800
 Subject: [PATCH 177/210] sound: es8326: default mute.
