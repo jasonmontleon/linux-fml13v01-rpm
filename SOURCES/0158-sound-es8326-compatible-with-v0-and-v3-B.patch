@@ -1,4 +1,4 @@
-From c9595bc47402ea8370f3d6da4c45d19035caa94f Mon Sep 17 00:00:00 2001
+From e1145b7eafdc5a4f1a75f2c74a71cfea0c70e081 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Tue, 3 Sep 2024 11:15:24 +0800
 Subject: [PATCH 158/210] sound: es8326 compatible with v0 and v3(-B).
@@ -216,5 +216,5 @@ index b8a23beaa76c..58675ad41b5e 100755
  	switch (params_format(params)) {
  	case SNDRV_PCM_FORMAT_S16_LE:
 -- 
-2.47.0
+2.48.1
 

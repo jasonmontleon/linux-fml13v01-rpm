@@ -1,4 +1,4 @@
-From c982d31eaf0ea945d3841877a0431be8a88c7f4e Mon Sep 17 00:00:00 2001
+From 8cb7b7cf630c55b5698b6226eb6266412f5f11e2 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Tue, 13 Aug 2024 11:45:12 +0800
 Subject: [PATCH 154/210] porting to framework board.
@@ -1254,5 +1254,5 @@ index 7feee6e84d74..1ba3712712d8 100644
  CONFIG_DEBUG_FS=y
  CONFIG_SOFTLOCKUP_DETECTOR=y
 -- 
-2.47.0
+2.48.1
 

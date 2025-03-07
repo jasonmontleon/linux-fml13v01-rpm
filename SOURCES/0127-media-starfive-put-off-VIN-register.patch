@@ -1,4 +1,4 @@
-From a63a05d31b38e58be30b80a10d464c4e1ecfcc0a Mon Sep 17 00:00:00 2001
+From 678e8b2f1031c092416a7a8d4720bca7ca650c9c Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Wed, 20 Mar 2024 10:55:10 +0800
 Subject: [PATCH 127/210] media: starfive: put off VIN register
@@ -24,5 +24,5 @@ index 431801e7a6ed..24bfe8da9c9a 100644
  module_exit(stfcamss_cleanup);
  
 -- 
-2.47.0
+2.48.1
 

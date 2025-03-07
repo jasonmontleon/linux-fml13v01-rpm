@@ -1,4 +1,4 @@
-From 36ece45ade77d96b95b10b6780a894bc0bae03fa Mon Sep 17 00:00:00 2001
+From bf926dbf3fb76fc6f3aba3cbf2615f31c12fdb94 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Tue, 23 Apr 2024 17:18:53 +0800
 Subject: [PATCH 146/210] clk: starfive: jh7110: Don't save and restore isp /
@@ -205,5 +205,5 @@ index a560dfc68265..842ffbbb6e05 100644
  };
  
 -- 
-2.47.0
+2.48.1
 

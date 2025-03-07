@@ -1,4 +1,4 @@
-From 1fd43f50c0ec31009c962936397141c593bb5abd Mon Sep 17 00:00:00 2001
+From c39213c08fd26428aaa8499a39936ded2b79a717 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Jo=C3=A3o=20M=C3=A1rio=20Domingos?=
  <joao.mario@tecnico.ulisboa.pt>
 Date: Tue, 16 Nov 2021 15:48:10 +0000
@@ -56,5 +56,5 @@ index b4efdddb2ad9..b12f2ccf3b67 100644
  		.event_mapped	= riscv_pmu_event_mapped,
  		.event_unmapped	= riscv_pmu_event_unmapped,
 -- 
-2.47.0
+2.48.1
 

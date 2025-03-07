@@ -1,4 +1,4 @@
-From b18326da4d84929b236b2d548c906f8e8c4c3287 Mon Sep 17 00:00:00 2001
+From 4d313bf7f584f68cba62d9eabd617e1542b55c48 Mon Sep 17 00:00:00 2001
 From: Herbert Xu <herbert@gondor.apana.org.au>
 Date: Thu, 30 Nov 2023 18:12:55 +0800
 Subject: [PATCH 012/210] crypto: starfive - Remove cfb and ofb
@@ -128,5 +128,5 @@ index 04ca92798067..0a4efa527197 100644
  #define STARFIVE_AES_MODE_CCM			0x5
  #define STARFIVE_AES_MODE_GCM			0x6
 -- 
-2.47.0
+2.48.1
 

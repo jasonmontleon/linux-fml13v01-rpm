@@ -1,4 +1,4 @@
-From 76667a24d49e855920f66704de2e2b8b8651a0f0 Mon Sep 17 00:00:00 2001
+From 9e7389575bca6769d91b73ffff04cb78e0ae13c4 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:02 +0800
 Subject: [PATCH 025/210] PCI: microchip: Add request_event_irq() callback
@@ -117,5 +117,5 @@ index adfca9f28458..16b81b23c213 100644
  			    phys_addr_t axi_addr, phys_addr_t pci_addr,
  			    size_t size);
 -- 
-2.47.0
+2.48.1
 

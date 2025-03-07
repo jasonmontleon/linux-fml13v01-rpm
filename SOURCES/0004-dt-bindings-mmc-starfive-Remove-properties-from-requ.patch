@@ -1,4 +1,4 @@
-From 1f05e61b53ffaccca03c92a3b8f5f21a67bb51b5 Mon Sep 17 00:00:00 2001
+From 1dcc22a837de3d68fb24e0b5310c51ac3b5cb967 Mon Sep 17 00:00:00 2001
 From: William Qiu <william.qiu@starfivetech.com>
 Date: Fri, 22 Sep 2023 14:28:32 +0800
 Subject: [PATCH 004/210] dt-bindings: mmc: starfive: Remove properties from
@@ -35,5 +35,5 @@ index 51e1b04e799f..553a75195c2e 100644
 -        starfive,sysreg = <&sys_syscon 0x14 0x1a 0x7c000000>;
      };
 -- 
-2.47.0
+2.48.1
 

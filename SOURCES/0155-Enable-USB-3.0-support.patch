@@ -1,4 +1,4 @@
-From d56e804056ff5120c04bb1be97107a993ac1c796 Mon Sep 17 00:00:00 2001
+From 19e54b6575f5fe65f66c0d42ea853c45456d42ff Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Wed, 14 Aug 2024 09:54:35 +0800
 Subject: [PATCH 155/210] Enable USB 3.0 support.
@@ -98,5 +98,5 @@ index a7265b86e427..60ec029a90f1 100644
  	ret = cdns_clk_rst_init(data);
  	if (ret)
 -- 
-2.47.0
+2.48.1
 

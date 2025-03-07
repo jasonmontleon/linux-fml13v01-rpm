@@ -1,4 +1,4 @@
-From 5ef5a830ee4ddc4a761426a4ec29e94ae1e98c45 Mon Sep 17 00:00:00 2001
+From 9bd76545fe754cea6b0b1133468d108ac02ec3fb Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Wed, 18 Sep 2024 14:43:56 +0800
 Subject: [PATCH 170/210] kernel: CONFIG_BT_HIDP=y
@@ -21,5 +21,5 @@ index 2267abc5323a..185c2a3613f9 100644
  # CONFIG_BT_HCIBTUSB_BCM is not set
  CONFIG_BT_HCIBTUSB_MTK=y
 -- 
-2.47.0
+2.48.1
 

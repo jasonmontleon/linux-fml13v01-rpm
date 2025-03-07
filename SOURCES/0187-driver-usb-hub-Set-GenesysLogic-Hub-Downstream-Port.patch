@@ -1,4 +1,4 @@
-From f490b886e35c45b09d2647f3b84e9bb90d786b37 Mon Sep 17 00:00:00 2001
+From 915a48641ae2edd461bf12d31d43758deeaa6fa5 Mon Sep 17 00:00:00 2001
 From: Sandie Cao <sandie.cao@deepcomputing.io>
 Date: Fri, 1 Nov 2024 10:29:26 +0800
 Subject: [PATCH 187/210] driver: usb: hub: Set GenesysLogic Hub Downstream
@@ -39,5 +39,5 @@ index 38f3f5a766df..c90e9b333397 100644
  	if (udev->parent) {
  		struct usb_hub *hub = usb_hub_to_struct_hub(udev->parent);
 -- 
-2.47.0
+2.48.1
 

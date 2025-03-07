@@ -1,4 +1,4 @@
-From 3ee93cd3f55b82abd37c6c18d87a08086fd3c72f Mon Sep 17 00:00:00 2001
+From 52e544ce66d44c512071b10b0894ca1ddab9928e Mon Sep 17 00:00:00 2001
 From: Ulf Hansson <ulf.hansson@linaro.org>
 Date: Tue, 12 Sep 2023 13:31:44 +0200
 Subject: [PATCH 044/210] pmdomain: starfive: Move Kconfig file to the pmdomain
@@ -46,5 +46,5 @@ index d21e75d69294..be63745d74a4 100644
  source "drivers/soc/tegra/Kconfig"
  source "drivers/soc/ti/Kconfig"
 -- 
-2.47.0
+2.48.1
 

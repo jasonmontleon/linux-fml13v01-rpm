@@ -1,4 +1,4 @@
-From 88ec1db7f1e7f0e7b4b0096bbef3f07139c66393 Mon Sep 17 00:00:00 2001
+From 3677a2c8bd2d9959ccee30de4b25555e6934e1d2 Mon Sep 17 00:00:00 2001
 From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 Date: Mon, 6 Jan 2025 11:25:21 +0100
 Subject: [PATCH 197/210] riscv: fml13v01_defconfig: add support CD-ROM images
@@ -25,5 +25,5 @@ index d01e3073c201..4bc2885ea05b 100644
  CONFIG_VFAT_FS=y
  CONFIG_FAT_DEFAULT_UTF8=y
 -- 
-2.47.0
+2.48.1
 

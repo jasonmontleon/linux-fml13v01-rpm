@@ -1,4 +1,4 @@
-From a9addd7e05a05a1877c4bec4e518a95756814621 Mon Sep 17 00:00:00 2001
+From 0c0991ea2892569d04374b1c97599631a1376868 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Mon, 26 Aug 2024 14:52:32 +0800
 Subject: [PATCH 156/210] Add hdmi edp display panel support.
@@ -155,5 +155,5 @@ index 35c716e9043c..3f526dc9d89d 100644
  	/*
  	 * The DT case will set the pwm_period_ns field to 0 and store the
 -- 
-2.47.0
+2.48.1
 

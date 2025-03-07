@@ -1,4 +1,4 @@
-From 6cc5eeb816f4f9c803b1f897fd971aa58b0e6ff7 Mon Sep 17 00:00:00 2001
+From 93cb979d1601f763e6352b3c63e90cad5d3290b7 Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Wed, 13 Sep 2023 14:54:26 +0100
 Subject: [PATCH 040/210] pmdomain: starfive: Replace SOC_STARFIVE with
@@ -32,5 +32,5 @@ index bdb96dc4c989..1e9b0c414fec 100644
  	help
  	  Say 'y' here to enable support power domain support.
 -- 
-2.47.0
+2.48.1
 

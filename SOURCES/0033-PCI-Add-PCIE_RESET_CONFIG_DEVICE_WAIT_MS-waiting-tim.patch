@@ -1,4 +1,4 @@
-From 6f0492124877aef1d9c1b3680d21216bcee2dc11 Mon Sep 17 00:00:00 2001
+From 06914059a17b6e74b8c8458a200ebe5399afd864 Mon Sep 17 00:00:00 2001
 From: Kevin Xie <kevin.xie@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:10 +0800
 Subject: [PATCH 033/210] PCI: Add PCIE_RESET_CONFIG_DEVICE_WAIT_MS waiting
@@ -56,5 +56,5 @@ index d69a17947ffc..f8fdde5eabfd 100644
  extern bool pci_early_dump;
  
 -- 
-2.47.0
+2.48.1
 

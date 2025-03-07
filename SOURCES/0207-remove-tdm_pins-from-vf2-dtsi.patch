@@ -1,4 +1,4 @@
-From 71b34c14bfc655ff34456351d930fed85a41bcaa Mon Sep 17 00:00:00 2001
+From 1c1477aecff1a5e3fa75eeee4f6a570f43109e63 Mon Sep 17 00:00:00 2001
 From: Jason Montleon <jmontleo@redhat.com>
 Date: Wed, 12 Feb 2025 15:23:22 -0500
 Subject: [PATCH 207/210] remove tdm_pins from vf2 dtsi
@@ -61,5 +61,5 @@ index 42cdabdb8942..b6480e45473c 100644
  		tx-pins {
  			pinmux = <GPIOMUX(5, GPOUT_SYS_UART0_TX,
 -- 
-2.47.0
+2.48.1
 
