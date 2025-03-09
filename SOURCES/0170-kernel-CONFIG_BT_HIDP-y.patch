@@ -1,4 +1,4 @@
-From 9bd76545fe754cea6b0b1133468d108ac02ec3fb Mon Sep 17 00:00:00 2001
+From fbf1566e7532c50f0958d3c7781d7d2de8a11ff6 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Wed, 18 Sep 2024 14:43:56 +0800
 Subject: [PATCH 170/210] kernel: CONFIG_BT_HIDP=y

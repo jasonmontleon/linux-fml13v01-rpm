@@ -1,4 +1,4 @@
-From d73baac161332478d996056bfc0f8b6590760156 Mon Sep 17 00:00:00 2001
+From 0966f9910f8d47694df942c20b1a61892532bcdd Mon Sep 17 00:00:00 2001
 From: "Kevin.xie" <kevin.xie@starfivetech.com>
 Date: Fri, 9 Jun 2023 14:57:13 +0800
 Subject: [PATCH 071/210] regulator: starfive-jh7110: Add regulator support for

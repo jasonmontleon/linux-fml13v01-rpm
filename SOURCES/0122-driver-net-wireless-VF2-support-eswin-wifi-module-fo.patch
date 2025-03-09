@@ -1,4 +1,4 @@
-From 0e0fc70aa36a4182dfdf87890cc15da4ddc50a65 Mon Sep 17 00:00:00 2001
+From c5f8297e2d2cf5230f27c3dca89e86848120cdfe Mon Sep 17 00:00:00 2001
 From: Ziv Xu <ziv.xu@starfivetech.com>
 Date: Wed, 13 Mar 2024 18:41:12 +0800
 Subject: [PATCH 122/210] driver: net: wireless: VF2 support eswin wifi module
