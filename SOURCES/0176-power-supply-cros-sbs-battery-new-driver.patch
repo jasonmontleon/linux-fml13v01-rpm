@@ -1,4 +1,4 @@
-From 05b1ec6f241b2aa1894df6b84cea1f64840e8d62 Mon Sep 17 00:00:00 2001
+From 8f729071c385008175d0fd536e84fc653725e1ea Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Fri, 11 Oct 2024 17:19:17 +0800
 Subject: [PATCH 176/210] power: supply: cros-sbs-battery: new driver.

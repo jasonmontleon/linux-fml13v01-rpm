@@ -1,4 +1,4 @@
-From 84e35280ee56e9e75fffca8321e725fabb652f43 Mon Sep 17 00:00:00 2001
+From 2429eb97da7a412786c380edf6eece7fb832e1c3 Mon Sep 17 00:00:00 2001
 From: "minda.chen" <minda.chen@starfivetech.com>
 Date: Tue, 18 Oct 2022 09:57:39 +0800
 Subject: [PATCH 133/210] usb:xhci:To improve performance,usb using lowmem for
@@ -45,7 +45,7 @@ index 12b6dfeaf658..226e9b248c23 100644
  
  				/* We don't support sg for isoc transfers ! */
 diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
-index 54c47463c215..ceb3baea7363 100644
+index b0137eac7ab3..bd8948f36b4c 100644
 --- a/drivers/usb/host/xhci-mem.c
 +++ b/drivers/usb/host/xhci-mem.c
 @@ -14,6 +14,7 @@
@@ -134,7 +134,7 @@ index 54c47463c215..ceb3baea7363 100644
  int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
  {
  	dma_addr_t	dma;
-@@ -2436,6 +2494,12 @@ int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
+@@ -2437,6 +2495,12 @@ int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
  
  	xhci->isoc_bei_interval = AVOID_BEI_INTERVAL_MAX;
  
@@ -274,7 +274,7 @@ index 70e6c240a540..8f3a8a61f26e 100644
  
  /**
 diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
-index fddb3a90dae3..3d6eb154f1cc 100644
+index df87e8bcb7d2..7d49ae84c4e5 100644
 --- a/drivers/usb/host/xhci.h
 +++ b/drivers/usb/host/xhci.h
 @@ -1509,6 +1509,13 @@ struct xhci_hub {

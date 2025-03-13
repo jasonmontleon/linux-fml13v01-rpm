@@ -1,4 +1,4 @@
-From c7a816ab69be6affe59c539300d2522db014c447 Mon Sep 17 00:00:00 2001
+From 67d678dbeb06135833f7736a34892178c72932d4 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:05:58 +0800
 Subject: [PATCH 021/210] PCI: microchip: Change the argument of

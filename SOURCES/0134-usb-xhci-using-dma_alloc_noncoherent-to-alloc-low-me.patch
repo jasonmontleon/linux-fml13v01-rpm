@@ -1,4 +1,4 @@
-From f4a194f2fc6f48958434128269979f5743f27e61 Mon Sep 17 00:00:00 2001
+From 488b28598d3fade03093510acfb18ea19286e0c9 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 3 Jul 2023 16:14:20 +0800
 Subject: [PATCH 134/210] usb: xhci: using dma_alloc_noncoherent to alloc low
@@ -15,7 +15,7 @@ Signed-off-by: Minda Chen <minda.chen@starfivetech.com>
  2 files changed, 21 insertions(+), 17 deletions(-)
 
 diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
-index ceb3baea7363..15f8114eeb8a 100644
+index bd8948f36b4c..bd1f2ccab4ab 100644
 --- a/drivers/usb/host/xhci-mem.c
 +++ b/drivers/usb/host/xhci-mem.c
 @@ -1891,7 +1891,8 @@ void xhci_mem_cleanup(struct xhci_hcd *xhci)
@@ -73,7 +73,7 @@ index ceb3baea7363..15f8114eeb8a 100644
  
  	INIT_LIST_HEAD(&xhci->cmd_list);
  
-@@ -2495,9 +2496,11 @@ int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
+@@ -2496,9 +2497,11 @@ int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
  	xhci->isoc_bei_interval = AVOID_BEI_INTERVAL_MAX;
  
  	if (xhci->quirks & XHCI_LOCAL_BUFFER) {

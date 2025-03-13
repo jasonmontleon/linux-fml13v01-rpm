@@ -1,4 +1,4 @@
-From 2990a3d750ca068cb6962363c63412467a249145 Mon Sep 17 00:00:00 2001
+From 88ec3202b03654f99e5f6ea0d74af6f35565b4ec Mon Sep 17 00:00:00 2001
 From: "shengyang.chen" <shengyang.chen@starfivetech.com>
 Date: Fri, 19 Apr 2024 11:05:21 +0800
 Subject: [PATCH 144/210] drm/panel: sync 6.6 mipi code with 6.1 and add 4lane

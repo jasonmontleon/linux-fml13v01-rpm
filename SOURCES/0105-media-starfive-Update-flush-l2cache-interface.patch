@@ -1,4 +1,4 @@
-From c74de142506b9d85c3917cf0ce7064444743e6c6 Mon Sep 17 00:00:00 2001
+From eeca7898ea7c901b7d60333120d313e146e6d309 Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Fri, 12 Jan 2024 17:27:46 +0800
 Subject: [PATCH 105/210] media: starfive: Update flush l2cache interface

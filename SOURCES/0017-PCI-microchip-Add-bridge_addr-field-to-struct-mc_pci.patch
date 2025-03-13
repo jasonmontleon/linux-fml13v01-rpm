@@ -1,4 +1,4 @@
-From 7a18bc7e877bf18654d7e0f2df5deea391a0d277 Mon Sep 17 00:00:00 2001
+From 7c686d4955635aaadae78a0a41116fd1e583b112 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:05:54 +0800
 Subject: [PATCH 017/210] PCI: microchip: Add bridge_addr field to struct

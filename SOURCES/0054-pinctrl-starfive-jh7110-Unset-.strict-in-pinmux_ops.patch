@@ -1,4 +1,4 @@
-From 27c300aaa25e97e2b0b510083bda48e3428a755f Mon Sep 17 00:00:00 2001
+From 4aecfb982589115af56843d1aed72b8b3d270c64 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Mon, 26 Feb 2024 11:35:44 +0800
 Subject: [PATCH 054/210] pinctrl: starfive: jh7110: Unset .strict in

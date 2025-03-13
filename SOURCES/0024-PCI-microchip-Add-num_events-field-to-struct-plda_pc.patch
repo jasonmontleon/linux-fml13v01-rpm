@@ -1,4 +1,4 @@
-From 7eb49405ff8f7d6355dbbc515a0c674ac087a6c9 Mon Sep 17 00:00:00 2001
+From e0a8f28d19df4d9d00d92ec63b243c5cb70d03f0 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:01 +0800
 Subject: [PATCH 024/210] PCI: microchip: Add num_events field to struct
