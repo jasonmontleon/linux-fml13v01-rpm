@@ -1,4 +1,4 @@
-From 4fba04e14197ee5dcf2fabf2e5afd8016ce8fbf3 Mon Sep 17 00:00:00 2001
+From b330f1959bf08864a33975485e9baa37f0e865f0 Mon Sep 17 00:00:00 2001
 From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 Date: Mon, 6 Jan 2025 10:59:53 +0100
 Subject: [PATCH 195/210] riscv: add defconfig for DeepComputing fml13v01
@@ -446,5 +446,5 @@ index 000000000000..5ddcc77aadf5
 +# CONFIG_RUNTIME_TESTING_MENU is not set
 +CONFIG_MEMTEST=y
 -- 
-2.48.1
+2.49.0
 

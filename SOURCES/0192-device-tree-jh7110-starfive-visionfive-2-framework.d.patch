@@ -1,4 +1,4 @@
-From 07f9abcfbf16e2138c77acf9c4d856b2a10c7ebe Mon Sep 17 00:00:00 2001
+From c9339bccb6e5fde54c5f08f6fc24599f3fe63abc Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Thu, 5 Dec 2024 17:40:51 +0800
 Subject: [PATCH 192/210] device-tree:
@@ -29,5 +29,5 @@ index aedd0dda74cd..4012d0e550b4 100755
  		status = "okay";
  	};
 -- 
-2.48.1
+2.49.0
 

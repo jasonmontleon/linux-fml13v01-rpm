@@ -1,4 +1,4 @@
-From 149a2d3fe7f8abc080dfc1ee9b0f045f434c81b9 Mon Sep 17 00:00:00 2001
+From c11a8777d6b482215923e03c65a1ed253192f656 Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Wed, 13 Sep 2023 14:54:25 +0100
 Subject: [PATCH 039/210] dt-bindings: power: Add power-domain header for
@@ -36,5 +36,5 @@ index 132bfe401fc8..341e2a0676ba 100644
 +
  #endif
 -- 
-2.48.1
+2.49.0
 

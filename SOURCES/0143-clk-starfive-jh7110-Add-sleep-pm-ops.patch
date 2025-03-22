@@ -1,4 +1,4 @@
-From d52fe3c91c3daa126099a445c42e80232fe88589 Mon Sep 17 00:00:00 2001
+From 23dc64d68f20811cceec0152a5939c2bd581f007 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Tue, 16 Apr 2024 14:41:24 +0800
 Subject: [PATCH 143/210] clk: starfive: jh7110: Add sleep pm ops
@@ -222,5 +222,5 @@ index ebc55b9ef837..a560dfc68265 100644
  
  struct jh71x0_clk_priv {
 -- 
-2.48.1
+2.49.0
 

@@ -1,4 +1,4 @@
-From 725178a7a9b5e0d04ccee5e386bc0aabc73bd9c4 Mon Sep 17 00:00:00 2001
+From 92a52ecb5944d4755d6550c9210c854022dedb30 Mon Sep 17 00:00:00 2001
 From: Xingyu Wu <xingyu.wu@starfivetech.com>
 Date: Mon, 21 Aug 2023 22:41:50 +0800
 Subject: [PATCH 047/210] riscv: dts: starfive: pinfunc: Fix the pins name of
@@ -31,5 +31,5 @@ index fb0139b56723..256de17f5261 100644
  #define GPI_SYS_TDM_RXD				36
  #define GPI_SYS_TDM_SYNC			37
 -- 
-2.48.1
+2.49.0
 

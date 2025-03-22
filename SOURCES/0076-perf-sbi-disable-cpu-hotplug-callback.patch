@@ -1,4 +1,4 @@
-From fc77ea67e0f76dd4f6bede7e04671828d07341da Mon Sep 17 00:00:00 2001
+From 3abb6dea86850438b31e2220954ad209c07a3f27 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Thu, 2 Mar 2023 17:16:01 +0800
 Subject: [PATCH 076/210] perf: sbi: disable cpu hotplug callback.
@@ -31,5 +31,5 @@ index 9d3e6d696ab9..b9e31a1279a2 100644
  	ret = riscv_pm_pmu_register(pmu);
  	if (ret)
 -- 
-2.48.1
+2.49.0
 

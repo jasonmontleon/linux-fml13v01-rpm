@@ -1,4 +1,4 @@
-From b22db750635fe316d31303845d11377f588a8a2a Mon Sep 17 00:00:00 2001
+From 2f2c7e4097657bcb7627fb2de43a90942bbac118 Mon Sep 17 00:00:00 2001
 From: Ziv Xu <ziv.xu@starfivetech.com>
 Date: Wed, 13 Mar 2024 18:47:59 +0800
 Subject: [PATCH 125/210] driver: media: starfive: v4l2_driver: vin support
@@ -189,5 +189,5 @@ index 49fcecdbc3e4..d1c7a921f1e8 100644
  	ret = v4l2_subdev_call(subdev, pad, get_fmt, NULL, &fmt);
  	if (ret)
 -- 
-2.48.1
+2.49.0
 

@@ -1,4 +1,4 @@
-From 94dfcbfb6ca0af74f700052f731034945a7feebe Mon Sep 17 00:00:00 2001
+From 03a0f76e7b072c3661ceec19ac58fcafc9205b3c Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Mon, 3 Apr 2023 13:52:17 +0800
 Subject: [PATCH 087/210] media: i2c: Add imx708 support
@@ -1977,5 +1977,5 @@ index 000000000000..e93da6cab5db
 +MODULE_DESCRIPTION("Sony IMX708 sensor driver");
 +MODULE_LICENSE("GPL");
 -- 
-2.48.1
+2.49.0
 

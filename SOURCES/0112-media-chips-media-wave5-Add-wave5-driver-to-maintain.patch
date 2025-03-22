@@ -1,4 +1,4 @@
-From 9f3f761bb04fd5e50267ccb80ca3d104b8d05695 Mon Sep 17 00:00:00 2001
+From 6573223f045f47e117946f67ed0e7b4c296f1b16 Mon Sep 17 00:00:00 2001
 From: Robert Beckett <bob.beckett@collabora.com>
 Date: Wed, 8 Nov 2023 20:29:26 +0100
 Subject: [PATCH 112/210] media: chips-media: wave5: Add wave5 driver to
@@ -33,5 +33,5 @@ index 9b078d76b925..7f7825190e61 100644
  M:	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
  L:	linux-gpio@vger.kernel.org
 -- 
-2.48.1
+2.49.0
 

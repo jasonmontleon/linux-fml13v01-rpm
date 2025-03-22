@@ -1,4 +1,4 @@
-From 9588f2556ab4fca122e0286b8311c576023c584e Mon Sep 17 00:00:00 2001
+From e810caaa8de0817ecc4a5bc4004e290610256c37 Mon Sep 17 00:00:00 2001
 From: William Qiu <william.qiu@starfivetech.com>
 Date: Mon, 9 Oct 2023 10:59:03 +0800
 Subject: [PATCH 050/210] mmc: starfive: Change the voltage to adapt to JH7110
@@ -65,5 +65,5 @@ index b4d81ef0f3af..e988e53cccab 100644
  
  static const struct of_device_id dw_mci_starfive_match[] = {
 -- 
-2.48.1
+2.49.0
 

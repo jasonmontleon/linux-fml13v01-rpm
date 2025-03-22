@@ -1,4 +1,4 @@
-From 39b75c4e25aab0f2b9067569b8018e4e5fb91322 Mon Sep 17 00:00:00 2001
+From 9e5206d34afff2c0603e47cea97962c1629f9f6f Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Fri, 28 Jul 2023 18:42:55 +0800
 Subject: [PATCH 059/210] riscv: configs: Add starfive_jh7110_defconfig
@@ -387,5 +387,5 @@ index 000000000000..3bc5da1dfb12
 +# CONFIG_RUNTIME_TESTING_MENU is not set
 +CONFIG_MEMTEST=y
 -- 
-2.48.1
+2.49.0
 

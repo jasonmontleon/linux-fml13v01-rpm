@@ -1,4 +1,4 @@
-From 39d6ad427896c53c46831813c73bc3b3438db1d4 Mon Sep 17 00:00:00 2001
+From cceee98b0a3bd984ed04ea7f23f978e11b63becc Mon Sep 17 00:00:00 2001
 From: Walker Chen <walker.chen@starfivetech.com>
 Date: Tue, 20 Jun 2023 15:57:53 +0800
 Subject: [PATCH 081/210] ASoC: starfive: Add JH7110 PDM driver
@@ -543,5 +543,5 @@ index 000000000000..74a8a2f2f675
 +MODULE_DESCRIPTION("Starfive PDM Controller Driver");
 +MODULE_LICENSE("GPL v2");
 -- 
-2.48.1
+2.49.0
 

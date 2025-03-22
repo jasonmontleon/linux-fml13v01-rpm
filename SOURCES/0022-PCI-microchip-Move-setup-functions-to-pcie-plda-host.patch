@@ -1,4 +1,4 @@
-From 7ebeb4020a2f7e70f21549b78fd521e258b2a46f Mon Sep 17 00:00:00 2001
+From b788e4f4c1351544753be6eb4df40d125081cb8d Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:05:59 +0800
 Subject: [PATCH 022/210] PCI: microchip: Move setup functions to
@@ -210,5 +210,5 @@ index 7bec6a470758..3a17d8ab5bb2 100644
 +			   struct plda_pcie_rp *port);
  #endif
 -- 
-2.48.1
+2.49.0
 

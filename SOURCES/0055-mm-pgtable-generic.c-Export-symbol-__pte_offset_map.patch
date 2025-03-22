@@ -1,4 +1,4 @@
-From 71a2ca84510376f6b24f3c0d87b5625d5ad09a39 Mon Sep 17 00:00:00 2001
+From db962fe0e22d3bc34156534aca074ddf22d49104 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Sat, 7 Oct 2023 18:10:20 +0800
 Subject: [PATCH 055/210] mm/pgtable-generic.c: Export symbol __pte_offset_map
@@ -23,5 +23,5 @@ index a78a4adf711a..ca74825d67f4 100644
  pte_t *pte_offset_map_nolock(struct mm_struct *mm, pmd_t *pmd,
  			     unsigned long addr, spinlock_t **ptlp)
 -- 
-2.48.1
+2.49.0
 

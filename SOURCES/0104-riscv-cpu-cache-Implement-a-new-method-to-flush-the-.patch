@@ -1,4 +1,4 @@
-From 7bd222593dff3f9e3d5b735fd7347d6aa785154c Mon Sep 17 00:00:00 2001
+From 972386eea7ee5903504532eebd02bb0b05de07c0 Mon Sep 17 00:00:00 2001
 From: Windsome Zeng <windsome.zeng@starfivetech.com>
 Date: Thu, 11 Jan 2024 18:29:10 +0800
 Subject: [PATCH 104/210] riscv: cpu: cache: Implement a new method to flush
@@ -267,5 +267,5 @@ index e336ac3f73cb..358693ba3753 100644
  void sifive_l2_flush64_range(phys_addr_t start, size_t len);
  void *sifive_ccache_set_uncached(void *addr, size_t size);
 -- 
-2.48.1
+2.49.0
 

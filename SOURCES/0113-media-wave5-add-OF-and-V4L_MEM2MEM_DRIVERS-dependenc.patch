@@ -1,4 +1,4 @@
-From cbda2134cafd8f2557209d01c85970011d690a04 Mon Sep 17 00:00:00 2001
+From 00845615209df467019c6aedcd0c4816a1588daf Mon Sep 17 00:00:00 2001
 From: Deborah Brouwer <deborah.brouwer@collabora.com>
 Date: Thu, 23 Nov 2023 14:08:41 -0800
 Subject: [PATCH 113/210] media: wave5: add OF and V4L_MEM2MEM_DRIVERS
@@ -32,5 +32,5 @@ index a3b949356cd5..77e7ae5c8f35 100644
  	select VIDEOBUF2_VMALLOC
  	select V4L2_MEM2MEM_DEV
 -- 
-2.48.1
+2.49.0
 

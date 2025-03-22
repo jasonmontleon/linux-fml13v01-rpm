@@ -1,4 +1,4 @@
-From eeca7898ea7c901b7d60333120d313e146e6d309 Mon Sep 17 00:00:00 2001
+From fbc6e256dbde2597922f5204f4a1836b48c11f53 Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Fri, 12 Jan 2024 17:27:46 +0800
 Subject: [PATCH 105/210] media: starfive: Update flush l2cache interface
@@ -94,5 +94,5 @@ index 6b331b738440..812e7a91ed9f 100644
  extern int stf_vin_register(struct stf_vin2_dev *vin_dev,
  		struct v4l2_device *v4l2_dev);
 -- 
-2.48.1
+2.49.0
 

@@ -1,4 +1,4 @@
-From 779edb5fbeb06fcff34212e97699448830a985b0 Mon Sep 17 00:00:00 2001
+From 5cfe338ab2716980d773f1c0f89db84de7a2f753 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Mon, 9 Sep 2024 18:36:46 +0800
 Subject: [PATCH 167/210] config USB BT
@@ -34,5 +34,5 @@ index d4fd3aa041de..2267abc5323a 100644
  CONFIG_IWLWIFI=y
  CONFIG_IWLDVM=y
 -- 
-2.48.1
+2.49.0
 

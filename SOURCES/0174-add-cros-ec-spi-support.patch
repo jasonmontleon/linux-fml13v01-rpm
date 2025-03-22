@@ -1,4 +1,4 @@
-From 2fc8ee9a2d67b826465536f9068eeaedaa160e6b Mon Sep 17 00:00:00 2001
+From 134a795f8b596ccd899aa78a4421cc666a3e4a62 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Thu, 26 Sep 2024 17:32:03 +0800
 Subject: [PATCH 174/210] add cros-ec-spi support.
@@ -1030,5 +1030,5 @@ index ab721cf13a98..470d35ad90fd 100644
  /* Switches */
  #define EC_MKBP_LID_OPEN	0
 -- 
-2.48.1
+2.49.0
 

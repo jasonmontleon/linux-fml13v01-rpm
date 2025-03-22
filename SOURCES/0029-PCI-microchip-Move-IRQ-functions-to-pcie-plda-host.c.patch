@@ -1,4 +1,4 @@
-From d67cf7f1b1bc0de07a870db5c1c0c23a6fa0a3a1 Mon Sep 17 00:00:00 2001
+From 48a379991b4964699d9192862275d0646883cd3b Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:06 +0800
 Subject: [PATCH 029/210] PCI: microchip: Move IRQ functions to
@@ -1033,5 +1033,5 @@ index a3ce01735bea..6672a231a4bc 100644
  			    phys_addr_t axi_addr, phys_addr_t pci_addr,
  			    size_t size);
 -- 
-2.48.1
+2.49.0
 

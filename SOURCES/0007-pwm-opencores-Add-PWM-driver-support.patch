@@ -1,4 +1,4 @@
-From c7ce73cb29028f66bc1ab66cf74bf27f5319558e Mon Sep 17 00:00:00 2001
+From b9548d510a85ebdd5ca42f0e22c7c28f3be4568a Mon Sep 17 00:00:00 2001
 From: William Qiu <william.qiu@starfivetech.com>
 Date: Fri, 22 Dec 2023 17:45:46 +0800
 Subject: [PATCH 007/210] pwm: opencores: Add PWM driver support
@@ -291,5 +291,5 @@ index 000000000000..dfb5a186da71
 +MODULE_DESCRIPTION("OpenCores PWM PTC driver");
 +MODULE_LICENSE("GPL");
 -- 
-2.48.1
+2.49.0
 
