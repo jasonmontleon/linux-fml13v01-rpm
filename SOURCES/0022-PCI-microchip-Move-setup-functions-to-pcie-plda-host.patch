@@ -1,7 +1,7 @@
-From b788e4f4c1351544753be6eb4df40d125081cb8d Mon Sep 17 00:00:00 2001
+From 2d7c6042dc8941eedf34ad2cb259e1dcc6ed5a6b Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:05:59 +0800
-Subject: [PATCH 022/210] PCI: microchip: Move setup functions to
+Subject: [PATCH 022/211] PCI: microchip: Move setup functions to
  pcie-plda-host.c
 
 Move setup functions to common pcie-plda-host.c. So these two functions

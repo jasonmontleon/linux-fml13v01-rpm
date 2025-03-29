@@ -1,7 +1,7 @@
-From 263a28cd593f079222a59f8605195bf37e4d83fe Mon Sep 17 00:00:00 2001
+From 3fa5337bdfbf608fcc539a0ec2176f4b5e15ac6c Mon Sep 17 00:00:00 2001
 From: Mason Huo <mason.huo@starfivetech.com>
 Date: Tue, 20 Jun 2023 13:37:52 +0800
-Subject: [PATCH 094/210] riscv: Optimize memcpy with aligned version
+Subject: [PATCH 094/211] riscv: Optimize memcpy with aligned version
 
 Optimizing the 128 byte align case, this will improve the
 performance of large block memcpy.

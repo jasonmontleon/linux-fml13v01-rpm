@@ -1,7 +1,7 @@
-From b4f82c7650343d4d88cb012843e34f2eca386c36 Mon Sep 17 00:00:00 2001
+From d75b0ea87253de48a502ba2097cdf4cd5cfa92ef Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:05:58 +0800
-Subject: [PATCH 021/210] PCI: microchip: Change the argument of
+Subject: [PATCH 021/211] PCI: microchip: Change the argument of
  plda_pcie_setup_iomems()
 
 If other vendor do not select PCI_HOST_COMMON, the driver data is not

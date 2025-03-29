@@ -1,7 +1,7 @@
-From 5af66098d15bb5e74caae257b5fb85589e2fbcca Mon Sep 17 00:00:00 2001
+From 2d467eb21441111d3baabd987672a19604c9a2cb Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Sun, 25 Jun 2023 09:40:29 +0800
-Subject: [PATCH 066/210] uart: 8250: Add dw auto flow ctrl support
+Subject: [PATCH 066/211] uart: 8250: Add dw auto flow ctrl support
 
 Add designeware 8250 auto flow ctrl support. Enable
 it by add auto-flow-control in dts.

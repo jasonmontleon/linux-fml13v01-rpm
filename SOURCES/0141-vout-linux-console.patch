@@ -1,7 +1,7 @@
-From 860ff7a730b4e36dcc65766497ada227e245211d Mon Sep 17 00:00:00 2001
+From 7cb5e5b0999ee2f73a751e31d042c5cf89a24993 Mon Sep 17 00:00:00 2001
 From: "keith.zhao" <keith.zhao@starfivetech.com>
 Date: Mon, 8 Apr 2024 17:59:21 +0800
-Subject: [PATCH 141/210] vout:linux:console
+Subject: [PATCH 141/211] vout:linux:console
 
 hdmi + mipi panel show the console log, hdmi will show part area unnormal
 

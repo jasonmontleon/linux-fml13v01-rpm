@@ -1,7 +1,7 @@
-From 0262b2dce60c937797a47ae33012aa2a79f84aac Mon Sep 17 00:00:00 2001
+From dea6c300fb39b43e5aca123475e530d403ac8741 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Tue, 19 Sep 2023 21:35:39 +0800
-Subject: [PATCH 058/210] riscv: dts: starfive: Add evb-overlay dtso subdir
+Subject: [PATCH 058/211] riscv: dts: starfive: Add evb-overlay dtso subdir
 
 Create subdir evb-overlay/ and add overlay .dtso for JH7110 EVB.
 The code is ported from tag JH7110_SDK_6.1_v5.11.3

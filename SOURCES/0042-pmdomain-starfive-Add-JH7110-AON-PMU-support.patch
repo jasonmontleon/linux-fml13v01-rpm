@@ -1,7 +1,7 @@
-From c49de6899d1c09110aa60691acdabcea7485e5ba Mon Sep 17 00:00:00 2001
+From 6ecd8e09c3ef601ee2dd72fc3f8a64014ea65089 Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Wed, 13 Sep 2023 14:54:28 +0100
-Subject: [PATCH 042/210] pmdomain: starfive: Add JH7110 AON PMU support
+Subject: [PATCH 042/211] pmdomain: starfive: Add JH7110 AON PMU support
 
 Add AON PMU for StarFive JH7110 SoC. It can be used to turn on/off the
 dphy rx/tx power switch.

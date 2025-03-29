@@ -1,7 +1,7 @@
-From 8c2606e05dfd75367eee98d8025cf0ee597e426b Mon Sep 17 00:00:00 2001
+From 1b0c146632625477d58cd5472a50f1687eb8e002 Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Wed, 27 Sep 2023 06:07:33 -0700
-Subject: [PATCH 045/210] dt-bindings: power: Update prefixes for AON power
+Subject: [PATCH 045/211] dt-bindings: power: Update prefixes for AON power
  domain
 
 Use "JH7110_AON_PD_" prefix for AON power domain for JH7110 SoC.

@@ -1,7 +1,7 @@
-From 0451b95afadbb2f03e16430d64bcc1f6e52a3a9d Mon Sep 17 00:00:00 2001
+From 921cfaa04abaf4e838df710032d46088eb59c343 Mon Sep 17 00:00:00 2001
 From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 Date: Mon, 6 Jan 2025 12:05:07 +0100
-Subject: [PATCH 194/210] driver: net: wireless: eswin: cannot use NULL as
+Subject: [PATCH 194/211] driver: net: wireless: eswin: cannot use NULL as
  integer
 
 The link ID parameter is defined as integer. So use 0 as parameter.

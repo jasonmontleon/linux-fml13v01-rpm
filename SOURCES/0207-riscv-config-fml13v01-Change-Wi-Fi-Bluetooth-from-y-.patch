@@ -1,0 +1,50 @@
+From 5eb834ec95e3c8b5fb6a4b0f72d9593a63dc6372 Mon Sep 17 00:00:00 2001
+From: Sandie Cao <sandie.cao@deepcomputing.io>
+Date: Wed, 26 Mar 2025 14:12:43 +0800
+Subject: [PATCH 207/211] riscv: config: fml13v01: Change Wi-Fi, Bluetooth from
+ y to m
+
+Signed-off-by: Sandie Cao <sandie.cao@deepcomputing.io>
+---
+ arch/riscv/configs/fml13v01_defconfig | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/arch/riscv/configs/fml13v01_defconfig b/arch/riscv/configs/fml13v01_defconfig
+index 77511a63ad27..7abcaec7f286 100644
+--- a/arch/riscv/configs/fml13v01_defconfig
++++ b/arch/riscv/configs/fml13v01_defconfig
+@@ -102,11 +102,11 @@ CONFIG_BT_BNEP=y
+ CONFIG_BT_BNEP_MC_FILTER=y
+ CONFIG_BT_BNEP_PROTO_FILTER=y
+ CONFIG_BT_HIDP=y
+-CONFIG_BT_HCIBTUSB=y
++CONFIG_BT_HCIBTUSB=m
+ # CONFIG_BT_HCIBTUSB_BCM is not set
+ CONFIG_BT_HCIBTUSB_MTK=y
+ # CONFIG_BT_HCIBTUSB_RTL is not set
+-CONFIG_BT_HCIUART=y
++CONFIG_BT_HCIUART=m
+ CONFIG_BT_HCIUART_INTEL=y
+ CONFIG_BT_AICUSB=y
+ CONFIG_CFG80211=y
+@@ -189,12 +189,12 @@ CONFIG_ATH10K_SDIO=m
+ CONFIG_ATH10K_USB=m
+ CONFIG_ATH10K_DEBUGFS=y
+ CONFIG_ATH10K_SPECTRAL=y
+-CONFIG_IPW2100=y
+-CONFIG_IWLWIFI=y
+-CONFIG_IWLDVM=y
+-CONFIG_IWLMVM=y
++CONFIG_IPW2100=m
++CONFIG_IWLWIFI=m
++CONFIG_IWLDVM=m
++CONFIG_IWLMVM=m
+ CONFIG_HOSTAP=y
+-CONFIG_MT7921E=y
++CONFIG_MT7921E=m
+ # CONFIG_RTL_CARDS is not set
+ CONFIG_USB_WIFI_ECR6600U=y
+ CONFIG_AIC_WLAN_SUPPORT=y
+-- 
+2.49.0
+

@@ -1,7 +1,7 @@
-From 10344c7f24abc219472f43c92ebe3d1cc4b293a9 Mon Sep 17 00:00:00 2001
+From 5681f04428135c7fa78c67dab11d3939b6c3794f Mon Sep 17 00:00:00 2001
 From: Kevin Xie <kevin.xie@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:10 +0800
-Subject: [PATCH 033/210] PCI: Add PCIE_RESET_CONFIG_DEVICE_WAIT_MS waiting
+Subject: [PATCH 033/211] PCI: Add PCIE_RESET_CONFIG_DEVICE_WAIT_MS waiting
  time value
 
 Add the PCIE_RESET_CONFIG_DEVICE_WAIT_MS macro to define the minimum

@@ -1,7 +1,7 @@
-From e09bb24f2b7e51a4348b9e17fe2b99d7e1532ff3 Mon Sep 17 00:00:00 2001
+From b6dd7b1e30bd23a609e847a825151fbabeff5edf Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Tue, 3 Sep 2024 11:15:24 +0800
-Subject: [PATCH 158/210] sound: es8326 compatible with v0 and v3(-B).
+Subject: [PATCH 158/211] sound: es8326 compatible with v0 and v3(-B).
 
 Signed-off-by: yang.wang <yang.wang@deepcomputing.io>
 ---

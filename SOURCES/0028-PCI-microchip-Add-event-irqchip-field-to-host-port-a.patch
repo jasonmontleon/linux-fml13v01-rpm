@@ -1,7 +1,7 @@
-From db846715b0fcb535a9b3440f8fa1c6e10f2bc158 Mon Sep 17 00:00:00 2001
+From ad192126a7caf0af56c389b91fde57b40eaa92a4 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:05 +0800
-Subject: [PATCH 028/210] PCI: microchip: Add event irqchip field to host port
+Subject: [PATCH 028/211] PCI: microchip: Add event irqchip field to host port
  and add PLDA irqchip
 
 As PLDA dts binding doc(Documentation/devicetree/bindings/pci/

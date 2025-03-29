@@ -1,7 +1,7 @@
-From 02f0d16b9616cd748c6cd67d78684f7fe878888e Mon Sep 17 00:00:00 2001
+From 2140bf36e78b78ff836f43c96901bb05d0c55784 Mon Sep 17 00:00:00 2001
 From: Ziv Xu <ziv.xu@starfivetech.com>
 Date: Wed, 13 Mar 2024 18:40:27 +0800
-Subject: [PATCH 121/210] driver: net: wireless: VF2 support aic8800 wifi
+Subject: [PATCH 121/211] driver: net: wireless: VF2 support aic8800 wifi
  module for kernel 6.6
 
 VF2 support aic8800 wifi module for kernel 6.6

@@ -1,7 +1,7 @@
-From 27cd908608c6edbe86d8e4c4f6a935b8a3bcb7a9 Mon Sep 17 00:00:00 2001
+From 4c4a2cf3c580f20ef10b251c1cfaa24c1ce314a1 Mon Sep 17 00:00:00 2001
 From: "xingyu.wu" <xingyu.wu@starfivetech.com>
 Date: Tue, 28 Jun 2022 22:48:15 +0800
-Subject: [PATCH 128/210] spi-pl022:starfive:Add platform bus register to adapt
+Subject: [PATCH 128/211] spi-pl022:starfive:Add platform bus register to adapt
  overlay
 
 Add platform bus register to adapt dtbo overlay.

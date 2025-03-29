@@ -1,7 +1,7 @@
-From 79326c6f5e31cf8a5601a944ffc21b906e7a98ab Mon Sep 17 00:00:00 2001
+From 62d6998d25a30ec9525d3da1fcd2555ec8838a91 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Fri, 28 Jul 2023 17:19:12 +0800
-Subject: [PATCH 056/210] riscv: dts: starfive: Add JH7110 EVB device tree
+Subject: [PATCH 056/211] riscv: dts: starfive: Add JH7110 EVB device tree
 
 Add JH7110 evaluation board device tree.
 The code is ported from tag JH7110_SDK_6.1_v5.11.3

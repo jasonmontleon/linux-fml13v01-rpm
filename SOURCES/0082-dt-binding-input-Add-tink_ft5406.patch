@@ -1,7 +1,7 @@
-From 8358b1c945d91d39963d3e0e3196f703eb975bb8 Mon Sep 17 00:00:00 2001
+From afde105ae19276fcfc9db55c5ba0d55d61b56b9b Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Fri, 9 Jun 2023 16:54:36 +0800
-Subject: [PATCH 082/210] dt-binding: input: Add tink_ft5406
+Subject: [PATCH 082/211] dt-binding: input: Add tink_ft5406
 
 Add tink_ft5406.
 

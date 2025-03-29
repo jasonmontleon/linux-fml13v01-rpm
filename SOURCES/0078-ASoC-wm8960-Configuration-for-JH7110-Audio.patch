@@ -1,7 +1,7 @@
-From eefa88b625b9bfc6b497e83ad6161496a04d9694 Mon Sep 17 00:00:00 2001
+From 6194033716ede7079f3d5ab9cc3ad256df9b45d5 Mon Sep 17 00:00:00 2001
 From: Walker Chen <walker.chen@starfivetech.com>
 Date: Mon, 12 Jun 2023 21:29:00 +0800
-Subject: [PATCH 078/210] ASoC: wm8960: Configuration for JH7110 Audio
+Subject: [PATCH 078/211] ASoC: wm8960: Configuration for JH7110 Audio
 
 Configure WM8960 to be used for JH7110 TDM & I2S.
 

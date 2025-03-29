@@ -1,7 +1,7 @@
-From d48e8a0bb2256104fbe2a9427141ad7f3de68f64 Mon Sep 17 00:00:00 2001
+From edf4e36bc22b7839531caa80be3b8d27789a5cae Mon Sep 17 00:00:00 2001
 From: "minda.chen" <minda.chen@starfivetech.com>
 Date: Tue, 18 Oct 2022 09:57:39 +0800
-Subject: [PATCH 133/210] usb:xhci:To improve performance,usb using lowmem for
+Subject: [PATCH 133/211] usb:xhci:To improve performance,usb using lowmem for
  bulk xfer.
 
 Generate an usb low memory pool for usb 3.0 host

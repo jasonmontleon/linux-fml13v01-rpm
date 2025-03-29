@@ -1,7 +1,7 @@
-From 601c36cf71b8c2c8d470942501748282c80a9c2d Mon Sep 17 00:00:00 2001
+From 27bfac49c84ee05b7209da19c01c1776be300528 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:02 +0800
-Subject: [PATCH 025/210] PCI: microchip: Add request_event_irq() callback
+Subject: [PATCH 025/211] PCI: microchip: Add request_event_irq() callback
  function
 
 As PLDA dts binding doc(Documentation/devicetree/bindings/pci/

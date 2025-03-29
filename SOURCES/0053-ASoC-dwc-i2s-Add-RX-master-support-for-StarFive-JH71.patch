@@ -1,7 +1,7 @@
-From c63753162c294efa4bb2f080aec975fa541a9c81 Mon Sep 17 00:00:00 2001
+From 46519c8d67df766fccd73ac99b5c0dc444a51efa Mon Sep 17 00:00:00 2001
 From: Xingyu Wu <xingyu.wu@starfivetech.com>
 Date: Tue, 17 Oct 2023 17:22:52 +0800
-Subject: [PATCH 053/210] ASoC: dwc: i2s: Add RX master support for StarFive
+Subject: [PATCH 053/211] ASoC: dwc: i2s: Add RX master support for StarFive
  JH7110 SoC
 
 Add JH7110 I2S RX master support, so the PDM can work on JH7110

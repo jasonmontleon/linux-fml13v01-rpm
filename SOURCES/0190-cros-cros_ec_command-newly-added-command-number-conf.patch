@@ -1,7 +1,7 @@
-From a31fdf88324f0c59984e47b9b63751b5797bc105 Mon Sep 17 00:00:00 2001
+From ba345cfacd8c6257a20062389f4fb95a587d61d6 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Mon, 25 Nov 2024 11:48:53 +0800
-Subject: [PATCH 190/210] cros: cros_ec_command: newly added command number
+Subject: [PATCH 190/211] cros: cros_ec_command: newly added command number
  conflicted with EC-MCU, corrected to unused command number.
 
 Signed-off-by: yang.wang <yang.wang@deepcomputing.io>

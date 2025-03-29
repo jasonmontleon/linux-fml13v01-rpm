@@ -1,7 +1,7 @@
-From 972386eea7ee5903504532eebd02bb0b05de07c0 Mon Sep 17 00:00:00 2001
+From 9df100a5cc44eef97b35ade02ec8453d59535636 Mon Sep 17 00:00:00 2001
 From: Windsome Zeng <windsome.zeng@starfivetech.com>
 Date: Thu, 11 Jan 2024 18:29:10 +0800
-Subject: [PATCH 104/210] riscv: cpu: cache: Implement a new method to flush
+Subject: [PATCH 104/211] riscv: cpu: cache: Implement a new method to flush
  the entire L2 cache
 
 According to the manual of SiFive U74, implement a new method to flush the entire L2 cache by using the Zero Device.

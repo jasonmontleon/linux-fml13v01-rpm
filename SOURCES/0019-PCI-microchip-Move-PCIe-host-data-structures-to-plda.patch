@@ -1,7 +1,7 @@
-From 3ee4f1626093b22a3abf2d8ebc4da4ca1b4f900d Mon Sep 17 00:00:00 2001
+From cb8fe3396d14ee3b1f720d72b614bcfffd86de29 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:05:56 +0800
-Subject: [PATCH 019/210] PCI: microchip: Move PCIe host data structures to
+Subject: [PATCH 019/211] PCI: microchip: Move PCIe host data structures to
  plda-pcie.h
 
 Move the common data structures definition to head file for these two data

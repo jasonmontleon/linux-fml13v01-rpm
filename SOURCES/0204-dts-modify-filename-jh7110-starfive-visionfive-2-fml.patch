@@ -1,7 +1,7 @@
-From d06c986e190359fadc8d75e8ec288292cc114238 Mon Sep 17 00:00:00 2001
+From 03b3316558bf3c4457adae192ceaa64c9ba02198 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Fri, 10 Jan 2025 17:49:46 +0800
-Subject: [PATCH 204/210] dts: modify filename:
+Subject: [PATCH 204/211] dts: modify filename:
  jh7110-starfive-visionfive-2-fml13v01.dts =>
  jh7110-deepcomputing-fml13v01.dts .
 

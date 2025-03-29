@@ -1,7 +1,7 @@
-From ed06935392801fb07590ff174e3700561ee16172 Mon Sep 17 00:00:00 2001
+From c50912e739e1f60e00032c80c1807d8f37f120b7 Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Wed, 13 Sep 2023 14:54:26 +0100
-Subject: [PATCH 040/210] pmdomain: starfive: Replace SOC_STARFIVE with
+Subject: [PATCH 040/211] pmdomain: starfive: Replace SOC_STARFIVE with
  ARCH_STARFIVE
 
 Using ARCH_FOO symbol is preferred than SOC_FOO.

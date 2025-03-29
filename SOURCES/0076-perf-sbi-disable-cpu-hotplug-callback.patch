@@ -1,7 +1,7 @@
-From 3abb6dea86850438b31e2220954ad209c07a3f27 Mon Sep 17 00:00:00 2001
+From 59691d173fc6888f28ce382e57c727da246cf345 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Thu, 2 Mar 2023 17:16:01 +0800
-Subject: [PATCH 076/210] perf: sbi: disable cpu hotplug callback.
+Subject: [PATCH 076/211] perf: sbi: disable cpu hotplug callback.
 
 register cpu hotplug callback will cause dhrystone
 and coremark benchmark reduce the scores. this CPU

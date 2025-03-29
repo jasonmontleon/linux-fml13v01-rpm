@@ -1,7 +1,7 @@
-From b961a4f1fb2e85c320d6c3549246605d8bff8cf8 Mon Sep 17 00:00:00 2001
+From 7bbb5d0908db75ff519654117c4efee0d5feb4f9 Mon Sep 17 00:00:00 2001
 From: "shengyang.chen" <shengyang.chen@starfivetech.com>
 Date: Mon, 12 Jun 2023 15:31:38 +0800
-Subject: [PATCH 090/210] vout: starfive: Add driver for the StarFive JH7110
+Subject: [PATCH 090/211] vout: starfive: Add driver for the StarFive JH7110
  display subsystem
 
 Add driver for the StarFive JH7110 display subsystem

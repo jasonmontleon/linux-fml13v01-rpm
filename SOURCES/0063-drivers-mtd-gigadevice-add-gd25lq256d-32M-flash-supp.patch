@@ -1,7 +1,7 @@
-From bdabe6a1a066fec2451c8566219a8dd3c106cb13 Mon Sep 17 00:00:00 2001
+From 5f44883fd1dc89ee1f200a7fd8a97c79a757e86a Mon Sep 17 00:00:00 2001
 From: Ziv Xu <ziv.xu@starfivetech.com>
 Date: Fri, 19 Jan 2024 15:22:55 +0800
-Subject: [PATCH 063/210] drivers: mtd: gigadevice: add gd25lq256d 32M flash
+Subject: [PATCH 063/211] drivers: mtd: gigadevice: add gd25lq256d 32M flash
  support
 
 add gd25lq256d 32M flash support

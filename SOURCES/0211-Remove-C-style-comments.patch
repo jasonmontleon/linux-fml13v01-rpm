@@ -1,7 +1,7 @@
-From 094ee112bcb4f8010a0a92a008304fb7944dc5a6 Mon Sep 17 00:00:00 2001
+From 204b1cb419eaee04719c3230212d1cce1508f7c8 Mon Sep 17 00:00:00 2001
 From: Jason Montleon <jmontleo@redhat.com>
 Date: Mon, 17 Feb 2025 11:14:30 -0500
-Subject: [PATCH 210/210] Remove C++ style comments
+Subject: [PATCH 211/211] Remove C++ style comments
 
 ---
  include/uapi/linux/jh7110-isp.h | 10 +++++-----

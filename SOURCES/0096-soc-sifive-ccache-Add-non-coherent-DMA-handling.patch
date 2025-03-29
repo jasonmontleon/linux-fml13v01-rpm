@@ -1,7 +1,7 @@
-From 6ce7983e5c47d94d793bb2b03ade2d692d09210a Mon Sep 17 00:00:00 2001
+From f07a2e99952323fad274e6501535b0b11331c58b Mon Sep 17 00:00:00 2001
 From: Emil Renner Berthing <kernel@esmil.dk>
 Date: Mon, 26 Jun 2023 14:45:57 +0800
-Subject: [PATCH 096/210] soc: sifive: ccache: Add non-coherent DMA handling
+Subject: [PATCH 096/211] soc: sifive: ccache: Add non-coherent DMA handling
 
 Add functions to flush the caches and handle non-coherent DMA.
 

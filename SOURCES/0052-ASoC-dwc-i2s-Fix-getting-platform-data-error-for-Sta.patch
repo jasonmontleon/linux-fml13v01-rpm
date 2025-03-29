@@ -1,7 +1,7 @@
-From fc8a04a1f6ed3db619968b21ec7648c55b869ce0 Mon Sep 17 00:00:00 2001
+From 8eb9573d780db3103d7254f47feea3c0396f7c16 Mon Sep 17 00:00:00 2001
 From: Xingyu Wu <xingyu.wu@starfivetech.com>
 Date: Wed, 21 Feb 2024 10:23:48 +0800
-Subject: [PATCH 052/210] ASoC: dwc: i2s: Fix getting platform data error for
+Subject: [PATCH 052/211] ASoC: dwc: i2s: Fix getting platform data error for
  StarFive JH7110
 
 JH7110 need to use a DT specific function to get the platform data,

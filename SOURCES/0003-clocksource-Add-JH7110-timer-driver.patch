@@ -1,7 +1,7 @@
-From 2107a38ff9475f412cb07354968901fd36eeab3e Mon Sep 17 00:00:00 2001
+From a9e87af4feeb41c209d05eeb7a76f203dcae9b33 Mon Sep 17 00:00:00 2001
 From: Xingyu Wu <xingyu.wu@starfivetech.com>
 Date: Thu, 19 Oct 2023 13:35:00 +0800
-Subject: [PATCH 003/210] clocksource: Add JH7110 timer driver
+Subject: [PATCH 003/211] clocksource: Add JH7110 timer driver
 
 Add timer driver for the StarFive JH7110 SoC.
 

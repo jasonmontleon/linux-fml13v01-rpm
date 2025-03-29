@@ -1,7 +1,7 @@
-From f1ffa30f0bf6fd489a4714bc28ccef9b0465222a Mon Sep 17 00:00:00 2001
+From 8c45b675f0d28443e7bcb598b7160fdf6e9adc18 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:11 +0800
-Subject: [PATCH 034/210] PCI: starfive: Add JH7110 PCIe controller
+Subject: [PATCH 034/211] PCI: starfive: Add JH7110 PCIe controller
 
 Add StarFive JH7110 SoC PCIe controller platform driver codes, JH7110
 with PLDA host PCIe core.

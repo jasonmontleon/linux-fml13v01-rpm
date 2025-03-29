@@ -1,7 +1,7 @@
-From 06055c705e4aa9827dcbdf72a94092451151af10 Mon Sep 17 00:00:00 2001
+From e89e799a7d16f24790456c474f7a72fe5a7b9e51 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Mon, 14 Aug 2023 16:06:17 +0800
-Subject: [PATCH 036/210] ASoC: starfive: Add JH7110 PWM-DAC driver
+Subject: [PATCH 036/211] ASoC: starfive: Add JH7110 PWM-DAC driver
 
 Add PWM-DAC driver support for the StarFive JH7110 SoC.
 

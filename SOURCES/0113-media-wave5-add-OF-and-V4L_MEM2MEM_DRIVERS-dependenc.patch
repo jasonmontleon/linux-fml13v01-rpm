@@ -1,7 +1,7 @@
-From 00845615209df467019c6aedcd0c4816a1588daf Mon Sep 17 00:00:00 2001
+From 0e6d150dad851b9f0a24116da492eb89959117ab Mon Sep 17 00:00:00 2001
 From: Deborah Brouwer <deborah.brouwer@collabora.com>
 Date: Thu, 23 Nov 2023 14:08:41 -0800
-Subject: [PATCH 113/210] media: wave5: add OF and V4L_MEM2MEM_DRIVERS
+Subject: [PATCH 113/211] media: wave5: add OF and V4L_MEM2MEM_DRIVERS
  dependencies
 
 Fix compile warning when CONFIG_OF=n:

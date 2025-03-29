@@ -1,7 +1,7 @@
-From 9fe9afe19f0f592954e21bc2d4b2b3c167ea0139 Mon Sep 17 00:00:00 2001
+From 6d5f536bb855491699d7559028389f0de26e1df6 Mon Sep 17 00:00:00 2001
 From: "shengyang.chen" <shengyang.chen@starfivetech.com>
 Date: Tue, 13 Jun 2023 14:22:29 +0800
-Subject: [PATCH 089/210] dt-bindings: display: Add yamls for JH7110 display
+Subject: [PATCH 089/211] dt-bindings: display: Add yamls for JH7110 display
  system and hdmi
 
 StarFive SoCs like the jh7110 use display system based on verisilicon IP, use hdmi

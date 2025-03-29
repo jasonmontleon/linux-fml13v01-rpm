@@ -160,18 +160,18 @@ Summary: The Linux kernel
 #  the --with-release option overrides this setting.)
 %define debugbuildsenabled 1
 %define buildid .fml13v01
-%define specrpmversion 6.6.84
-%define specversion 6.6.84
+%define specrpmversion 6.6.85
+%define specversion 6.6.85
 %define patchversion 6.6
 %define pkgrelease 200
 %define kversion 6
-%define tarfile_release 6.6.84
+%define tarfile_release 6.6.85
 # This is needed to do merge window version magic
 %define patchlevel 6
 # This allows pkg_release to have configurable %%{?dist} tag
 %define specrelease 200%{?buildid}%{?dist}
 # This defines the kabi tarball version
-%define kabiversion 6.6.84
+%define kabiversion 6.6.85
 
 # If this variable is set to 1, a bpf selftests build failure will cause a
 # fatal kernel package build error
@@ -1172,10 +1172,11 @@ Patch60203: 0203-riscv-fml13v01_defconfig-sync-the-previous-configura.patch
 Patch60204: 0204-dts-modify-filename-jh7110-starfive-visionfive-2-fml.patch
 Patch60205: 0205-riscv-fml13v01-Update-defconfig.patch
 Patch60206: 0206-riscv-fml13v01-Update-defconfig-CONFIG_TUN.patch
-Patch60207: 0207-remove-tdm_pins-from-vf2-dtsi.patch
-Patch60208: 0208-add-missing-bool-type.patch
-Patch60209: 0209-.NOTINTERMEDIATE-not-.SECONDARY.patch
-Patch60210: 0210-Remove-C-style-comments.patch
+Patch60207: 0207-riscv-config-fml13v01-Change-Wi-Fi-Bluetooth-from-y-.patch
+Patch60208: 0208-remove-tdm_pins-from-vf2-dtsi.patch
+Patch60209: 0209-add-missing-bool-type.patch
+Patch60210: 0210-.NOTINTERMEDIATE-not-.SECONDARY.patch
+Patch60211: 0211-Remove-C-style-comments.patch
 
 
 
@@ -2136,10 +2137,12 @@ ApplyOptionalPatch 0203-riscv-fml13v01_defconfig-sync-the-previous-configura.pat
 ApplyOptionalPatch 0204-dts-modify-filename-jh7110-starfive-visionfive-2-fml.patch
 ApplyOptionalPatch 0205-riscv-fml13v01-Update-defconfig.patch
 ApplyOptionalPatch 0206-riscv-fml13v01-Update-defconfig-CONFIG_TUN.patch
-ApplyOptionalPatch 0207-remove-tdm_pins-from-vf2-dtsi.patch
-ApplyOptionalPatch 0208-add-missing-bool-type.patch
-ApplyOptionalPatch 0209-.NOTINTERMEDIATE-not-.SECONDARY.patch
-ApplyOptionalPatch 0210-Remove-C-style-comments.patch
+ApplyOptionalPatch 0207-riscv-config-fml13v01-Change-Wi-Fi-Bluetooth-from-y-.patch
+ApplyOptionalPatch 0208-remove-tdm_pins-from-vf2-dtsi.patch
+ApplyOptionalPatch 0209-add-missing-bool-type.patch
+ApplyOptionalPatch 0210-.NOTINTERMEDIATE-not-.SECONDARY.patch
+ApplyOptionalPatch 0211-Remove-C-style-comments.patch
+
 
 
 
@@ -4132,6 +4135,9 @@ fi\
 #
 #
 %changelog
+* Fri Mar 28 2025 Jason Montleon <jason@montleon.com> [6.6.85-200.fml13v01]
+- Add new upstream patches
+
 * Tue Jan 07 2025 Jason Montleon <jason@montleon.com> [6.6.69-206.hifive_10.6]
 - Unset CONFIG_RISCV_SBI_V01
 

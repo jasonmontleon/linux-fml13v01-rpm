@@ -1,7 +1,7 @@
-From 879ac1eca960cd69a83b60e03604b8f453dc6a3e Mon Sep 17 00:00:00 2001
+From a06d0155890c495c4318f2cdb65b03da515abc68 Mon Sep 17 00:00:00 2001
 From: Nas Chung <nas.chung@chipsnmedia.com>
 Date: Wed, 8 Nov 2023 20:29:23 +0100
-Subject: [PATCH 109/210] media: chips-media: wave5: Add vpuapi layer
+Subject: [PATCH 109/211] media: chips-media: wave5: Add vpuapi layer
 
 Add the vpuapi layer of the wave5 codec driver.
 This layer is used to configure the hardware according

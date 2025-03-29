@@ -1,7 +1,7 @@
-From 7ffa140f4340784531256f615cc709cec2b72475 Mon Sep 17 00:00:00 2001
+From 4cdd06fca4c00959500fe75479de3ec44d6d7a82 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Tue, 23 Apr 2024 17:18:53 +0800
-Subject: [PATCH 146/210] clk: starfive: jh7110: Don't save and restore isp /
+Subject: [PATCH 146/211] clk: starfive: jh7110: Don't save and restore isp /
  vout clock registers in sleep pm
 
 Add reg_flags to identify clocks.

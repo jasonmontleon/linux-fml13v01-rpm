@@ -1,7 +1,7 @@
-From c9339bccb6e5fde54c5f08f6fc24599f3fe63abc Mon Sep 17 00:00:00 2001
+From 2bb74ca2d4af6f9128765d822d42201cee128737 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Thu, 5 Dec 2024 17:40:51 +0800
-Subject: [PATCH 192/210] device-tree:
+Subject: [PATCH 192/211] device-tree:
  jh7110-starfive-visionfive-2-framework.dts
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8

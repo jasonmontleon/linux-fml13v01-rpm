@@ -1,7 +1,7 @@
-From 4ae8c7ee30636c99f581e7fd7f9ffe7acc16cf96 Mon Sep 17 00:00:00 2001
+From 77c2e23cb0f9e64f3d6b61b8ff65a50f9b324f88 Mon Sep 17 00:00:00 2001
 From: Jason Montleon <jmontleo@redhat.com>
 Date: Wed, 12 Feb 2025 15:23:22 -0500
-Subject: [PATCH 207/210] remove tdm_pins from vf2 dtsi
+Subject: [PATCH 208/211] remove tdm_pins from vf2 dtsi
 
 ---
  .../jh7110-starfive-visionfive-2.dtsi         | 35 +++++++++++++++++++
