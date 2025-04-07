@@ -1,4 +1,4 @@
-From 998f1ff4999ade9ebf6cf76723d52ddaeb9400f8 Mon Sep 17 00:00:00 2001
+From 6e229ce2d9a1b55e9f4775b21858fa59a422ae80 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Wed, 20 Mar 2024 17:36:14 +0800
 Subject: [PATCH 132/211] riscv: dts: starfive: evb-overlay: Support SPI

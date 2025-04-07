@@ -1,4 +1,4 @@
-From 6ecd8e09c3ef601ee2dd72fc3f8a64014ea65089 Mon Sep 17 00:00:00 2001
+From 88fdd73007a01ca322f3f7f766942b4a7030b1b0 Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Wed, 13 Sep 2023 14:54:28 +0100
 Subject: [PATCH 042/211] pmdomain: starfive: Add JH7110 AON PMU support

@@ -1,4 +1,4 @@
-From 00cf53c7695957b37d9b9fa72dacee612fcb3bbe Mon Sep 17 00:00:00 2001
+From 2d2880ca9e9254c31b6fd8e6132f64cf268b9357 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:05:52 +0800
 Subject: [PATCH 015/211] PCI: microchip: Move pcie-microchip-host.c to plda

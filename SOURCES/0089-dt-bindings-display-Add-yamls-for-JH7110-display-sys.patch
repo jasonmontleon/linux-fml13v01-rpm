@@ -1,4 +1,4 @@
-From 6d5f536bb855491699d7559028389f0de26e1df6 Mon Sep 17 00:00:00 2001
+From 71b3fa9801944b64654dd245180fa95dfd447775 Mon Sep 17 00:00:00 2001
 From: "shengyang.chen" <shengyang.chen@starfivetech.com>
 Date: Tue, 13 Jun 2023 14:22:29 +0800
 Subject: [PATCH 089/211] dt-bindings: display: Add yamls for JH7110 display
