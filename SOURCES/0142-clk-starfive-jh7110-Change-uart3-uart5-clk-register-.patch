@@ -1,7 +1,7 @@
-From 8a99a15e6aedf249b8eca326489a1804c5e7cb64 Mon Sep 17 00:00:00 2001
+From 6f214954d97a17d4cdce744ecbe6bcec19c19d7a Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Mon, 15 Apr 2024 20:59:35 +0800
-Subject: [PATCH 142/211] clk: starfive: jh7110: Change uart3-uart5 clk
+Subject: [PATCH 142/212] clk: starfive: jh7110: Change uart3-uart5 clk
  register info
 
 The core_clk division register of uart3-uart5 include fractional and

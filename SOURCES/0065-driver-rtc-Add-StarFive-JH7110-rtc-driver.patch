@@ -1,7 +1,7 @@
-From 9b0e834cee5f7dcf01b56657b93b62af0a0eff0f Mon Sep 17 00:00:00 2001
+From f8b87b81b7f9cf895710aef06f8456702f38404f Mon Sep 17 00:00:00 2001
 From: "ziv.xu" <ziv.xu@starfivetech.com>
 Date: Fri, 9 Jun 2023 15:31:53 +0800
-Subject: [PATCH 065/211] driver: rtc: Add StarFive JH7110 rtc driver
+Subject: [PATCH 065/212] driver: rtc: Add StarFive JH7110 rtc driver
 
 Add RTC driver and support for StarFive JH7110 SoC.
 

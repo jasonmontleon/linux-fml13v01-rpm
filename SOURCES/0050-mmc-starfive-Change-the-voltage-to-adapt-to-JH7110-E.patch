@@ -1,7 +1,7 @@
-From b39b708850290e5ab27e11564ffc900875bddf92 Mon Sep 17 00:00:00 2001
+From 002fe4110b02f3941c4469b0f61c94c9a9d8991c Mon Sep 17 00:00:00 2001
 From: William Qiu <william.qiu@starfivetech.com>
 Date: Mon, 9 Oct 2023 10:59:03 +0800
-Subject: [PATCH 050/211] mmc: starfive: Change the voltage to adapt to JH7110
+Subject: [PATCH 050/212] mmc: starfive: Change the voltage to adapt to JH7110
  EVB
 
 Change the voltage, so the driver can adapt to JH7110 EVB.

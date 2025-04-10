@@ -1,7 +1,7 @@
-From b61c1e7d4cdb969b486dd835b8fef3f7fb341159 Mon Sep 17 00:00:00 2001
+From bde503c0b45234b2ca13966824ced55ab8b747bc Mon Sep 17 00:00:00 2001
 From: Mark Brown <broonie@kernel.org>
 Date: Mon, 11 Sep 2023 23:48:39 +0100
-Subject: [PATCH 037/211] ASoC: Update jh7110 PWM DAC for ops move
+Subject: [PATCH 037/212] ASoC: Update jh7110 PWM DAC for ops move
 
 For some reason the JH7110 PWM DAC driver made it through build testing
 in spite of not being updated for the move of probe() to the ops struct.

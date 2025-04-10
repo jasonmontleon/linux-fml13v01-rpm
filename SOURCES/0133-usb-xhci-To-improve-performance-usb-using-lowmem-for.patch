@@ -1,7 +1,7 @@
-From ba2041dc1b34b467bc40d9cc0760fb60466db7bf Mon Sep 17 00:00:00 2001
+From 555640528f4bc857f8f5c55bd6520928f4e0a317 Mon Sep 17 00:00:00 2001
 From: "minda.chen" <minda.chen@starfivetech.com>
 Date: Tue, 18 Oct 2022 09:57:39 +0800
-Subject: [PATCH 133/211] usb:xhci:To improve performance,usb using lowmem for
+Subject: [PATCH 133/212] usb:xhci:To improve performance,usb using lowmem for
  bulk xfer.
 
 Generate an usb low memory pool for usb 3.0 host
@@ -45,7 +45,7 @@ index 12b6dfeaf658..226e9b248c23 100644
  
  				/* We don't support sg for isoc transfers ! */
 diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
-index b0137eac7ab3..bd8948f36b4c 100644
+index fbc486546b85..31c86b0b0a93 100644
 --- a/drivers/usb/host/xhci-mem.c
 +++ b/drivers/usb/host/xhci-mem.c
 @@ -14,6 +14,7 @@

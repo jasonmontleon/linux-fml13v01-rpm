@@ -1,7 +1,7 @@
-From 3932e1f56ef4f804e1f8e5f549d077bf89e210d6 Mon Sep 17 00:00:00 2001
+From 80dd9f6e30851adeb19c4163b4f113239b8a0bf0 Mon Sep 17 00:00:00 2001
 From: William Qiu <william.qiu@starfivetech.com>
 Date: Thu, 15 Jun 2023 20:15:25 +0800
-Subject: [PATCH 070/211] CAN: starfive - Add CAN engine support
+Subject: [PATCH 070/212] CAN: starfive - Add CAN engine support
 
 Adding device probe StarFive CAN module.
 

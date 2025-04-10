@@ -1,7 +1,7 @@
-From 820e8abb716f63e9ff610f1510a920bd0b59e456 Mon Sep 17 00:00:00 2001
+From a0e9bf94a7d9c239fc813a22b6a9fc887eed2a11 Mon Sep 17 00:00:00 2001
 From: Jia Jie Ho <jiajie.ho@starfivetech.com>
 Date: Mon, 20 Nov 2023 11:12:42 +0800
-Subject: [PATCH 011/211] crypto: starfive - Pad adata with zeroes
+Subject: [PATCH 011/212] crypto: starfive - Pad adata with zeroes
 
 Aad requires padding with zeroes up to 15 bytes in some cases. This
 patch increases the allocated buffer size for aad and prevents the

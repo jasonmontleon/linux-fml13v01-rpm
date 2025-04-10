@@ -1,7 +1,7 @@
-From d77caf670d76612ffdb8bd4f0b1fa9dffcbdaf15 Mon Sep 17 00:00:00 2001
+From 74f3d76bf72a2b4b96a92548e4e12dda2dd36a4f Mon Sep 17 00:00:00 2001
 From: Ulf Hansson <ulf.hansson@linaro.org>
 Date: Tue, 12 Sep 2023 13:31:44 +0200
-Subject: [PATCH 044/211] pmdomain: starfive: Move Kconfig file to the pmdomain
+Subject: [PATCH 044/212] pmdomain: starfive: Move Kconfig file to the pmdomain
  subsystem
 
 The Kconfig belongs closer to the corresponding implementation, hence let's

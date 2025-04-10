@@ -1,7 +1,7 @@
-From 0fcedac8ad7f2289adf2a616b1109b5ce4e05022 Mon Sep 17 00:00:00 2001
+From dbc2b533e602271cbaa8e186e48192e391143431 Mon Sep 17 00:00:00 2001
 From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 Date: Mon, 6 Jan 2025 11:35:04 +0100
-Subject: [PATCH 198/211] riscv: fml13v01_defconfig: CONFIG_CGROUP_CPUACCT=y
+Subject: [PATCH 198/212] riscv: fml13v01_defconfig: CONFIG_CGROUP_CPUACCT=y
 
 Enable CPU accounting controller
 

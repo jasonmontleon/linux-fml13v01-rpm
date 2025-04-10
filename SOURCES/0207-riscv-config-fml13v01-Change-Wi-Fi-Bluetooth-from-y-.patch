@@ -1,7 +1,7 @@
-From 128be99591be10f8dbcb663b8a6eee313d9bc103 Mon Sep 17 00:00:00 2001
+From 05e0903c174fbfe8e32ac153a02a1c2269e9c2a2 Mon Sep 17 00:00:00 2001
 From: Sandie Cao <sandie.cao@deepcomputing.io>
 Date: Wed, 26 Mar 2025 14:12:43 +0800
-Subject: [PATCH 207/211] riscv: config: fml13v01: Change Wi-Fi, Bluetooth from
+Subject: [PATCH 207/212] riscv: config: fml13v01: Change Wi-Fi, Bluetooth from
  y to m
 
 Signed-off-by: Sandie Cao <sandie.cao@deepcomputing.io>

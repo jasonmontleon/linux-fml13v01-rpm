@@ -1,7 +1,7 @@
-From f5574bce2e5cac4ed5ae73a8da9836089040594f Mon Sep 17 00:00:00 2001
+From 8f282aafd66d676abab0f6bc6f02d1d7bd62979f Mon Sep 17 00:00:00 2001
 From: Emil Renner Berthing <kernel@esmil.dk>
 Date: Mon, 26 Jun 2023 14:39:39 +0800
-Subject: [PATCH 097/211] riscv: Implement non-coherent DMA support via SiFive
+Subject: [PATCH 097/212] riscv: Implement non-coherent DMA support via SiFive
  cache flushing
 
 This variant is used on the StarFive JH7100 SoC.

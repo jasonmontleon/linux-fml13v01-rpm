@@ -1,7 +1,7 @@
-From 5fe0abdbb1cefb9f4dbe01b685a58ccaf0b0fcfc Mon Sep 17 00:00:00 2001
+From e43b07a903d5bf3a6087c3d9691e981c13647b3b Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Tue, 23 Apr 2024 18:08:06 +0800
-Subject: [PATCH 147/211] clk: starfive: jh7110-isp: Add sleep pm ops and
+Subject: [PATCH 147/212] clk: starfive: jh7110-isp: Add sleep pm ops and
  enable runtime autosuspend
 
 Add sleep pm ops and enable runtime autosuspend for isp clock driver.

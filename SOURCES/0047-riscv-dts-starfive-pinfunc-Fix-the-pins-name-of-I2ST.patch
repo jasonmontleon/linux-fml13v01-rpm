@@ -1,7 +1,7 @@
-From 567448fc7fa5bfab00b3d13854c52b0d4100f0be Mon Sep 17 00:00:00 2001
+From 7b413b8202f9a3d773ca314acac244e314a8a923 Mon Sep 17 00:00:00 2001
 From: Xingyu Wu <xingyu.wu@starfivetech.com>
 Date: Mon, 21 Aug 2023 22:41:50 +0800
-Subject: [PATCH 047/211] riscv: dts: starfive: pinfunc: Fix the pins name of
+Subject: [PATCH 047/212] riscv: dts: starfive: pinfunc: Fix the pins name of
  I2STX1
 
 These pins are actually I2STX1 clock input, not I2STX0,

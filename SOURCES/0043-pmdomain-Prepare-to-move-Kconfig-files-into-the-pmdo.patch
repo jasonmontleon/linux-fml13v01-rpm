@@ -1,7 +1,7 @@
-From c618e84f3a04b1f14359e594709053c0b58d9ff2 Mon Sep 17 00:00:00 2001
+From 0b2ae64e7ace8d3af3c27a8ea22184e925adf797 Mon Sep 17 00:00:00 2001
 From: Ulf Hansson <ulf.hansson@linaro.org>
 Date: Mon, 11 Sep 2023 17:22:15 +0200
-Subject: [PATCH 043/211] pmdomain: Prepare to move Kconfig files into the
+Subject: [PATCH 043/212] pmdomain: Prepare to move Kconfig files into the
  pmdomain subsystem
 
 Rather than having the various Kconfig files for the genpd providers

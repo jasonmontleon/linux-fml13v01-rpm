@@ -1,7 +1,7 @@
-From ed56955a285a3bb45c3cff9cec2cf4cc9c2e6ab6 Mon Sep 17 00:00:00 2001
+From 4cb723d1221c53191673e1ab379f2b0ee132e7b2 Mon Sep 17 00:00:00 2001
 From: "keith.zhao" <keith.zhao@starfivetech.com>
 Date: Sun, 28 Apr 2024 16:12:25 +0800
-Subject: [PATCH 152/211] vout:debian: blank wave
+Subject: [PATCH 152/212] vout:debian: blank wave
 
 open menu 'setting', there is some blank waves in the diag
 

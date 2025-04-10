@@ -1,7 +1,7 @@
-From d5cc417d5760b1a314797ce06572e13031e2b1fe Mon Sep 17 00:00:00 2001
+From 8b6959a4207ff3c6763dccb1655672ec836e7c8c Mon Sep 17 00:00:00 2001
 From: William Qiu <william.qiu@starfivetech.com>
 Date: Fri, 22 Sep 2023 14:28:32 +0800
-Subject: [PATCH 004/211] dt-bindings: mmc: starfive: Remove properties from
+Subject: [PATCH 004/212] dt-bindings: mmc: starfive: Remove properties from
  required
 
 Due to the change of tuning implementation, it's no longer necessary to

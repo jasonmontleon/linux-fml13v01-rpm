@@ -1,7 +1,7 @@
-From 63ad31ea98347ded98ac0cbe430911fbc03ea833 Mon Sep 17 00:00:00 2001
+From d563a57991ac644fcd1532856915c8b35e4e26aa Mon Sep 17 00:00:00 2001
 From: "zejian.su" <zejian.su@starfivetech.com>
 Date: Mon, 3 Jul 2023 16:52:13 +0800
-Subject: [PATCH 099/211] Add 16 ISP controls, remove the frame SYNC event to
+Subject: [PATCH 099/212] Add 16 ISP controls, remove the frame SYNC event to
  video7 (SC) These controls are: WB, CAR, CCM, CFA, CTC, DBC, DNYUV, GMARGB,
  LCCF, OBC, OECF, R2Y, SAT, SHRP, YCRV, SC
 

@@ -1,7 +1,7 @@
-From 8e9652d0f284f205cff8b61898c0575b9d53c7ff Mon Sep 17 00:00:00 2001
+From cf1035f09f5eaf5587057f23a9c41400b4892539 Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Fri, 18 Nov 2022 11:50:58 +0800
-Subject: [PATCH 140/211] media: i2c: imx219: Add support enum/set/get frame
+Subject: [PATCH 140/212] media: i2c: imx219: Add support enum/set/get frame
  rate
 
 Add support enum/set/get frame rate to pass the compliance test.

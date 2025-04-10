@@ -1,7 +1,7 @@
-From d54a419c2cb7c6f853dd004d1e15b80bd7325c2e Mon Sep 17 00:00:00 2001
+From dffd4825031654d97c7de0b14d98ef496205e9b8 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Tue, 3 Sep 2024 17:05:26 +0800
-Subject: [PATCH 159/211] PCI Wifi: MT7922 MT7921 AX200/AX201.
+Subject: [PATCH 159/212] PCI Wifi: MT7922 MT7921 AX200/AX201.
 
 Signed-off-by: yang.wang <yang.wang@deepcomputing.io>
 ---

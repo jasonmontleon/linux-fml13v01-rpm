@@ -1,7 +1,7 @@
-From 9e7f085432f0c99df45fe84753bf5123d79c488a Mon Sep 17 00:00:00 2001
+From 7cd385c52bffe5645c9b037e76f8b4d629f896c8 Mon Sep 17 00:00:00 2001
 From: Robert Beckett <bob.beckett@collabora.com>
 Date: Wed, 8 Nov 2023 20:29:25 +0100
-Subject: [PATCH 111/211] dt-bindings: media: wave5: add yaml devicetree
+Subject: [PATCH 111/212] dt-bindings: media: wave5: add yaml devicetree
  bindings
 
 Add bindings for the wave5 chips&media codec driver

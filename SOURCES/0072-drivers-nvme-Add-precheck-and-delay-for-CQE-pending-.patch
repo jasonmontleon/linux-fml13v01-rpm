@@ -1,7 +1,7 @@
-From 4057863e06e8c7962bad17c2bcae613efacc4c46 Mon Sep 17 00:00:00 2001
+From 662b722eb09413b022bc19f63204e5bf7e2c8d6f Mon Sep 17 00:00:00 2001
 From: "Kevin.xie" <kevin.xie@starfivetech.com>
 Date: Thu, 24 Nov 2022 16:59:12 +0800
-Subject: [PATCH 072/211] drivers: nvme: Add precheck and delay for CQE pending
+Subject: [PATCH 072/212] drivers: nvme: Add precheck and delay for CQE pending
  status.
 
 To workaroud the NVMe I/O timeout problem in bootup S10udev case
@@ -13,7 +13,7 @@ Signed-off-by: Kevin.xie <kevin.xie@starfivetech.com>
  1 file changed, 10 insertions(+)
 
 diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index a36ec6df6624..b68d6eb52c19 100644
+index a763df0200ab..839ec61903f2 100644
 --- a/drivers/nvme/host/pci.c
 +++ b/drivers/nvme/host/pci.c
 @@ -28,6 +28,7 @@

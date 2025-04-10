@@ -1,7 +1,7 @@
-From d2432cf4dd001d4f63d3984275849218ce4315f5 Mon Sep 17 00:00:00 2001
+From f871ef3834629769a2714f957ee9f99f1d205481 Mon Sep 17 00:00:00 2001
 From: Xingyu Wu <xingyu.wu@starfivetech.com>
 Date: Thu, 15 Jun 2023 11:32:50 +0800
-Subject: [PATCH 080/211] ASoC: starfive: Add SPDIF and PCM driver
+Subject: [PATCH 080/212] ASoC: starfive: Add SPDIF and PCM driver
 
 Add SPDIF and SPDIF-PCM driver for StarFive JH7110.
 

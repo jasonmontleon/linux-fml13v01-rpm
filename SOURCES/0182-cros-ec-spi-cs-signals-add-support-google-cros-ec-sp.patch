@@ -1,7 +1,7 @@
-From 140a301319c25a871e10c60518d1590d75954b68 Mon Sep 17 00:00:00 2001
+From c162922189ba259b1737bf193cfb27646b94acf9 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Fri, 25 Oct 2024 18:35:39 +0800
-Subject: [PATCH 182/211] cros-ec-spi: cs signals add support:
+Subject: [PATCH 182/212] cros-ec-spi: cs signals add support:
  'google,cros-ec-spi-pre-delay' and 'google,cros-ec-spi-msg-delay'
 
 Signed-off-by: yang.wang <yang.wang@deepcomputing.io>

@@ -1,7 +1,7 @@
-From dca69bd979f3cb6d3cbc4515e27fec4d37d256bd Mon Sep 17 00:00:00 2001
+From 6fd2dc50d8c00693a4ced3224e010cebc783dc38 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Fri, 3 Jan 2025 17:04:46 +0800
-Subject: [PATCH 193/211] device-tree:: update the product model to FML13V01.
+Subject: [PATCH 193/212] device-tree:: update the product model to FML13V01.
 
 Signed-off-by: yang.wang <yang.wang@deepcomputing.io>
 ---

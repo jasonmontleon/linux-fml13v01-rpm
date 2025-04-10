@@ -1,7 +1,7 @@
-From 9e48dc8f8f2235f12678c432bb9aa64280bfe786 Mon Sep 17 00:00:00 2001
+From 90b507f39d1f788123247ff12d6c66295d3aee6b Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Wed, 20 Mar 2024 10:55:10 +0800
-Subject: [PATCH 127/211] media: starfive: put off VIN register
+Subject: [PATCH 127/212] media: starfive: put off VIN register
 
 put off VIN register.
 

@@ -1,7 +1,7 @@
-From 83002be775b8310bda939ab7af8ee254dd3427c8 Mon Sep 17 00:00:00 2001
+From 67686feaf36e31a9a5ea20556b9be403deecf785 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Fri, 13 Oct 2023 14:10:24 +0800
-Subject: [PATCH 091/211] soc: starfive: jh71xx_pmu: Add EVENT_TURN_OFF
+Subject: [PATCH 091/212] soc: starfive: jh71xx_pmu: Add EVENT_TURN_OFF
  register writing support
 
 Add and export starfive_pmu_hw_event_turn_off_mask() to

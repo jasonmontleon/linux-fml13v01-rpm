@@ -1,7 +1,7 @@
-From 2d2880ca9e9254c31b6fd8e6132f64cf268b9357 Mon Sep 17 00:00:00 2001
+From d051de524a9890681b6f499dadd04643485818ce Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:05:52 +0800
-Subject: [PATCH 015/211] PCI: microchip: Move pcie-microchip-host.c to plda
+Subject: [PATCH 015/212] PCI: microchip: Move pcie-microchip-host.c to plda
  directory
 
 For Microchip Polarfire PCIe host is PLDA XpressRich IP, move to plda

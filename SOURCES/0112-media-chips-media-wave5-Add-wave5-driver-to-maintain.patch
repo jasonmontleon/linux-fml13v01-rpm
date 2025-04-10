@@ -1,7 +1,7 @@
-From 6f7314095352bcd7e0187ae9072e3379f4232982 Mon Sep 17 00:00:00 2001
+From 6d5d30022e21d4a6204cd171e79f4cd864410483 Mon Sep 17 00:00:00 2001
 From: Robert Beckett <bob.beckett@collabora.com>
 Date: Wed, 8 Nov 2023 20:29:26 +0100
-Subject: [PATCH 112/211] media: chips-media: wave5: Add wave5 driver to
+Subject: [PATCH 112/212] media: chips-media: wave5: Add wave5 driver to
  maintainers file
 
 Add the Chips&Media wave5 encoder/decoder driver to the maintainers file

@@ -1,7 +1,7 @@
-From af962e552dced47c64b36ffe08b892e9e88cdad5 Mon Sep 17 00:00:00 2001
+From 3954e19baccb2d398496abdf36cd07d1dbee92ae Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Fri, 12 May 2023 17:33:20 +0800
-Subject: [PATCH 062/211] i2c: designware: Delete SMBus functionalities
+Subject: [PATCH 062/212] i2c: designware: Delete SMBus functionalities
 
 The driver didn't implement the smbus interface,
 so replace the SMBus functionalities with

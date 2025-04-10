@@ -1,7 +1,7 @@
-From 27ac4a33329f5a9a111634a5781e829fa019fee0 Mon Sep 17 00:00:00 2001
+From 4a17f69d59b4fda87528c5072f118c3418010df9 Mon Sep 17 00:00:00 2001
 From: William Qiu <william.qiu@starfivetech.com>
 Date: Fri, 22 Sep 2023 14:28:33 +0800
-Subject: [PATCH 005/211] mmc: starfive: Change tuning implementation
+Subject: [PATCH 005/212] mmc: starfive: Change tuning implementation
 
 Before, we used syscon to achieve tuning, but the actual measurement
 showed little effect, so the tuning implementation was modified here,

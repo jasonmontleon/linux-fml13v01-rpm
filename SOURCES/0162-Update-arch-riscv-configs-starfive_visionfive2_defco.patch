@@ -1,7 +1,7 @@
-From c79e9c9010b872118858a1b54a473cb8e6064458 Mon Sep 17 00:00:00 2001
+From f268c8027971b6ddaf85da19b15ae231d30cd05b Mon Sep 17 00:00:00 2001
 From: "sixue.cheng" <sixue.cheng@xcalibyte.com>
 Date: Thu, 5 Sep 2024 03:16:35 +0000
-Subject: [PATCH 162/211] Update
+Subject: [PATCH 162/212] Update
  arch/riscv/configs/starfive_visionfive2_defconfig
 
 ---

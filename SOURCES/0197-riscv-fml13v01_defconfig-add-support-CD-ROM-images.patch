@@ -1,7 +1,7 @@
-From 088abf62b77120b73e6f3fff213cc26717b6144e Mon Sep 17 00:00:00 2001
+From 6d05c75f556bb2ac4f631430d09eae398e43f189 Mon Sep 17 00:00:00 2001
 From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 Date: Mon, 6 Jan 2025 11:25:21 +0100
-Subject: [PATCH 197/211] riscv: fml13v01_defconfig: add support CD-ROM images
+Subject: [PATCH 197/212] riscv: fml13v01_defconfig: add support CD-ROM images
 
 Some distros use this format for installer images.
 

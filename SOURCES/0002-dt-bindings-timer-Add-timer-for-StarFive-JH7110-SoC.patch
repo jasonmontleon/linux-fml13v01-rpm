@@ -1,7 +1,7 @@
-From 43de57cf3c46333f6be0a8d033977c2962ca733f Mon Sep 17 00:00:00 2001
+From 3bbfbf82fd636693d0f41c846f3a1ea417b09e33 Mon Sep 17 00:00:00 2001
 From: Xingyu Wu <xingyu.wu@starfivetech.com>
 Date: Thu, 19 Oct 2023 13:34:59 +0800
-Subject: [PATCH 002/211] dt-bindings: timer: Add timer for StarFive JH7110 SoC
+Subject: [PATCH 002/212] dt-bindings: timer: Add timer for StarFive JH7110 SoC
 
 Add bindings for the timer on the JH7110 RISC-V SoC
 by StarFive Technology Ltd.

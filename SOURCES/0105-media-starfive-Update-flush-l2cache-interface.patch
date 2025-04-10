@@ -1,7 +1,7 @@
-From b69e0f23e8ddc643e98437822edfa824a5835459 Mon Sep 17 00:00:00 2001
+From cf2f58991c348cbc72574acc93d18314dd7fafd8 Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Fri, 12 Jan 2024 17:27:46 +0800
-Subject: [PATCH 105/211] media: starfive: Update flush l2cache interface
+Subject: [PATCH 105/212] media: starfive: Update flush l2cache interface
 
 Improve l2cache flush performance. And adjust ISP sc buffer size
 in pixel format.

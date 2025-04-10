@@ -1,7 +1,7 @@
-From bdcb41050e40cee9cdafadd2e9cbb4957e973c12 Mon Sep 17 00:00:00 2001
+From 66e461254e106d24af305d6d2f8bf6425cd0e4f5 Mon Sep 17 00:00:00 2001
 From: Jason Montleon <jmontleo@redhat.com>
 Date: Mon, 17 Feb 2025 08:29:07 -0500
-Subject: [PATCH 210/211] .NOTINTERMEDIATE not .SECONDARY
+Subject: [PATCH 211/212] .NOTINTERMEDIATE not .SECONDARY
 
 ---
  drivers/gpu/drm/img/img-rogue/Makefile | 2 +-
