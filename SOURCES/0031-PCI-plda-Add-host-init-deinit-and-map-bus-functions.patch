@@ -1,7 +1,7 @@
-From b88ab551ab4da8446873b3541a17af5c81cac017 Mon Sep 17 00:00:00 2001
+From 3506359c3f3419c12dece6b76ceb38d5e7420da6 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:08 +0800
-Subject: [PATCH 031/212] PCI: plda: Add host init/deinit and map bus functions
+Subject: [PATCH 031/213] PCI: plda: Add host init/deinit and map bus functions
 
 Add PLDA host plda_pcie_host_init()/plda_pcie_host_deinit() and map bus
 function. So vendor can use it to init PLDA PCIe host core.

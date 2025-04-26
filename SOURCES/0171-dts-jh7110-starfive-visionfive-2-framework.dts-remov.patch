@@ -1,7 +1,7 @@
-From 435fff829fab35d53551fdfed8e2b029d7cae7bc Mon Sep 17 00:00:00 2001
+From 158f0923d46e1afbfe151f8787ec058ccc53f2ef Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Thu, 19 Sep 2024 15:58:06 +0800
-Subject: [PATCH 171/212] dts: jh7110-starfive-visionfive-2-framework.dts
+Subject: [PATCH 171/213] dts: jh7110-starfive-visionfive-2-framework.dts
  remove interrupts configs.
 
 Signed-off-by: yang.wang <yang.wang@deepcomputing.io>

@@ -1,7 +1,7 @@
-From 28d047ea286bf60731cbdf113344b67d7aa4e105 Mon Sep 17 00:00:00 2001
+From 32dc88031bee0a26941716cd024af975ef6fd38f Mon Sep 17 00:00:00 2001
 From: Xingyu Wu <xingyu.wu@starfivetech.com>
 Date: Fri, 16 Jun 2023 16:27:46 +0800
-Subject: [PATCH 079/212] ASoC: codecs: Add AC108 Codec driver
+Subject: [PATCH 079/213] ASoC: codecs: Add AC108 Codec driver
 
 Add AC108 Codec driver and AC101 driver for AC10x.
 

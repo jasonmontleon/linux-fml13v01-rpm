@@ -1,7 +1,7 @@
-From fd67ed6e15ad1adcfe1405b91a89dd594aa48e09 Mon Sep 17 00:00:00 2001
+From 08ec767d076ab08ffd189866557e3e553b6d801c Mon Sep 17 00:00:00 2001
 From: Ziv Xu <ziv.xu@starfivetech.com>
 Date: Wed, 13 Mar 2024 18:47:59 +0800
-Subject: [PATCH 125/212] driver: media: starfive: v4l2_driver: vin support
+Subject: [PATCH 125/213] driver: media: starfive: v4l2_driver: vin support
  kernel 6.6
 
 vin support kernel 6.6

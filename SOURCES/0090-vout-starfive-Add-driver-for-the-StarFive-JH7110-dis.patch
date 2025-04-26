@@ -1,7 +1,7 @@
-From 0b01fd24e487ede3c9c65f6be7ae60035a7c8d1e Mon Sep 17 00:00:00 2001
+From ef949419c8cdfd03028e23123ea62dde6b5486bc Mon Sep 17 00:00:00 2001
 From: "shengyang.chen" <shengyang.chen@starfivetech.com>
 Date: Mon, 12 Jun 2023 15:31:38 +0800
-Subject: [PATCH 090/212] vout: starfive: Add driver for the StarFive JH7110
+Subject: [PATCH 090/213] vout: starfive: Add driver for the StarFive JH7110
  display subsystem
 
 Add driver for the StarFive JH7110 display subsystem
@@ -108,7 +108,7 @@ Signed-off-by: Hal Feng <hal.feng@starfivetech.com>
  create mode 100644 include/uapi/drm/vs_drm.h
 
 diff --git a/drivers/gpu/drm/Kconfig b/drivers/gpu/drm/Kconfig
-index ec4abf9ff47b..de1853c07f99 100644
+index a2b4c97bcb31..5a62b1e78a26 100644
 --- a/drivers/gpu/drm/Kconfig
 +++ b/drivers/gpu/drm/Kconfig
 @@ -388,6 +388,8 @@ source "drivers/gpu/drm/solomon/Kconfig"
@@ -130,7 +130,7 @@ index 215e78e79125..a0902298f98f 100644
  obj-$(CONFIG_DRM_LOONGSON) += loongson/
 +obj-$(CONFIG_DRM_VERISILICON) += verisilicon/
 diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
-index 554d4468aa7c..f353d9db160c 100644
+index f3681970887c..85c3cc3caa66 100644
 --- a/drivers/gpu/drm/drm_atomic_helper.c
 +++ b/drivers/gpu/drm/drm_atomic_helper.c
 @@ -1127,6 +1127,42 @@ disable_outputs(struct drm_device *dev, struct drm_atomic_state *old_state)

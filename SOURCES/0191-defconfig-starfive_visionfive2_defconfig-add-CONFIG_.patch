@@ -1,7 +1,7 @@
-From 56e97609221777a701ac7bb6e2f21bad03b795c3 Mon Sep 17 00:00:00 2001
+From b38c45a6d2bc6a04624faea6998803ef2c606555 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Thu, 5 Dec 2024 11:36:52 +0800
-Subject: [PATCH 191/212] defconfig: starfive_visionfive2_defconfig: add
+Subject: [PATCH 191/213] defconfig: starfive_visionfive2_defconfig: add
  CONFIG_AUDIT.
 
 Signed-off-by: yang.wang <yang.wang@deepcomputing.io>

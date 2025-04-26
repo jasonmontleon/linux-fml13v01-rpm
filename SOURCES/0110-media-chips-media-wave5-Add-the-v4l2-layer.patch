@@ -1,7 +1,7 @@
-From c55b618976062a75c0e10e7398d8c1ce204b04e9 Mon Sep 17 00:00:00 2001
+From 1f452e48ee0589ef171410de93b1c4ee328b82ed Mon Sep 17 00:00:00 2001
 From: Nas Chung <nas.chung@chipsnmedia.com>
 Date: Wed, 8 Nov 2023 20:29:24 +0100
-Subject: [PATCH 110/212] media: chips-media: wave5: Add the v4l2 layer
+Subject: [PATCH 110/213] media: chips-media: wave5: Add the v4l2 layer
 
 Add the decoder and encoder implementing the v4l2
 API. This patch also adds the Makefile and the VIDEO_WAVE_VPU config

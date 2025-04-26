@@ -1,7 +1,7 @@
-From e5895ad07a66a56185a18da3373d686f3034195d Mon Sep 17 00:00:00 2001
+From b32837551dd4797756795897eb5a729bd4f7e76a Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Tue, 13 Jun 2023 16:55:23 +0800
-Subject: [PATCH 086/212] dt-bindings: media: i2c: Add IMX708 CMOS sensor
+Subject: [PATCH 086/213] dt-bindings: media: i2c: Add IMX708 CMOS sensor
  binding
 
 Add YAML devicetree binding for IMX708 CMOS image sensor.

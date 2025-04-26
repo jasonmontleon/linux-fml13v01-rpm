@@ -1,7 +1,7 @@
-From d23239713e902a3b95052fe90afa76bbbe837cda Mon Sep 17 00:00:00 2001
+From 505764c6aff58a1ecf25d85bb19d6f9603f50d3b Mon Sep 17 00:00:00 2001
 From: Xingyu Wu <xingyu.wu@starfivetech.com>
 Date: Wed, 21 Feb 2024 10:23:48 +0800
-Subject: [PATCH 052/212] ASoC: dwc: i2s: Fix getting platform data error for
+Subject: [PATCH 052/213] ASoC: dwc: i2s: Fix getting platform data error for
  StarFive JH7110
 
 JH7110 need to use a DT specific function to get the platform data,
@@ -15,10 +15,10 @@ Signed-off-by: Hal Feng <hal.feng@starfivetech.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/sound/soc/dwc/dwc-i2s.c b/sound/soc/dwc/dwc-i2s.c
-index 9ea4be56d3b7..a25ffe50d5c1 100644
+index 43edad6c887d..90a26853c4e4 100644
 --- a/sound/soc/dwc/dwc-i2s.c
 +++ b/sound/soc/dwc/dwc-i2s.c
-@@ -917,7 +917,11 @@ static int jh7110_i2stx0_clk_cfg(struct i2s_clk_config_data *config)
+@@ -916,7 +916,11 @@ static int jh7110_i2stx0_clk_cfg(struct i2s_clk_config_data *config)
  
  static int dw_i2s_probe(struct platform_device *pdev)
  {

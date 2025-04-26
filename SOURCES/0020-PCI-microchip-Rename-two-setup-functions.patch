@@ -1,7 +1,7 @@
-From 32ca1a6cd1640e9e7178b7ae2a016277c1b7407d Mon Sep 17 00:00:00 2001
+From 88676a6cefc9b5471a200903061c069c56e6fdb0 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:05:57 +0800
-Subject: [PATCH 020/212] PCI: microchip: Rename two setup functions
+Subject: [PATCH 020/213] PCI: microchip: Rename two setup functions
 
 Rename two setup functions to plda prefix. Prepare to re-use these two
 setup function.

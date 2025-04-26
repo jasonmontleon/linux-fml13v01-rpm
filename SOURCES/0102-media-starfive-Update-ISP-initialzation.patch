@@ -1,7 +1,7 @@
-From b595bf93da91342ac1d4f166011d4cb771a62847 Mon Sep 17 00:00:00 2001
+From 986cd9ecc91f8a4361a59d4903027a313b80493b Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Mon, 13 Nov 2023 14:46:50 +0800
-Subject: [PATCH 102/212] media: starfive: Update ISP initialzation
+Subject: [PATCH 102/213] media: starfive: Update ISP initialzation
 
 ISP compatible stf_isp_ctrl and libcamera.
 

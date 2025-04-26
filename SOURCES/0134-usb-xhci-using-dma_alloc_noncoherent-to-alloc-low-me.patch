@@ -1,7 +1,7 @@
-From 1466a3ddc779a2b864dc55710ae1a6f2834d2888 Mon Sep 17 00:00:00 2001
+From 3ab0aa8bf4dca780f1c4ade25068325d4928ad62 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 3 Jul 2023 16:14:20 +0800
-Subject: [PATCH 134/212] usb: xhci: using dma_alloc_noncoherent to alloc low
+Subject: [PATCH 134/213] usb: xhci: using dma_alloc_noncoherent to alloc low
  memory pool
 
 For RISCV_NONCACHEHERENT is set, using dma_alloc_noncoherent

@@ -1,7 +1,7 @@
-From d5aacc8e7389e93dbfd6f38134876fdd1336dd77 Mon Sep 17 00:00:00 2001
+From fadcee03eaab224852b00b29a958785cb33da34e Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Tue, 11 Apr 2023 16:25:57 +0800
-Subject: [PATCH 049/212] MAINTAINERS: Update all StarFive entries
+Subject: [PATCH 049/213] MAINTAINERS: Update all StarFive entries
 
 Merge all StarFive maintainers changes together.
 
@@ -11,10 +11,10 @@ Signed-off-by: Hal Feng <hal.feng@starfivetech.com>
  1 file changed, 57 insertions(+), 4 deletions(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index ae4c0cec5073..56d03735ecfe 100644
+index 294d2ce29b73..e8768278863c 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -7053,6 +7053,14 @@ T:	git git://anongit.freedesktop.org/drm/drm-misc
+@@ -7054,6 +7054,14 @@ T:	git git://anongit.freedesktop.org/drm/drm-misc
  F:	Documentation/devicetree/bindings/display/rockchip/
  F:	drivers/gpu/drm/rockchip/
  
@@ -29,7 +29,7 @@ index ae4c0cec5073..56d03735ecfe 100644
  DRM DRIVERS FOR STI
  M:	Alain Volmat <alain.volmat@foss.st.com>
  L:	dri-devel@lists.freedesktop.org
-@@ -16014,6 +16022,13 @@ F:	Documentation/i2c/busses/i2c-ocores.rst
+@@ -16015,6 +16023,13 @@ F:	Documentation/i2c/busses/i2c-ocores.rst
  F:	drivers/i2c/busses/i2c-ocores.c
  F:	include/linux/platform_data/i2c-ocores.h
  
@@ -43,7 +43,7 @@ index ae4c0cec5073..56d03735ecfe 100644
  OPENRISC ARCHITECTURE
  M:	Jonas Bonn <jonas@southpole.se>
  M:	Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>
-@@ -16425,6 +16440,14 @@ S:	Maintained
+@@ -16426,6 +16441,14 @@ S:	Maintained
  F:	Documentation/devicetree/bindings/pci/layerscape-pcie-gen4.txt
  F:	drivers/pci/controller/mobiveil/pcie-layerscape-gen4.c
  
@@ -58,7 +58,7 @@ index ae4c0cec5073..56d03735ecfe 100644
  PCI DRIVER FOR RENESAS R-CAR
  M:	Marek Vasut <marek.vasut+renesas@gmail.com>
  M:	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-@@ -16656,7 +16679,7 @@ M:	Daire McNamara <daire.mcnamara@microchip.com>
+@@ -16657,7 +16680,7 @@ M:	Daire McNamara <daire.mcnamara@microchip.com>
  L:	linux-pci@vger.kernel.org
  S:	Supported
  F:	Documentation/devicetree/bindings/pci/microchip*
@@ -67,7 +67,7 @@ index ae4c0cec5073..56d03735ecfe 100644
  
  PCIE DRIVER FOR QUALCOMM MSM
  M:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-@@ -16680,6 +16703,13 @@ S:	Maintained
+@@ -16681,6 +16704,13 @@ S:	Maintained
  F:	Documentation/devicetree/bindings/pci/socionext,uniphier-pcie*
  F:	drivers/pci/controller/dwc/pcie-uniphier*
  
@@ -81,7 +81,7 @@ index ae4c0cec5073..56d03735ecfe 100644
  PCIE DRIVER FOR ST SPEAR13XX
  M:	Pratyush Anand <pratyush.anand@gmail.com>
  L:	linux-pci@vger.kernel.org
-@@ -18452,7 +18482,7 @@ F:	drivers/char/hw_random/mpfs-rng.c
+@@ -18453,7 +18483,7 @@ F:	drivers/char/hw_random/mpfs-rng.c
  F:	drivers/clk/microchip/clk-mpfs*.c
  F:	drivers/i2c/busses/i2c-microchip-corei2c.c
  F:	drivers/mailbox/mailbox-mpfs.c
@@ -90,7 +90,7 @@ index ae4c0cec5073..56d03735ecfe 100644
  F:	drivers/pwm/pwm-microchip-core.c
  F:	drivers/reset/reset-mpfs.c
  F:	drivers/rtc/rtc-mpfs.c
-@@ -20433,6 +20463,15 @@ M:	Ion Badulescu <ionut@badula.org>
+@@ -20434,6 +20464,15 @@ M:	Ion Badulescu <ionut@badula.org>
  S:	Odd Fixes
  F:	drivers/net/ethernet/adaptec/starfire*
  
@@ -106,7 +106,7 @@ index ae4c0cec5073..56d03735ecfe 100644
  STARFIVE CRYPTO DRIVER
  M:	Jia Jie Ho <jiajie.ho@starfivetech.com>
  M:	William Qiu <william.qiu@starfivetech.com>
-@@ -20471,6 +20510,13 @@ S:	Supported
+@@ -20472,6 +20511,13 @@ S:	Supported
  F:	Documentation/devicetree/bindings/clock/starfive,jh7110-pll.yaml
  F:	drivers/clk/starfive/clk-starfive-jh7110-pll.c
  
@@ -120,7 +120,7 @@ index ae4c0cec5073..56d03735ecfe 100644
  STARFIVE JH7110 SYSCON
  M:	William Qiu <william.qiu@starfivetech.com>
  M:	Xingyu Wu <xingyu.wu@starfivetech.com>
-@@ -20518,9 +20564,10 @@ F:	drivers/usb/cdns3/cdns3-starfive.c
+@@ -20519,9 +20565,10 @@ F:	drivers/usb/cdns3/cdns3-starfive.c
  
  STARFIVE JH71XX PMU CONTROLLER DRIVER
  M:	Walker Chen <walker.chen@starfivetech.com>
@@ -132,7 +132,7 @@ index ae4c0cec5073..56d03735ecfe 100644
  F:	include/dt-bindings/power/starfive,jh7110-pmu.h
  
  STARFIVE SOC DRIVERS
-@@ -20528,7 +20575,13 @@ M:	Conor Dooley <conor@kernel.org>
+@@ -20529,7 +20576,13 @@ M:	Conor Dooley <conor@kernel.org>
  S:	Maintained
  T:	git https://git.kernel.org/pub/scm/linux/kernel/git/conor/linux.git/
  F:	Documentation/devicetree/bindings/soc/starfive/

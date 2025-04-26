@@ -1,7 +1,7 @@
-From 72e77e83a7cd8b5d540af501c000451b56686784 Mon Sep 17 00:00:00 2001
+From 9cad2a786989a1466a4cb2170b8abdeebf89f6d3 Mon Sep 17 00:00:00 2001
 From: Ziv Xu <ziv.xu@starfivetech.com>
 Date: Wed, 13 Mar 2024 18:41:12 +0800
-Subject: [PATCH 122/212] driver: net: wireless: VF2 support eswin wifi module
+Subject: [PATCH 122/213] driver: net: wireless: VF2 support eswin wifi module
  for kernel 6.6
 
 VF2 support eswin wifi module for kernel 6.6

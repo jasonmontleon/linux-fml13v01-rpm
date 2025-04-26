@@ -1,7 +1,7 @@
-From e1a45b761daa5b148ee116e5ea4b7bd34ea0e46d Mon Sep 17 00:00:00 2001
+From 14cf66dc13e2b7eb6d365a28dfa2a208c0bc2e7f Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:04 +0800
-Subject: [PATCH 027/212] PCI: microchip: Add get_events() callback and add
+Subject: [PATCH 027/213] PCI: microchip: Add get_events() callback and add
  PLDA get_event()
 
 As PLDA dts binding doc(Documentation/devicetree/bindings/pci/

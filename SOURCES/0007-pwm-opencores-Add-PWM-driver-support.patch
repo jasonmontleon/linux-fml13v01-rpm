@@ -1,7 +1,7 @@
-From 63fb005b84b741907c7b45e3743eed2c7520ffd0 Mon Sep 17 00:00:00 2001
+From 27ccf85bf7d1fc4ade113a9109692f6476df4e7d Mon Sep 17 00:00:00 2001
 From: William Qiu <william.qiu@starfivetech.com>
 Date: Fri, 22 Dec 2023 17:45:46 +0800
-Subject: [PATCH 007/212] pwm: opencores: Add PWM driver support
+Subject: [PATCH 007/213] pwm: opencores: Add PWM driver support
 
 Add driver for OpenCores PWM Controller. And add compatibility code
 which based on StarFive SoC.

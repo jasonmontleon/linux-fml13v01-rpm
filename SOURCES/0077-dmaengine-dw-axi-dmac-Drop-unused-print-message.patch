@@ -1,7 +1,7 @@
-From 09a1347c5f7950ea04114faf27af1febfd4becbe Mon Sep 17 00:00:00 2001
+From 20a9233a0cc3d78a3def1582ac8591ac5c221e0a Mon Sep 17 00:00:00 2001
 From: Walker Chen <walker.chen@starfivetech.com>
 Date: Mon, 12 Jun 2023 21:21:45 +0800
-Subject: [PATCH 077/212] dmaengine: dw-axi-dmac: Drop unused print message
+Subject: [PATCH 077/213] dmaengine: dw-axi-dmac: Drop unused print message
 
 Removed printing information which is not related to StarFive
 platform.

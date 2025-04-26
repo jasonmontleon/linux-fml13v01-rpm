@@ -1,7 +1,7 @@
-From 6d5d30022e21d4a6204cd171e79f4cd864410483 Mon Sep 17 00:00:00 2001
+From ff355382bdfb875946a51957f3ed8b89a69b66b1 Mon Sep 17 00:00:00 2001
 From: Robert Beckett <bob.beckett@collabora.com>
 Date: Wed, 8 Nov 2023 20:29:26 +0100
-Subject: [PATCH 112/212] media: chips-media: wave5: Add wave5 driver to
+Subject: [PATCH 112/213] media: chips-media: wave5: Add wave5 driver to
  maintainers file
 
 Add the Chips&Media wave5 encoder/decoder driver to the maintainers file
@@ -14,10 +14,10 @@ Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
  1 file changed, 8 insertions(+)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 9b078d76b925..7f7825190e61 100644
+index c7c1f1d6f405..e3c2f2d91350 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -23264,6 +23264,14 @@ F:	include/linux/watchdog.h
+@@ -23265,6 +23265,14 @@ F:	include/linux/watchdog.h
  F:	include/trace/events/watchdog.h
  F:	include/uapi/linux/watchdog.h
  

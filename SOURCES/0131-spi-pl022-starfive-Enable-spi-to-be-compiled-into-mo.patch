@@ -1,7 +1,7 @@
-From e0ca4de191b5a6492edb2e48c63b5ec1b35e59d1 Mon Sep 17 00:00:00 2001
+From 2e84dd851210bf7498aba1aee722132654d18dc4 Mon Sep 17 00:00:00 2001
 From: "ziv.xu" <ziv.xu@starfive.com>
 Date: Wed, 18 Jan 2023 15:50:47 +0800
-Subject: [PATCH 131/212] spi-pl022-starfive:Enable spi to be compiled into
+Subject: [PATCH 131/213] spi-pl022-starfive:Enable spi to be compiled into
  modules
 
 Enable spi to be compiled into modules

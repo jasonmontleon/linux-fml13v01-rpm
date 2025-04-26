@@ -1,7 +1,7 @@
-From e750584d99e128ad6376c7846a80ad94bc34dc98 Mon Sep 17 00:00:00 2001
+From 732669577f9c0511709e91cb6a014a9bf376e37e Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:07 +0800
-Subject: [PATCH 030/212] pci: plda: Add event bitmap field to struct
+Subject: [PATCH 030/213] pci: plda: Add event bitmap field to struct
  plda_pcie_rp
 
 For PLDA DMA interrupts are not all implemented. The non-implemented

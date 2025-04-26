@@ -1,7 +1,7 @@
-From 94a1e549b59a37c162e9f22361169a437830f8ab Mon Sep 17 00:00:00 2001
+From 3ed679af1e9a46f6dd5121b8512d5c2edc8aa70e Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Wed, 20 Mar 2024 17:36:14 +0800
-Subject: [PATCH 132/212] riscv: dts: starfive: evb-overlay: Support SPI
+Subject: [PATCH 132/213] riscv: dts: starfive: evb-overlay: Support SPI
  overlay
 
 Add new compatibles to support SPI overlay.

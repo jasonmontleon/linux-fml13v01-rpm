@@ -1,7 +1,7 @@
-From 281f0eb288f3f4c9b7705b601a9c085a3f5b968a Mon Sep 17 00:00:00 2001
+From 164b72dd9d2e2fea85c4fbd508c5d009fb954e13 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Mon, 11 Mar 2024 11:10:45 +0800
-Subject: [PATCH 126/212] riscv: dts: starfive: jh7110-evb: Add qspi norflash
+Subject: [PATCH 126/213] riscv: dts: starfive: jh7110-evb: Add qspi norflash
  partition for uboot-env
 
 Add qspi norflash partition "uboot-env@f0000",

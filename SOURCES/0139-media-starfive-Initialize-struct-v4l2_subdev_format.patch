@@ -1,7 +1,7 @@
-From 0fcad7d60dcf740b055f7437db69f2b11e94e93b Mon Sep 17 00:00:00 2001
+From 59a9ca5862084d56ca28217012091dce4042ae0f Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Thu, 28 Mar 2024 09:35:03 +0800
-Subject: [PATCH 139/212] media: starfive: Initialize struct v4l2_subdev_format
+Subject: [PATCH 139/213] media: starfive: Initialize struct v4l2_subdev_format
 
 Initialize struct v4l2_subdev_format make the stream be zero.
 

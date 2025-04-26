@@ -1,7 +1,7 @@
-From 8154978c2982896bf7d2d229146033e934a089bd Mon Sep 17 00:00:00 2001
+From 4f4f56fd2bc3fbe74e617f0aa3440177ade2d3cf Mon Sep 17 00:00:00 2001
 From: Xingyu Wu <xingyu.wu@starfivetech.com>
 Date: Tue, 17 Oct 2023 17:22:52 +0800
-Subject: [PATCH 053/212] ASoC: dwc: i2s: Add RX master support for StarFive
+Subject: [PATCH 053/213] ASoC: dwc: i2s: Add RX master support for StarFive
  JH7110 SoC
 
 Add JH7110 I2S RX master support, so the PDM can work on JH7110
@@ -17,10 +17,10 @@ Signed-off-by: Hal Feng <hal.feng@starfivetech.com>
 diff --git a/sound/soc/dwc/dwc-i2s.c b/sound/soc/dwc/dwc-i2s.c
 old mode 100644
 new mode 100755
-index a25ffe50d5c1..d349841280d6
+index 90a26853c4e4..1bec2d264f7c
 --- a/sound/soc/dwc/dwc-i2s.c
 +++ b/sound/soc/dwc/dwc-i2s.c
-@@ -906,6 +906,27 @@ static int jh7110_i2srx_crg_init(struct dw_i2s_dev *dev)
+@@ -905,6 +905,27 @@ static int jh7110_i2srx_crg_init(struct dw_i2s_dev *dev)
  	return jh7110_i2s_crg_slave_init(dev);
  }
  
@@ -48,7 +48,7 @@ index a25ffe50d5c1..d349841280d6
  static int jh7110_i2stx0_clk_cfg(struct i2s_clk_config_data *config)
  {
  	struct dw_i2s_dev *dev = container_of(config, struct dw_i2s_dev, config);
-@@ -1086,11 +1107,21 @@ static const struct i2s_platform_data jh7110_i2srx_data = {
+@@ -1085,11 +1106,21 @@ static const struct i2s_platform_data jh7110_i2srx_data = {
  	.i2s_pd_init = jh7110_i2srx_crg_init,
  };
  

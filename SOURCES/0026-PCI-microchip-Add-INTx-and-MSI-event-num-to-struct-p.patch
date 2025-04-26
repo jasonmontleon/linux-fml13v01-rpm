@@ -1,7 +1,7 @@
-From 419cec0c658c59638d0a8e65465a8c58b6475e9b Mon Sep 17 00:00:00 2001
+From 9e127362dca5052d2a75756e6fde03b7e10f7bc7 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:03 +0800
-Subject: [PATCH 026/212] PCI: microchip: Add INTx and MSI event num to struct
+Subject: [PATCH 026/213] PCI: microchip: Add INTx and MSI event num to struct
  plda_event
 
 The INTx and MSI interrupt event num is different in Microchip and

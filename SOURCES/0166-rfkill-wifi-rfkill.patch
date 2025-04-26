@@ -1,7 +1,7 @@
-From 9754036842a4d8a2c3cd6530ccca42d3cb8e1708 Mon Sep 17 00:00:00 2001
+From 4bde8bf8cf8c87d3d41f01a7587e80acafdb4450 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Mon, 9 Sep 2024 16:39:24 +0800
-Subject: [PATCH 166/212] rfkill: wifi-rfkill.
+Subject: [PATCH 166/213] rfkill: wifi-rfkill.
 
 Signed-off-by: yang.wang <yang.wang@deepcomputing.io>
 ---

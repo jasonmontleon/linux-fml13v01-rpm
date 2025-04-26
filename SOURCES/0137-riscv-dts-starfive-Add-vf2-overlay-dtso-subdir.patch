@@ -1,7 +1,7 @@
-From 2f53142d5515fe77137dab7743a784251638fca2 Mon Sep 17 00:00:00 2001
+From dca5311575c8724b9e2809dc31b660891b5d4f49 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Fri, 22 Mar 2024 09:54:28 +0800
-Subject: [PATCH 137/212] riscv: dts: starfive: Add vf2-overlay dtso subdir
+Subject: [PATCH 137/213] riscv: dts: starfive: Add vf2-overlay dtso subdir
 
 Create subdir vf2-overlay/ and add overlay .dtso for VF2 board.
 The code is ported from tag JH7110_VF2_6.1_v5.11.4

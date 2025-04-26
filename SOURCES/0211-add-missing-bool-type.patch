@@ -1,7 +1,7 @@
-From d209351e5d132071787d9d3204ad0629acadbce1 Mon Sep 17 00:00:00 2001
+From ea68b356353aa6fbde269c76ecf3923427da05ab Mon Sep 17 00:00:00 2001
 From: Jason Montleon <jmontleo@redhat.com>
 Date: Wed, 12 Feb 2025 15:24:15 -0500
-Subject: [PATCH 210/212] add missing bool type
+Subject: [PATCH 211/213] add missing bool type
 
 ---
  include/uapi/drm/vs_drm.h | 2 ++

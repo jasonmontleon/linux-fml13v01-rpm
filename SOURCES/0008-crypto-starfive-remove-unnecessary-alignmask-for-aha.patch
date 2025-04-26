@@ -1,7 +1,7 @@
-From 3486b209e7773f33218b2fc1cdef9b501c771b5f Mon Sep 17 00:00:00 2001
+From c08609a20950cc63efc3832e01feb779ee550630 Mon Sep 17 00:00:00 2001
 From: Eric Biggers <ebiggers@google.com>
 Date: Sun, 22 Oct 2023 01:10:42 -0700
-Subject: [PATCH 008/212] crypto: starfive - remove unnecessary alignmask for
+Subject: [PATCH 008/213] crypto: starfive - remove unnecessary alignmask for
  ahashes
 
 The crypto API's support for alignmasks for ahash algorithms is nearly

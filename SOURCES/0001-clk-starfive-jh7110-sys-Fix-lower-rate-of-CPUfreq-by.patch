@@ -1,7 +1,7 @@
-From 8ad030787cd24dc3f106564adec6e39433a5edb8 Mon Sep 17 00:00:00 2001
+From c8467c564cc4a4f11a8e22cf204e64504dda366c Mon Sep 17 00:00:00 2001
 From: Xingyu Wu <xingyu.wu@starfivetech.com>
 Date: Mon, 21 Aug 2023 23:29:15 +0800
-Subject: [PATCH 001/212] clk: starfive: jh7110-sys: Fix lower rate of CPUfreq
+Subject: [PATCH 001/213] clk: starfive: jh7110-sys: Fix lower rate of CPUfreq
  by setting PLL0 rate to 1.5GHz
 
 CPUfreq supports 4 cpu frequency loads on 375/500/750/1500MHz.

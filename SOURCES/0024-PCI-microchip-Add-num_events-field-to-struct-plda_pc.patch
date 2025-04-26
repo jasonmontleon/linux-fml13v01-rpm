@@ -1,7 +1,7 @@
-From ae8ada3bb5258edd659dbb678f2662b1d0d4ac45 Mon Sep 17 00:00:00 2001
+From f403ee3436e1bf6d264e7970c5f90a52811b63b0 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:01 +0800
-Subject: [PATCH 024/212] PCI: microchip: Add num_events field to struct
+Subject: [PATCH 024/213] PCI: microchip: Add num_events field to struct
  plda_pcie_rp
 
 The number of events is different across platforms. In order to share

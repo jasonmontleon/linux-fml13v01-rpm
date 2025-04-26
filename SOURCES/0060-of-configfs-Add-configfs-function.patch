@@ -1,7 +1,7 @@
-From e2d3ad10434edf0277233b53fd816475250cec17 Mon Sep 17 00:00:00 2001
+From 236311431e9f6091902f9601cd79c7ba4d631fdc Mon Sep 17 00:00:00 2001
 From: Jianlong Huang <jianlong.huang@starfivetech.com>
 Date: Thu, 16 Jun 2022 17:13:57 +0800
-Subject: [PATCH 060/212] of: configfs: Add configfs function
+Subject: [PATCH 060/213] of: configfs: Add configfs function
 
 Signed-off-by: Jianlong Huang <jianlong.huang@starfivetech.com>
 Signed-off-by: Hal Feng <hal.feng@starfivetech.com>

@@ -1,7 +1,7 @@
-From 9e3825fa857db9f73f8a6f633efec5a5c0b1d27f Mon Sep 17 00:00:00 2001
+From 5c4eb045b5a8946f2039168057a1f73156e019a0 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Wed, 13 Nov 2024 18:24:45 +0800
-Subject: [PATCH 189/212] defconfig: starfive_visionfive2_defconfig:
+Subject: [PATCH 189/213] defconfig: starfive_visionfive2_defconfig:
  CONFIG_ZRAM
 
 Signed-off-by: yang.wang <yang.wang@deepcomputing.io>

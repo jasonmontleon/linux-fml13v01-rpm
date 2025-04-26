@@ -1,7 +1,7 @@
-From 32b5d0cf53563739ef56a3018f62290ac7e4f13a Mon Sep 17 00:00:00 2001
+From ca7e51756affd1bc93ba01cf9736f6b37ef0c2b5 Mon Sep 17 00:00:00 2001
 From: Jia Jie Ho <jiajie.ho@starfivetech.com>
 Date: Mon, 4 Dec 2023 11:02:39 +0800
-Subject: [PATCH 013/212] crypto: starfive - Remove unneeded NULL checks
+Subject: [PATCH 013/213] crypto: starfive - Remove unneeded NULL checks
 
 NULL check before kfree_sensitive function is not needed.
 

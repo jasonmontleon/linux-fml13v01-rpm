@@ -1,7 +1,7 @@
-From a09f06693164c55b95d6a48e6d2979c652cbf3ef Mon Sep 17 00:00:00 2001
+From 30eb2f35ad7f41ec71124dbd725ebc1a96fb59b4 Mon Sep 17 00:00:00 2001
 From: Sebastian Fricke <sebastian.fricke@collabora.com>
 Date: Wed, 8 Nov 2023 20:29:20 +0100
-Subject: [PATCH 106/212] media: v4l2: Add ignore_streaming flag
+Subject: [PATCH 106/213] media: v4l2: Add ignore_streaming flag
 
 Add a new flag to the `struct v4l2_m2m_dev` to toggle whether a queue
 must be streaming in order to allow queuing jobs to the ready queue.

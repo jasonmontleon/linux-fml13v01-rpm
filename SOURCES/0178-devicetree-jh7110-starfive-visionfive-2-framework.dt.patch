@@ -1,7 +1,7 @@
-From 2b41ba152b5f6e4c412b18def8bb937793b346f4 Mon Sep 17 00:00:00 2001
+From cd1fb4e87f175f70ad42f731e919b758d3c08ab8 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Wed, 16 Oct 2024 17:59:51 +0800
-Subject: [PATCH 178/212] devicetree:
+Subject: [PATCH 178/213] devicetree:
  jh7110-starfive-visionfive-2-framework.dts: removing invalid content.
 
 Signed-off-by: yang.wang <yang.wang@deepcomputing.io>

@@ -1,7 +1,7 @@
-From f92852c6d1f1a30ba423d7d2ff0c2684c45a7a15 Mon Sep 17 00:00:00 2001
+From 02c2f4f8ecad96f13c55de20e02888dec566de62 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Fri, 28 Jul 2023 18:42:55 +0800
-Subject: [PATCH 059/212] riscv: configs: Add starfive_jh7110_defconfig
+Subject: [PATCH 059/213] riscv: configs: Add starfive_jh7110_defconfig
 
 Add starfive_jh7110_defconfig for JH7110 EVB.
 The code is ported from tag JH7110_SDK_6.1_v5.11.3

@@ -1,7 +1,7 @@
-From 4f12944e0d3d2ebf1dc1d139dcc962f49c8b5b96 Mon Sep 17 00:00:00 2001
+From 7d9416ccb63cdc2d7ae995d0b01ce7125cf8c199 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Fri, 22 Mar 2024 11:33:40 +0800
-Subject: [PATCH 138/212] riscv: dts: starfive: visionfive 2: Add aliases for
+Subject: [PATCH 138/213] riscv: dts: starfive: visionfive 2: Add aliases for
  i2c* and uart3
 
 Fix the numbers of i2c and uart3.

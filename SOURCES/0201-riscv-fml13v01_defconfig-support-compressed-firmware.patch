@@ -1,7 +1,7 @@
-From 29d5c6ed40dcfdf639f451f952599eae3c347a41 Mon Sep 17 00:00:00 2001
+From 208a08843aaefadcb0fdc1c3ed026c08d62e45be Mon Sep 17 00:00:00 2001
 From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 Date: Mon, 6 Jan 2025 13:34:05 +0100
-Subject: [PATCH 201/212] riscv: fml13v01_defconfig: support compressed
+Subject: [PATCH 201/213] riscv: fml13v01_defconfig: support compressed
  firmware
 
 Ubuntu compresses firmware with ZSTD.
