@@ -1,4 +1,4 @@
-From 1819e0c239f35c84e3511b99119d0f57af749ca9 Mon Sep 17 00:00:00 2001
+From f88ddf2f371515b2748a9228ebe3499bcc45aa29 Mon Sep 17 00:00:00 2001
 From: Ulf Hansson <ulf.hansson@linaro.org>
 Date: Tue, 12 Sep 2023 13:31:44 +0200
 Subject: [PATCH 044/213] pmdomain: starfive: Move Kconfig file to the pmdomain

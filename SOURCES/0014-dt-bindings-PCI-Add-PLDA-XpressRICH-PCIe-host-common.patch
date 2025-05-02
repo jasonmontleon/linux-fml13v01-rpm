@@ -1,4 +1,4 @@
-From c0d580763a3f7a43a2cd4f3b5acc6cb6e7b93885 Mon Sep 17 00:00:00 2001
+From 3065846eab99bfb5ad73b640f671530ee8984fe8 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:05:51 +0800
 Subject: [PATCH 014/213] dt-bindings: PCI: Add PLDA XpressRICH PCIe host

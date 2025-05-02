@@ -1,4 +1,4 @@
-From 7ff5ccd3b607c21dba2fdb021f14d205800acd73 Mon Sep 17 00:00:00 2001
+From 3d89396251a55f71db7661afd0e8c009d10bb4fc Mon Sep 17 00:00:00 2001
 From: "ziv.xu" <ziv.xu@starfive.com>
 Date: Tue, 28 Nov 2023 15:37:14 +0800
 Subject: [PATCH 136/213] driver: bluetooth: add aic8800 driver support

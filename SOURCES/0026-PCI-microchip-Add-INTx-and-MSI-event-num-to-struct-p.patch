@@ -1,4 +1,4 @@
-From 9e127362dca5052d2a75756e6fde03b7e10f7bc7 Mon Sep 17 00:00:00 2001
+From 41b8c2d8b93a3ca55b3c6f63d55e5f0178765c77 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:03 +0800
 Subject: [PATCH 026/213] PCI: microchip: Add INTx and MSI event num to struct

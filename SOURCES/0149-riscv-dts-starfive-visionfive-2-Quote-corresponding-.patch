@@ -1,4 +1,4 @@
-From ffa70adaa19c38dd77d197d074eca6b70e115c09 Mon Sep 17 00:00:00 2001
+From 0be2f61bda0911cf1e7b511b4da07a27573635aa Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Wed, 24 Apr 2024 14:23:07 +0800
 Subject: [PATCH 149/213] riscv: dts: starfive: visionfive 2: Quote

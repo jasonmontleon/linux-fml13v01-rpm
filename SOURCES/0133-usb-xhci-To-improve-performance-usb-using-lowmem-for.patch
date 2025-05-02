@@ -1,4 +1,4 @@
-From a434b15dfacb5c2bdb9438abd89ced1ee5007c61 Mon Sep 17 00:00:00 2001
+From 18c5809cb3d83010b311423c29db00632ab9aa4e Mon Sep 17 00:00:00 2001
 From: "minda.chen" <minda.chen@starfivetech.com>
 Date: Tue, 18 Oct 2022 09:57:39 +0800
 Subject: [PATCH 133/213] usb:xhci:To improve performance,usb using lowmem for
@@ -148,7 +148,7 @@ index fbc486546b85..31c86b0b0a93 100644
  	 * XXX: Might need to set the Interrupter Moderation Register to
  	 * something other than the default (~1ms minimum between interrupts).
 diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
-index d68e9abcdc69..5de9eea81f71 100644
+index 8832e0cedada..ab7ff6a3db9e 100644
 --- a/drivers/usb/host/xhci-plat.c
 +++ b/drivers/usb/host/xhci-plat.c
 @@ -253,6 +253,14 @@ int xhci_plat_probe(struct platform_device *pdev, struct device *sysdev, const s
@@ -167,10 +167,10 @@ index d68e9abcdc69..5de9eea81f71 100644
  					 &xhci->imod_interval);
  	}
 diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index 4a081685a195..5d4f25cc5f71 100644
+index cb9443962945..b27499ce86bc 100644
 --- a/drivers/usb/host/xhci-ring.c
 +++ b/drivers/usb/host/xhci-ring.c
-@@ -3708,7 +3708,8 @@ int xhci_queue_bulk_tx(struct xhci_hcd *xhci, gfp_t mem_flags,
+@@ -3711,7 +3711,8 @@ int xhci_queue_bulk_tx(struct xhci_hcd *xhci, gfp_t mem_flags,
  
  	full_len = urb->transfer_buffer_length;
  	/* If we have scatter/gather list, we use it. */

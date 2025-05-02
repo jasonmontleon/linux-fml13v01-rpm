@@ -1,4 +1,4 @@
-From ff1c5f0912c2029ee30d8204f7627f8164a6dc5c Mon Sep 17 00:00:00 2001
+From 7e207d4aa3daa7be0a8b4079c15b01204f8b9b4b Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Mon, 15 Apr 2024 20:59:35 +0800
 Subject: [PATCH 142/213] clk: starfive: jh7110: Change uart3-uart5 clk
