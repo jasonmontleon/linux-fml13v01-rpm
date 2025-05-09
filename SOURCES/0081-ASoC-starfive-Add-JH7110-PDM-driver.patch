@@ -1,7 +1,7 @@
-From 220d00cc693a12eeaf22b5bd813c3e4cf3809c5e Mon Sep 17 00:00:00 2001
+From 15c57820dc0484ceca654bbf3b6f27c2486e0511 Mon Sep 17 00:00:00 2001
 From: Walker Chen <walker.chen@starfivetech.com>
 Date: Tue, 20 Jun 2023 15:57:53 +0800
-Subject: [PATCH 081/213] ASoC: starfive: Add JH7110 PDM driver
+Subject: [PATCH 081/214] ASoC: starfive: Add JH7110 PDM driver
 
 Add pdm driver support for the StarFive JH7110 SoC.
 

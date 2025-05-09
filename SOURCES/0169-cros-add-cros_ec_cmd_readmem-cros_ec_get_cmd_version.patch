@@ -1,7 +1,7 @@
-From df4efe31b9fc598a025c53035f48352d51175f71 Mon Sep 17 00:00:00 2001
+From 474c9c1f32f4343197a81ac531823029252d8675 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Fri, 13 Sep 2024 10:15:55 +0800
-Subject: [PATCH 169/213] cros: add cros_ec_cmd_readmem
+Subject: [PATCH 169/214] cros: add cros_ec_cmd_readmem
  cros_ec_get_cmd_versions api interface.
 
 Signed-off-by: yang.wang <yang.wang@deepcomputing.io>

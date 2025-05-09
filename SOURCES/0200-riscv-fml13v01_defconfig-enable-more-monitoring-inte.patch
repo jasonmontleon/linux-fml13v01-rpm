@@ -1,7 +1,7 @@
-From a34ae5f60024b5e614a4b05cd97456e18b1a64a8 Mon Sep 17 00:00:00 2001
+From bc08ea759a476df6409a90aa9b265f244e817322 Mon Sep 17 00:00:00 2001
 From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 Date: Mon, 6 Jan 2025 11:46:41 +0100
-Subject: [PATCH 200/213] riscv: fml13v01_defconfig: enable more monitoring
+Subject: [PATCH 200/214] riscv: fml13v01_defconfig: enable more monitoring
  interfaces
 
 LXD needs these

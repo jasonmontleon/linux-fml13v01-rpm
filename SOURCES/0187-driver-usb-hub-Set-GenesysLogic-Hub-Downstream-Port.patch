@@ -1,7 +1,7 @@
-From 2d2bfce9cc550d1748a8773f32fdeed2e3f85b98 Mon Sep 17 00:00:00 2001
+From 478415c3c93577323f55ee40a9fe4f3b2f6b380a Mon Sep 17 00:00:00 2001
 From: Sandie Cao <sandie.cao@deepcomputing.io>
 Date: Fri, 1 Nov 2024 10:29:26 +0800
-Subject: [PATCH 187/213] driver: usb: hub: Set GenesysLogic Hub Downstream
+Subject: [PATCH 187/214] driver: usb: hub: Set GenesysLogic Hub Downstream
  Port
 
 On Deepcomputing FML13V10, Adjust the left&up GenesysLogic Hub

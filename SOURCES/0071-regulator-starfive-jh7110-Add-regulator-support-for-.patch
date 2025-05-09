@@ -1,7 +1,7 @@
-From 653352b670b74c5f39d869529bac8c664dd3ccf8 Mon Sep 17 00:00:00 2001
+From 735ed093d55fef75c31d508a396379443f887cef Mon Sep 17 00:00:00 2001
 From: "Kevin.xie" <kevin.xie@starfivetech.com>
 Date: Fri, 9 Jun 2023 14:57:13 +0800
-Subject: [PATCH 071/213] regulator: starfive-jh7110: Add regulator support for
+Subject: [PATCH 071/214] regulator: starfive-jh7110: Add regulator support for
  JH7110 A type EVB.
 
 Add 7 regulators base on regulator framework for

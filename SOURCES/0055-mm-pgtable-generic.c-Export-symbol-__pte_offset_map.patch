@@ -1,7 +1,7 @@
-From 4430251c63e748ae83ee3e94a6e399842e3174cd Mon Sep 17 00:00:00 2001
+From 9d5c376cfb2aee4d7941bcb0f4bc0cc934e0b64b Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Sat, 7 Oct 2023 18:10:20 +0800
-Subject: [PATCH 055/213] mm/pgtable-generic.c: Export symbol __pte_offset_map
+Subject: [PATCH 055/214] mm/pgtable-generic.c: Export symbol __pte_offset_map
 
 So JH7110 vdec can call pte_offset_map() when it is built as a module.
 

@@ -1,7 +1,7 @@
-From 459bcdc9c70934c763b847dc4881adf3cd8bcbe0 Mon Sep 17 00:00:00 2001
+From aba54ca94dc7b97b88795f9822120c5d8da16e99 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Tue, 11 Apr 2023 16:25:57 +0800
-Subject: [PATCH 049/213] MAINTAINERS: Update all StarFive entries
+Subject: [PATCH 049/214] MAINTAINERS: Update all StarFive entries
 
 Merge all StarFive maintainers changes together.
 

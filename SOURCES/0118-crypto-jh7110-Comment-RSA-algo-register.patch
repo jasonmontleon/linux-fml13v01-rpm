@@ -1,7 +1,7 @@
-From 3787d2cc29ccc6846db85c91378ccddc29e2c4ef Mon Sep 17 00:00:00 2001
+From 3a65b01c0354e5227a1793a3d7cb7b6b01b503fd Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Tue, 5 Mar 2024 11:00:21 +0800
-Subject: [PATCH 118/213] crypto: jh7110: Comment RSA algo register
+Subject: [PATCH 118/214] crypto: jh7110: Comment RSA algo register
 
 There are some issues in RSA algo, which will cause kernel crash.
 So comment RSA algo register temporarily.

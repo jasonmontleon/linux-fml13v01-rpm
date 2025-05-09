@@ -1,7 +1,7 @@
-From 8e3788013e9f04d4f1801a5c309e2c6a6de5d743 Mon Sep 17 00:00:00 2001
+From f5dc0a14b8c784773c8828987a2f8bd665173799 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Mon, 26 Feb 2024 11:35:44 +0800
-Subject: [PATCH 054/213] pinctrl: starfive: jh7110: Unset .strict in
+Subject: [PATCH 054/214] pinctrl: starfive: jh7110: Unset .strict in
  pinmux_ops
 
 Allow simultaneous use of the same pin for GPIO and another function.

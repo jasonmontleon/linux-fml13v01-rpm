@@ -1,7 +1,7 @@
-From cd61aa9b96fa231e466aa909148bb600a80b5a15 Mon Sep 17 00:00:00 2001
+From 89d8faebc7dc0810d574941d0ccccb55c94a89d7 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:05:53 +0800
-Subject: [PATCH 016/213] PCI: microchip: Move PLDA IP register macros to
+Subject: [PATCH 016/214] PCI: microchip: Move PLDA IP register macros to
  pcie-plda.h
 
 Move PLDA PCIe host controller IP registers macros to pcie-plda.h,

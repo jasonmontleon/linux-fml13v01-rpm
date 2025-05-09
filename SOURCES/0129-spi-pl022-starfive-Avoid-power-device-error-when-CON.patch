@@ -1,7 +1,7 @@
-From f3cc0ff7c2ad69d454a3f1f28c157f3368c99e6b Mon Sep 17 00:00:00 2001
+From 40cd071607a7fe4d3bbcd94e13f2f9faa76ddc16 Mon Sep 17 00:00:00 2001
 From: "xingyu.wu" <xingyu.wu@starfivetech.com>
 Date: Tue, 19 Jul 2022 14:49:20 +0800
-Subject: [PATCH 129/213] spi:pl022-starfive:Avoid power device error when
+Subject: [PATCH 129/214] spi:pl022-starfive:Avoid power device error when
  CONFIG_PM enable
 
 It would be error when CONFIG_PM enable and use overlay by of-platform to register.

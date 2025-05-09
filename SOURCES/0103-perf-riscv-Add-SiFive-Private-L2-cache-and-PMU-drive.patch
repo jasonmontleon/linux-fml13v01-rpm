@@ -1,7 +1,7 @@
-From 716c23500e20717199def21552d0cfd2888d16b8 Mon Sep 17 00:00:00 2001
+From 981635e613f9ae343cba39ead2b3d18493f54cb0 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Thu, 4 Jan 2024 18:02:20 +0800
-Subject: [PATCH 103/213] perf: riscv: Add SiFive Private L2 cache and PMU
+Subject: [PATCH 103/214] perf: riscv: Add SiFive Private L2 cache and PMU
  driver
 
 The SiFive private L2 cache PMU is supports per-task profiling

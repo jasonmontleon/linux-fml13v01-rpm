@@ -1,7 +1,7 @@
-From b8f4c86d1aff47a512351d41924caff2fe929680 Mon Sep 17 00:00:00 2001
+From 4098c09b8348116c695bf521405d22381b737d5a Mon Sep 17 00:00:00 2001
 From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 Date: Mon, 6 Jan 2025 11:16:14 +0100
-Subject: [PATCH 196/213] riscv: fml13v01_defconfig: add squashfs support
+Subject: [PATCH 196/214] riscv: fml13v01_defconfig: add squashfs support
 
 SquashFS support is needed for running snaps
 

@@ -1,7 +1,7 @@
-From 11334a61d9e7a5ee55421799b78234791ec693d2 Mon Sep 17 00:00:00 2001
+From a59ed199c1abcf43f5ea107d5fbb0c9cd8215ef7 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
 Date: Sat, 14 Oct 2023 00:19:49 +0200
-Subject: [PATCH 038/213] ASoC: starfive/jh7110-pwmdac: Convert to platform
+Subject: [PATCH 038/214] ASoC: starfive/jh7110-pwmdac: Convert to platform
  remove callback returning void
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8

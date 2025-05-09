@@ -1,7 +1,7 @@
-From 1c42ab656f413a6817006454f9693586ed05480d Mon Sep 17 00:00:00 2001
+From 1d1463f9967dcb198609a4a07f9e9da1dbc6cc48 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Tue, 12 Nov 2024 10:54:14 +0800
-Subject: [PATCH 188/213] defconfig: starfive_visionfive2_defconfig: add
+Subject: [PATCH 188/214] defconfig: starfive_visionfive2_defconfig: add
  CONFIG_SECCOMP & CONFIG_SECCOMP_FILTER
 
 Signed-off-by: yang.wang <yang.wang@deepcomputing.io>

@@ -1,7 +1,7 @@
-From 599eb6c8ab6d267468ebda8bb887463399319b9c Mon Sep 17 00:00:00 2001
+From 2cd4b8c273afc4909b1f56f537abcb01fd10692a Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:05:54 +0800
-Subject: [PATCH 017/213] PCI: microchip: Add bridge_addr field to struct
+Subject: [PATCH 017/214] PCI: microchip: Add bridge_addr field to struct
  mc_pcie
 
 For bridge address base is common PLDA field, Add this to struct mc_pcie

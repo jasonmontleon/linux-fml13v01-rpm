@@ -160,18 +160,18 @@ Summary: The Linux kernel
 #  the --with-release option overrides this setting.)
 %define debugbuildsenabled 1
 %define buildid .fml13v01
-%define specrpmversion 6.6.89
-%define specversion 6.6.89
+%define specrpmversion 6.6.90
+%define specversion 6.6.90
 %define patchversion 6.6
 %define pkgrelease 200
 %define kversion 6
-%define tarfile_release 6.6.89
+%define tarfile_release 6.6.90
 # This is needed to do merge window version magic
 %define patchlevel 6
 # This allows pkg_release to have configurable %%{?dist} tag
 %define specrelease 200%{?buildid}%{?dist}
 # This defines the kabi tarball version
-%define kabiversion 6.6.89
+%define kabiversion 6.6.90
 
 # If this variable is set to 1, a bpf selftests build failure will cause a
 # fatal kernel package build error
@@ -1175,10 +1175,11 @@ Patch60206: 0206-riscv-fml13v01-Update-defconfig-CONFIG_TUN.patch
 Patch60207: 0207-riscv-config-fml13v01-Change-Wi-Fi-Bluetooth-from-y-.patch
 Patch60208: 0208-usb-remove-test-module-to-avoid-error.patch
 Patch60209: 0209-riscv-configs-fml13v01_defconfig-sync-with-ubuntu-ge.patch
-Patch60210: 0210-remove-tdm_pins-from-vf2-dtsi.patch
-Patch60211: 0211-add-missing-bool-type.patch
-Patch60212: 0212-.NOTINTERMEDIATE-not-.SECONDARY.patch
-Patch60213: 0213-Remove-C-style-comments.patch
+Patch60210: 0210-riscv-configs-fml13v01_defconfig-undefined-CONFIG_LO.patch
+Patch60211: 0211-remove-tdm_pins-from-vf2-dtsi.patch
+Patch60212: 0212-add-missing-bool-type.patch
+Patch60213: 0213-.NOTINTERMEDIATE-not-.SECONDARY.patch
+Patch60214: 0214-Remove-C-style-comments.patch
 
 
 
@@ -2142,10 +2143,11 @@ ApplyOptionalPatch 0206-riscv-fml13v01-Update-defconfig-CONFIG_TUN.patch
 ApplyOptionalPatch 0207-riscv-config-fml13v01-Change-Wi-Fi-Bluetooth-from-y-.patch
 ApplyOptionalPatch 0208-usb-remove-test-module-to-avoid-error.patch
 ApplyOptionalPatch 0209-riscv-configs-fml13v01_defconfig-sync-with-ubuntu-ge.patch
-ApplyOptionalPatch 0210-remove-tdm_pins-from-vf2-dtsi.patch
-ApplyOptionalPatch 0211-add-missing-bool-type.patch
-ApplyOptionalPatch 0212-.NOTINTERMEDIATE-not-.SECONDARY.patch
-ApplyOptionalPatch 0213-Remove-C-style-comments.patch
+ApplyOptionalPatch 0210-riscv-configs-fml13v01_defconfig-undefined-CONFIG_LO.patch
+ApplyOptionalPatch 0211-remove-tdm_pins-from-vf2-dtsi.patch
+ApplyOptionalPatch 0212-add-missing-bool-type.patch
+ApplyOptionalPatch 0213-.NOTINTERMEDIATE-not-.SECONDARY.patch
+ApplyOptionalPatch 0214-Remove-C-style-comments.patch
 
 
 

@@ -1,7 +1,7 @@
-From 7a37a47efdc9e9ac37dfddc4e041e9f724b53ce3 Mon Sep 17 00:00:00 2001
+From 7a3faa76a4414651d3d55eb1fcf581f4a0ee2abf Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Mon, 9 Sep 2024 18:36:46 +0800
-Subject: [PATCH 167/213] config USB BT
+Subject: [PATCH 167/214] config USB BT
 
 Signed-off-by: yang.wang <yang.wang@deepcomputing.io>
 ---

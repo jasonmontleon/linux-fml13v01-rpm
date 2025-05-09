@@ -1,7 +1,7 @@
-From eb57b8e3d4b794846473a608278671dc5c6e22c6 Mon Sep 17 00:00:00 2001
+From e0e21a209555306fc6f651c8494e8beac0f1ff08 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Tue, 11 Apr 2023 16:31:15 +0800
-Subject: [PATCH 048/213] riscv: dts: starfive: Add full support (except VIN
+Subject: [PATCH 048/214] riscv: dts: starfive: Add full support (except VIN
  and VOUT) for JH7110 and VisionFive 2 board
 
 Merge all StarFive dts patches together except VIN and VOUT.

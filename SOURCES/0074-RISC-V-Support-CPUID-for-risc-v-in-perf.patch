@@ -1,8 +1,8 @@
-From 16717dbf64e0fdf6aa8a03f89dd6402b9926e764 Mon Sep 17 00:00:00 2001
+From 4e672a2e2853b22e115c9a7c329afdd44c37cad7 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Jo=C3=A3o=20M=C3=A1rio=20Domingos?=
  <joao.mario@tecnico.ulisboa.pt>
 Date: Tue, 16 Nov 2021 15:48:10 +0000
-Subject: [PATCH 074/213] RISC-V: Support CPUID for risc-v in perf
+Subject: [PATCH 074/214] RISC-V: Support CPUID for risc-v in perf
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit

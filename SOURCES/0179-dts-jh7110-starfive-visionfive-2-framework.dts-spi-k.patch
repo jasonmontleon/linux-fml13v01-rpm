@@ -1,7 +1,7 @@
-From 9a6a5e05f22d70e29acf7d11dab5dfb64258307a Mon Sep 17 00:00:00 2001
+From df10567dfa42117a816bd86fa2e663996536584b Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Fri, 18 Oct 2024 16:59:49 +0800
-Subject: [PATCH 179/213] dts: jh7110-starfive-visionfive-2-framework.dts: spi
+Subject: [PATCH 179/214] dts: jh7110-starfive-visionfive-2-framework.dts: spi
  keep cs asserted for multiple bytes.
 
 Signed-off-by: yang.wang <yang.wang@deepcomputing.io>

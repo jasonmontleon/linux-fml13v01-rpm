@@ -1,7 +1,7 @@
-From f94b5ba9b23b4530d76a069fb47fafa1c8a9e371 Mon Sep 17 00:00:00 2001
+From 169e5685af4dd85e96fb13abbe49ad6b380c905f Mon Sep 17 00:00:00 2001
 From: William Qiu <william.qiu@starfivetech.com>
 Date: Thu, 15 Jun 2023 20:14:22 +0800
-Subject: [PATCH 069/213] dt-bindings: CAN: Add StarFive CAN module
+Subject: [PATCH 069/214] dt-bindings: CAN: Add StarFive CAN module
 
 Add documentation to describe StarFive CAN engine.
 

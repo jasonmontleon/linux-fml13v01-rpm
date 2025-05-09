@@ -1,7 +1,7 @@
-From ab743a94cea847bad8dbd2c5c059dc0a3cc3a9a3 Mon Sep 17 00:00:00 2001
+From 71dcbae59dc50072a963d9009c6d970896a22441 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:09 +0800
-Subject: [PATCH 032/213] dt-bindings: PCI: Add StarFive JH7110 PCIe controller
+Subject: [PATCH 032/214] dt-bindings: PCI: Add StarFive JH7110 PCIe controller
 
 Add StarFive JH7110 SoC PCIe controller dt-bindings. JH7110 using PLDA
 XpressRICH PCIe host controller IP.

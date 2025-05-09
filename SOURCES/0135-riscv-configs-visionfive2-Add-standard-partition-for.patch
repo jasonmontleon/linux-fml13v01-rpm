@@ -1,7 +1,7 @@
-From fbb0b8885a59aafe2e0e4161bbfb2c826ee4e3ec Mon Sep 17 00:00:00 2001
+From 8ab410a21c5142a82e7101477769ede83642b265 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Thu, 21 Mar 2024 16:53:51 +0800
-Subject: [PATCH 135/213] riscv: configs: visionfive2: Add standard partition
+Subject: [PATCH 135/214] riscv: configs: visionfive2: Add standard partition
  for hibernation
 
 Add CONFIG_PM_STD_PARTITION="PARTLABEL=hibernation".

@@ -1,7 +1,7 @@
-From 18c5809cb3d83010b311423c29db00632ab9aa4e Mon Sep 17 00:00:00 2001
+From 5f0e8276c9ccdbd4b548bbf06de4359eb82d4a63 Mon Sep 17 00:00:00 2001
 From: "minda.chen" <minda.chen@starfivetech.com>
 Date: Tue, 18 Oct 2022 09:57:39 +0800
-Subject: [PATCH 133/213] usb:xhci:To improve performance,usb using lowmem for
+Subject: [PATCH 133/214] usb:xhci:To improve performance,usb using lowmem for
  bulk xfer.
 
 Generate an usb low memory pool for usb 3.0 host
@@ -45,7 +45,7 @@ index 12b6dfeaf658..226e9b248c23 100644
  
  				/* We don't support sg for isoc transfers ! */
 diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
-index fbc486546b85..31c86b0b0a93 100644
+index 22cca89efbfd..eae40368d45d 100644
 --- a/drivers/usb/host/xhci-mem.c
 +++ b/drivers/usb/host/xhci-mem.c
 @@ -14,6 +14,7 @@
@@ -56,7 +56,7 @@ index fbc486546b85..31c86b0b0a93 100644
  
  #include "xhci.h"
  #include "xhci-trace.h"
-@@ -1842,6 +1843,7 @@ xhci_free_interrupter(struct xhci_hcd *xhci, struct xhci_interrupter *ir)
+@@ -1878,6 +1879,7 @@ EXPORT_SYMBOL_GPL(xhci_remove_secondary_interrupter);
  void xhci_mem_cleanup(struct xhci_hcd *xhci)
  {
  	struct device	*dev = xhci_to_hcd(xhci)->self.sysdev;
@@ -64,7 +64,7 @@ index fbc486546b85..31c86b0b0a93 100644
  	int i, j, num_ports;
  
  	cancel_delayed_work_sync(&xhci->cmd_timer);
-@@ -1887,6 +1889,13 @@ void xhci_mem_cleanup(struct xhci_hcd *xhci)
+@@ -1928,6 +1930,13 @@ void xhci_mem_cleanup(struct xhci_hcd *xhci)
  	xhci_dbg_trace(xhci, trace_xhci_dbg_init,
  			"Freed medium stream array pool");
  
@@ -78,9 +78,9 @@ index fbc486546b85..31c86b0b0a93 100644
  	if (xhci->dcbaa)
  		dma_free_coherent(dev, sizeof(*xhci->dcbaa),
  				xhci->dcbaa, xhci->dcbaa->dma);
-@@ -2300,6 +2309,55 @@ xhci_add_interrupter(struct xhci_hcd *xhci, struct xhci_interrupter *ir,
- 	return 0;
+@@ -2399,6 +2408,55 @@ xhci_create_secondary_interrupter(struct usb_hcd *hcd, unsigned int segs,
  }
+ EXPORT_SYMBOL_GPL(xhci_create_secondary_interrupter);
  
 +int xhci_setup_local_lowmem(struct xhci_hcd *xhci, size_t size)
 +{
@@ -133,8 +133,8 @@ index fbc486546b85..31c86b0b0a93 100644
 +
  int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
  {
- 	dma_addr_t	dma;
-@@ -2437,6 +2495,12 @@ int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
+ 	struct xhci_interrupter *ir;
+@@ -2540,6 +2598,12 @@ int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
  
  	xhci->isoc_bei_interval = AVOID_BEI_INTERVAL_MAX;
  
@@ -167,7 +167,7 @@ index 8832e0cedada..ab7ff6a3db9e 100644
  					 &xhci->imod_interval);
  	}
 diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index cb9443962945..b27499ce86bc 100644
+index 5a53280fa2ed..cc2f47e9c12c 100644
 --- a/drivers/usb/host/xhci-ring.c
 +++ b/drivers/usb/host/xhci-ring.c
 @@ -3711,7 +3711,8 @@ int xhci_queue_bulk_tx(struct xhci_hcd *xhci, gfp_t mem_flags,
@@ -181,7 +181,7 @@ index cb9443962945..b27499ce86bc 100644
  		sg = urb->sg;
  		addr = (u64) sg_dma_address(sg);
 diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
-index 70e6c240a540..8f3a8a61f26e 100644
+index ce38cd2435c8..01b8d7ef9391 100644
 --- a/drivers/usb/host/xhci.c
 +++ b/drivers/usb/host/xhci.c
 @@ -19,6 +19,8 @@
@@ -193,7 +193,7 @@ index 70e6c240a540..8f3a8a61f26e 100644
  
  #include "xhci.h"
  #include "xhci-trace.h"
-@@ -1286,6 +1288,55 @@ static void xhci_unmap_temp_buf(struct usb_hcd *hcd, struct urb *urb)
+@@ -1312,6 +1314,55 @@ static void xhci_unmap_temp_buf(struct usb_hcd *hcd, struct urb *urb)
  	urb->transfer_buffer = NULL;
  }
  
@@ -249,7 +249,7 @@ index 70e6c240a540..8f3a8a61f26e 100644
  /*
   * Bypass the DMA mapping if URB is suitable for Immediate Transfer (IDT),
   * we'll copy the actual data into the TRB address register. This is limited to
-@@ -1306,9 +1357,11 @@ static int xhci_map_urb_for_dma(struct usb_hcd *hcd, struct urb *urb,
+@@ -1332,9 +1383,11 @@ static int xhci_map_urb_for_dma(struct usb_hcd *hcd, struct urb *urb,
  		if (xhci_urb_temp_buffer_required(hcd, urb))
  			return xhci_map_temp_buffer(hcd, urb);
  	}
@@ -261,7 +261,7 @@ index 70e6c240a540..8f3a8a61f26e 100644
  static void xhci_unmap_urb_for_dma(struct usb_hcd *hcd, struct urb *urb)
  {
  	struct xhci_hcd *xhci;
-@@ -1321,8 +1374,10 @@ static void xhci_unmap_urb_for_dma(struct usb_hcd *hcd, struct urb *urb)
+@@ -1347,8 +1400,10 @@ static void xhci_unmap_urb_for_dma(struct usb_hcd *hcd, struct urb *urb)
  
  	if ((xhci->quirks & XHCI_SG_TRB_CACHE_SIZE_QUIRK) && unmap_temp_buf)
  		xhci_unmap_temp_buf(hcd, urb);
@@ -274,10 +274,10 @@ index 70e6c240a540..8f3a8a61f26e 100644
  
  /**
 diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
-index df87e8bcb7d2..7d49ae84c4e5 100644
+index 74bdd035d756..0b0d7151fda5 100644
 --- a/drivers/usb/host/xhci.h
 +++ b/drivers/usb/host/xhci.h
-@@ -1509,6 +1509,13 @@ struct xhci_hub {
+@@ -1506,6 +1506,13 @@ struct xhci_hub {
  	u8			min_rev;
  };
  
@@ -291,7 +291,7 @@ index df87e8bcb7d2..7d49ae84c4e5 100644
  /* There is one xhci_hcd structure per controller */
  struct xhci_hcd {
  	struct usb_hcd *main_hcd;
-@@ -1663,6 +1670,8 @@ struct xhci_hcd {
+@@ -1660,6 +1667,8 @@ struct xhci_hcd {
  #define XHCI_CDNS_SCTX_QUIRK	BIT_ULL(48)
  #define XHCI_ETRON_HOST	BIT_ULL(49)
  
@@ -300,7 +300,7 @@ index df87e8bcb7d2..7d49ae84c4e5 100644
  	unsigned int		num_active_eps;
  	unsigned int		limit_active_eps;
  	struct xhci_port	*hw_ports;
-@@ -1692,6 +1701,8 @@ struct xhci_hcd {
+@@ -1689,6 +1698,8 @@ struct xhci_hcd {
  	struct list_head	regset_list;
  
  	void			*dbc;
