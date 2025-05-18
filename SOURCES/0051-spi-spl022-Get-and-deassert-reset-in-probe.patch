@@ -1,4 +1,4 @@
-From cb079c17dcad8cd284a5346c945da46af8e0eb82 Mon Sep 17 00:00:00 2001
+From 889698827448a4b0ce4191fb6c5599b7829d7056 Mon Sep 17 00:00:00 2001
 From: "ziv.xu" <ziv.xu@starfivetech.com>
 Date: Sun, 4 Feb 2024 10:35:24 +0800
 Subject: [PATCH 051/214] spi: spl022: Get and deassert reset in probe()

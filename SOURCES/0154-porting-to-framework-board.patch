@@ -1,4 +1,4 @@
-From 24bb2b127c3e7b761d110a18304c34d42307e304 Mon Sep 17 00:00:00 2001
+From ba2ff6e5693383eb70a74907d957f6d2058ca036 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Tue, 13 Aug 2024 11:45:12 +0800
 Subject: [PATCH 154/214] porting to framework board.

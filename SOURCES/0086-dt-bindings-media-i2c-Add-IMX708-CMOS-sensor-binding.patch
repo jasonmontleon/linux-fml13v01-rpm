@@ -1,4 +1,4 @@
-From 34705e869ee60c720c4c71edc8202b205162a167 Mon Sep 17 00:00:00 2001
+From ab7f98de702d5534567fe7c196cb1646e07bf980 Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Tue, 13 Jun 2023 16:55:23 +0800
 Subject: [PATCH 086/214] dt-bindings: media: i2c: Add IMX708 CMOS sensor
