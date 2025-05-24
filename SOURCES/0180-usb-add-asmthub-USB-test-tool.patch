@@ -1,4 +1,4 @@
-From fc23c3aec68945cfbce2f740718b62fb961d4b29 Mon Sep 17 00:00:00 2001
+From 09be5900ce26af2a5e069cbe6abda0e888ef50b1 Mon Sep 17 00:00:00 2001
 From: Sandie Cao <sandie.cao@deepcomputing.io>
 Date: Tue, 22 Oct 2024 16:22:25 +0800
 Subject: [PATCH 180/214] usb: add asmthub USB test-tool

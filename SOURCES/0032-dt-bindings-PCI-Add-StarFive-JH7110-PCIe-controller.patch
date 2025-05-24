@@ -1,4 +1,4 @@
-From 8a8cd6f1a9fd855b710b3e57e02f43415e88f627 Mon Sep 17 00:00:00 2001
+From 2b3f367ac4213657ca33e03e10e206ad78ed7d35 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:09 +0800
 Subject: [PATCH 032/214] dt-bindings: PCI: Add StarFive JH7110 PCIe controller

@@ -1,4 +1,4 @@
-From 070280d69431ea10939cac5f7879e87dce3313a0 Mon Sep 17 00:00:00 2001
+From 3d151126ffe4cdb979cf8b7f2f0ab4920ca580df Mon Sep 17 00:00:00 2001
 From: William Qiu <william.qiu@starfivetech.com>
 Date: Mon, 9 Oct 2023 10:59:03 +0800
 Subject: [PATCH 050/214] mmc: starfive: Change the voltage to adapt to JH7110
