@@ -1,4 +1,4 @@
-From f7356b8123dcbbf512057d254d3798a71091453f Mon Sep 17 00:00:00 2001
+From ffa4495a0ca23d6d43e5d6cfa55cefccfcf6f2ac Mon Sep 17 00:00:00 2001
 From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 Date: Mon, 6 Jan 2025 13:37:13 +0100
 Subject: [PATCH 202/214] riscv: fml13v01_defconfig: add Atheros 802.11ac

@@ -1,4 +1,4 @@
-From e27cc127c6eaf0c7d77f8cbbe9661625b986056c Mon Sep 17 00:00:00 2001
+From b0518b3a65419314a4fd1e993dc104d93d366781 Mon Sep 17 00:00:00 2001
 From: "ziv.xu" <ziv.xu@starfive.com>
 Date: Wed, 18 Jan 2023 15:50:47 +0800
 Subject: [PATCH 131/214] spi-pl022-starfive:Enable spi to be compiled into

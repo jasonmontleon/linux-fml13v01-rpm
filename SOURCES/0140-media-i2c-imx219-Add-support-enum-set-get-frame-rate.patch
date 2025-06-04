@@ -1,4 +1,4 @@
-From 1cde9dc1c1b427bd93902315df18ffb8b5577475 Mon Sep 17 00:00:00 2001
+From 7d9f857c8242ed1532fa348247be407d6554ca70 Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Fri, 18 Nov 2022 11:50:58 +0800
 Subject: [PATCH 140/214] media: i2c: imx219: Add support enum/set/get frame
@@ -12,7 +12,7 @@ Signed-off-by: Changhuang Liang <changhuang.liang@starfivetech.com>
  1 file changed, 105 insertions(+)
 
 diff --git a/drivers/media/i2c/imx219.c b/drivers/media/i2c/imx219.c
-index a14e571dc62b..2cd04f638488 100644
+index a3d5a8a7c660..e59438da875c 100644
 --- a/drivers/media/i2c/imx219.c
 +++ b/drivers/media/i2c/imx219.c
 @@ -170,6 +170,8 @@ struct imx219_mode {

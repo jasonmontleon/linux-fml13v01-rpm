@@ -1,4 +1,4 @@
-From 415fa579290c9ff155cc2520b8998ec0e483dad5 Mon Sep 17 00:00:00 2001
+From 566fbefdfaa4dd47233b0375c3a58f9fb18e3c52 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Thu, 26 Sep 2024 17:32:03 +0800
 Subject: [PATCH 174/214] add cros-ec-spi support.

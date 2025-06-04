@@ -1,4 +1,4 @@
-From a02f60e39a77267c5a57b7c74b6a9190bcf0adbd Mon Sep 17 00:00:00 2001
+From 9abf45285c7ba296f17177cfa598c3f1146e4112 Mon Sep 17 00:00:00 2001
 From: Xingyu Wu <xingyu.wu@starfivetech.com>
 Date: Mon, 21 Aug 2023 22:41:50 +0800
 Subject: [PATCH 047/214] riscv: dts: starfive: pinfunc: Fix the pins name of

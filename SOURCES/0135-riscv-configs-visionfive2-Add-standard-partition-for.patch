@@ -1,4 +1,4 @@
-From 10c32c1cfc4558e05bbdae54e3e23cb4ab459c80 Mon Sep 17 00:00:00 2001
+From a119813fb9cfe9046c50a18e8242a1e160287e1b Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Thu, 21 Mar 2024 16:53:51 +0800
 Subject: [PATCH 135/214] riscv: configs: visionfive2: Add standard partition

@@ -1,4 +1,4 @@
-From 9aa762d15e38f74347c28fad412c4a4343be73b2 Mon Sep 17 00:00:00 2001
+From 77e0e792dcd374c137aaadf13bf5408446fbcdff Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Fri, 12 May 2023 17:33:20 +0800
 Subject: [PATCH 062/214] i2c: designware: Delete SMBus functionalities
@@ -13,7 +13,7 @@ Signed-off-by: Hal Feng <hal.feng@starfivetech.com>
  1 file changed, 4 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/i2c/busses/i2c-designware-core.h b/drivers/i2c/busses/i2c-designware-core.h
-index 5eb130c1d671..55419e6758e8 100644
+index e93870a0f9a4..922bf4ac6226 100644
 --- a/drivers/i2c/busses/i2c-designware-core.h
 +++ b/drivers/i2c/busses/i2c-designware-core.h
 @@ -18,12 +18,10 @@
