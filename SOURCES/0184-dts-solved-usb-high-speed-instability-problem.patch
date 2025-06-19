@@ -1,4 +1,4 @@
-From a716d4a90b1613dd71e4fe6df99eb56139b3ec82 Mon Sep 17 00:00:00 2001
+From f6569fecf4cba4b759abfb6d0b72140017c83712 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Wed, 30 Oct 2024 10:57:23 +0800
 Subject: [PATCH 184/214] dts: solved usb high speed instability problem.
