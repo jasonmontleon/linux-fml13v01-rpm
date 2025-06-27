@@ -1,4 +1,4 @@
-From f3533d6bf0b2d84b5174531826c9e7936f29f2b6 Mon Sep 17 00:00:00 2001
+From d5048e3b26dae7ae766faa05c08933497ba7a648 Mon Sep 17 00:00:00 2001
 From: Sandie Cao <sandie.cao@deepcomputing.io>
 Date: Fri, 9 May 2025 18:43:37 +0800
 Subject: [PATCH 210/214] riscv: configs: fml13v01_defconfig: undefined
@@ -20,5 +20,5 @@ index 010ef7e35bc5..11cabe7637d6 100644
  CONFIG_DEFAULT_HOSTNAME="StarFive"
  CONFIG_SYSVIPC=y
 -- 
-2.49.0
+2.50.0
 

@@ -1,4 +1,4 @@
-From f41a8e6f42471d5ca144c50eb29324e515914ab4 Mon Sep 17 00:00:00 2001
+From e837d8ac9af079bb25d4cd3d4442eae0ac220d89 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Mon, 26 Feb 2024 11:35:44 +0800
 Subject: [PATCH 054/214] pinctrl: starfive: jh7110: Unset .strict in
@@ -25,5 +25,5 @@ index a3fee55479d2..a65413319824 100644
  
  static const u8 jh7110_drive_strength_mA[4] = { 2, 4, 8, 12 };
 -- 
-2.49.0
+2.50.0
 

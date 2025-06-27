@@ -1,4 +1,4 @@
-From 6347e472fe8acd904b562770e28c0e2f7ddcd4f0 Mon Sep 17 00:00:00 2001
+From e0f413a210a1b5bb65f23cd940f71fd01820d267 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:08 +0800
 Subject: [PATCH 031/214] PCI: plda: Add host init/deinit and map bus functions
@@ -259,5 +259,5 @@ index 443109d04d59..7b69891700a4 100644
 +}
  #endif
 -- 
-2.49.0
+2.50.0
 

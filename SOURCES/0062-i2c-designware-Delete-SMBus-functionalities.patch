@@ -1,4 +1,4 @@
-From 60a1ee835a9e3db6a2902551993d46f80b279ae1 Mon Sep 17 00:00:00 2001
+From 7ce996d20fef262a6ca8bc0dc5c5f45bc3a368a9 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Fri, 12 May 2023 17:33:20 +0800
 Subject: [PATCH 062/214] i2c: designware: Delete SMBus functionalities
@@ -34,5 +34,5 @@ index e93870a0f9a4..922bf4ac6226 100644
  #define DW_IC_CON_MASTER			BIT(0)
  #define DW_IC_CON_SPEED_STD			(1 << 1)
 -- 
-2.49.0
+2.50.0
 

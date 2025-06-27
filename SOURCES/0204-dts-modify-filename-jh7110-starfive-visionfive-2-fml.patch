@@ -1,4 +1,4 @@
-From a842e419bdc946b5e1962688960fc95b0fb1343f Mon Sep 17 00:00:00 2001
+From b2dcb8b3b93da72d0da9a1235ac06227b780a174 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Fri, 10 Jan 2025 17:49:46 +0800
 Subject: [PATCH 204/214] dts: modify filename:
@@ -30,5 +30,5 @@ similarity index 100%
 rename from arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-fml13v01.dts
 rename to arch/riscv/boot/dts/starfive/jh7110-deepcomputing-fml13v01.dts
 -- 
-2.49.0
+2.50.0
 

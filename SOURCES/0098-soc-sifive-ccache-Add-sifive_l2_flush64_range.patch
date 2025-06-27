@@ -1,4 +1,4 @@
-From 95a530b7ce27a5ec08acd867354127f3c7145829 Mon Sep 17 00:00:00 2001
+From c6147b8d1c520893891f529764b669204eca231c Mon Sep 17 00:00:00 2001
 From: Samin Guo <samin.guo@starfivetech.com>
 Date: Mon, 26 Jun 2023 16:43:17 +0800
 Subject: [PATCH 098/214] soc: sifive: ccache: Add sifive_l2_flush64_range
@@ -41,5 +41,5 @@ index d349ccb3969b..e336ac3f73cb 100644
  static inline void sifive_ccache_clear_uncached(void *addr, size_t size)
  {
 -- 
-2.49.0
+2.50.0
 

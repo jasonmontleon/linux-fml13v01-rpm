@@ -1,4 +1,4 @@
-From 97c90a879f27df72774e8f760e8a1365d579845d Mon Sep 17 00:00:00 2001
+From a48f8fc8f6e09d82446783a6a4c391e4a0bb8778 Mon Sep 17 00:00:00 2001
 From: Ziv Xu <ziv.xu@starfivetech.com>
 Date: Wed, 13 Mar 2024 18:37:31 +0800
 Subject: [PATCH 120/214] riscv: configs: add visionfive2 defconfig to kernel
@@ -446,5 +446,5 @@ index 000000000000..4b675e0c77cd
 +# CONFIG_RUNTIME_TESTING_MENU is not set
 +CONFIG_MEMTEST=y
 -- 
-2.49.0
+2.50.0
 

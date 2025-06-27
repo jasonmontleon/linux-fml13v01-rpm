@@ -1,4 +1,4 @@
-From d2fe7ef80b7bf39f81912bab250a9537702ded79 Mon Sep 17 00:00:00 2001
+From 9ec9d04e0f98e23fc828b2bdbfb51f1436ce694a Mon Sep 17 00:00:00 2001
 From: Robert Beckett <bob.beckett@collabora.com>
 Date: Wed, 8 Nov 2023 20:29:25 +0100
 Subject: [PATCH 111/214] dt-bindings: media: wave5: add yaml devicetree
@@ -83,5 +83,5 @@ index 000000000000..6d5569e77b7a
 +        sram = <&sram>;
 +    };
 -- 
-2.49.0
+2.50.0
 

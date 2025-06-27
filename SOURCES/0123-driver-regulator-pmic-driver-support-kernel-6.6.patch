@@ -1,4 +1,4 @@
-From 54a8e51c2e189089dd9c6e636d758b751b9d3d37 Mon Sep 17 00:00:00 2001
+From d4f6910b17667b83dca7d4149f388222bca1e5f4 Mon Sep 17 00:00:00 2001
 From: Ziv Xu <ziv.xu@starfivetech.com>
 Date: Wed, 13 Mar 2024 18:43:27 +0800
 Subject: [PATCH 123/214] driver: regulator: pmic driver support kernel 6.6
@@ -23,5 +23,5 @@ index c657820b0bbb..810f90f3e2a1 100644
  #include <linux/regmap.h>
  #include <linux/regulator/driver.h>
 -- 
-2.49.0
+2.50.0
 

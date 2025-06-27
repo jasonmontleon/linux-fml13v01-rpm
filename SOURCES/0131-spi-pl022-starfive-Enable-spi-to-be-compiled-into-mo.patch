@@ -1,4 +1,4 @@
-From 8180a80d9a0f09feaea4e398d445235f2bdbddff Mon Sep 17 00:00:00 2001
+From 72995c41f28ea51757d5043db48a2632c4e1c825 Mon Sep 17 00:00:00 2001
 From: "ziv.xu" <ziv.xu@starfive.com>
 Date: Wed, 18 Jan 2023 15:50:47 +0800
 Subject: [PATCH 131/214] spi-pl022-starfive:Enable spi to be compiled into
@@ -39,5 +39,5 @@ index ca499bfa8b44..1420c40fa815 100644
  
  MODULE_AUTHOR("xingyu.wu <xingyu.wu@starfivetech.com>");
 -- 
-2.49.0
+2.50.0
 
