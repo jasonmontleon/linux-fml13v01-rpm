@@ -1,4 +1,4 @@
-From 51f709da90fc8469752999e13038e8ee759ab0d5 Mon Sep 17 00:00:00 2001
+From 15ecb1ed578c39e15a61f3f3efe05420bf1dcc46 Mon Sep 17 00:00:00 2001
 From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 Date: Mon, 6 Jan 2025 11:35:04 +0100
 Subject: [PATCH 198/214] riscv: fml13v01_defconfig: CONFIG_CGROUP_CPUACCT=y

@@ -1,4 +1,4 @@
-From 2df0e073478ec480ee090ac49c67dc6dd34db6cf Mon Sep 17 00:00:00 2001
+From d31e22d900f0e95d099f6506322d47a0247f7120 Mon Sep 17 00:00:00 2001
 From: "shanlong.li" <shanlong.li@starfivetech.com>
 Date: Mon, 10 Jul 2023 03:07:57 -0700
 Subject: [PATCH 067/214] driver:uart: fix up uart communicate fail
