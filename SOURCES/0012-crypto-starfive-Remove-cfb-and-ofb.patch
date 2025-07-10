@@ -1,4 +1,4 @@
-From 4da5e50e80cad692f2cd240d704f10554fc210c0 Mon Sep 17 00:00:00 2001
+From 04d17cd488adc722d9c449d1a547477e75d29da6 Mon Sep 17 00:00:00 2001
 From: Herbert Xu <herbert@gondor.apana.org.au>
 Date: Thu, 30 Nov 2023 18:12:55 +0800
 Subject: [PATCH 012/214] crypto: starfive - Remove cfb and ofb

@@ -1,4 +1,4 @@
-From 40a7ace93255efd8b75f38372d1d74bc1cffe063 Mon Sep 17 00:00:00 2001
+From cbbbff52066d2c9d874379fec2bc0903f1af1b43 Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Mon, 6 Feb 2023 11:37:14 +0800
 Subject: [PATCH 151/214] riscv: dts: starfive: Add goodix gt911 touchscreen

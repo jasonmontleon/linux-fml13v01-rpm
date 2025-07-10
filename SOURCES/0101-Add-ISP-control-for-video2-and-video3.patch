@@ -1,4 +1,4 @@
-From 524d8169aa0a9d664e81e4cf1a9b1e275207572c Mon Sep 17 00:00:00 2001
+From 696d4cc94fb70d579b01c54e0e906165d1238116 Mon Sep 17 00:00:00 2001
 From: "zejian.su" <zejian.su@starfivetech.com>
 Date: Mon, 30 Oct 2023 16:09:58 +0800
 Subject: [PATCH 101/214] Add ISP control for video2 and video3.

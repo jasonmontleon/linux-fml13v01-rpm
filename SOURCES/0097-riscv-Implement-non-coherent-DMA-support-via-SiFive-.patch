@@ -1,4 +1,4 @@
-From 68fca79a913d8207f7044a696eda7940eef27c46 Mon Sep 17 00:00:00 2001
+From 59022651349bc323fbf2f1fce2ee73496f3cde18 Mon Sep 17 00:00:00 2001
 From: Emil Renner Berthing <kernel@esmil.dk>
 Date: Mon, 26 Jun 2023 14:39:39 +0800
 Subject: [PATCH 097/214] riscv: Implement non-coherent DMA support via SiFive

@@ -1,4 +1,4 @@
-From 4f51a507fbb576a8972df75dd7d0f14a43335ce4 Mon Sep 17 00:00:00 2001
+From 16f8df58814c1e6643610956659c03be0b184598 Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Wed, 21 Dec 2022 16:20:04 +0800
 Subject: [PATCH 083/214] input: touchscreen: Add tinker_ft5406 driver support

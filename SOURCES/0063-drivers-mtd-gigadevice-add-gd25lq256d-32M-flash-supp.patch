@@ -1,4 +1,4 @@
-From 8fac1d99884f5df809023a1a8cbd81f270b2bb0d Mon Sep 17 00:00:00 2001
+From f38c0ad74f88d9f3d82dbea176201b3c09335c4a Mon Sep 17 00:00:00 2001
 From: Ziv Xu <ziv.xu@starfivetech.com>
 Date: Fri, 19 Jan 2024 15:22:55 +0800
 Subject: [PATCH 063/214] drivers: mtd: gigadevice: add gd25lq256d 32M flash
