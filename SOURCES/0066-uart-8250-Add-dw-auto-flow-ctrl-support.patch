@@ -1,4 +1,4 @@
-From 4592d109be995d056e88ccd0514e56c4a0e6ccd2 Mon Sep 17 00:00:00 2001
+From afd70f32573b42c62fc52a53ea681ad3a3d616ca Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Sun, 25 Jun 2023 09:40:29 +0800
 Subject: [PATCH 066/214] uart: 8250: Add dw auto flow ctrl support
@@ -108,5 +108,5 @@ index add349889d0a..58c5c0ac0911 100644
 +
  #endif /* _UAPILINUX_SERIAL_CORE_H */
 -- 
-2.50.0
+2.50.1
 

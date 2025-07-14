@@ -1,4 +1,4 @@
-From 4f4ef67d0ccb52ccd730dee2f7acbece03bd0138 Mon Sep 17 00:00:00 2001
+From 1f2e15d0993ececd484ce0b64578d1ba3393c336 Mon Sep 17 00:00:00 2001
 From: "zejian.su" <zejian.su@starfivetech.com>
 Date: Mon, 7 Aug 2023 10:38:36 +0800
 Subject: [PATCH 100/214] Expand 2 bytes after the SC buffer for the AE/AWB
@@ -258,5 +258,5 @@ index e20895bd881a..91254bb509a2 100644
  	struct jh7110_isp_sc_awb_config awb_config;
  };
 -- 
-2.50.0
+2.50.1
 

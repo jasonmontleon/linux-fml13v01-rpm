@@ -1,4 +1,4 @@
-From df55cb95ad2b0a2173776e280f3eecc329610994 Mon Sep 17 00:00:00 2001
+From 97b33954e0acc0fd359736f8a96e90bdec4b6d68 Mon Sep 17 00:00:00 2001
 From: Nas Chung <nas.chung@chipsnmedia.com>
 Date: Wed, 8 Nov 2023 20:29:24 +0100
 Subject: [PATCH 110/214] media: chips-media: wave5: Add the v4l2 layer
@@ -4465,5 +4465,5 @@ index 000000000000..32b7fd3730b5
 +
 +#endif
 -- 
-2.50.0
+2.50.1
 

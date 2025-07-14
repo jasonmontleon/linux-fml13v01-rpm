@@ -1,4 +1,4 @@
-From 2e95a3a7b45cd93c1099634c8c1437070059f0a4 Mon Sep 17 00:00:00 2001
+From 90807b10b6b5310e8970cb592d2b921ed2abde2f Mon Sep 17 00:00:00 2001
 From: "keith.zhao" <keith.zhao@starfivetech.com>
 Date: Mon, 8 Apr 2024 17:59:21 +0800
 Subject: [PATCH 141/214] vout:linux:console
@@ -153,5 +153,5 @@ index 73c2669ba581..89de491aef58 100644
  	if (!crtc || !fb)
  		return 0;
 -- 
-2.50.0
+2.50.1
 

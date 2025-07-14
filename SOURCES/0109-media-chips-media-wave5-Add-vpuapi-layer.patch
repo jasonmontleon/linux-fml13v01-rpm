@@ -1,4 +1,4 @@
-From d88ea027386ae1373bdbf8db4fbf4e5dc2d09b33 Mon Sep 17 00:00:00 2001
+From 8962426d6ae5f336bc4fc649cec22ab68ce30e21 Mon Sep 17 00:00:00 2001
 From: Nas Chung <nas.chung@chipsnmedia.com>
 Date: Wed, 8 Nov 2023 20:29:23 +0100
 Subject: [PATCH 109/214] media: chips-media: wave5: Add vpuapi layer
@@ -5927,5 +5927,5 @@ index 000000000000..063028eccd3b
 +
 +#endif /* __WAVE5_FUNCTION_H__ */
 -- 
-2.50.0
+2.50.1
 

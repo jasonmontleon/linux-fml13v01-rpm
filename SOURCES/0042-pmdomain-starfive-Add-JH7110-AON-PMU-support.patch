@@ -1,4 +1,4 @@
-From 724f26e5c98e73f6385ec461c15e56c2ea2e6c90 Mon Sep 17 00:00:00 2001
+From 44c33939b0dc5e8747e0d9313426fdbf0f62da6c Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Wed, 13 Sep 2023 14:54:28 +0100
 Subject: [PATCH 042/214] pmdomain: starfive: Add JH7110 AON PMU support
@@ -122,5 +122,5 @@ index 0dbdcc0d2c91..c7b474409cf7 100644
  MODULE_DESCRIPTION("StarFive JH71XX PMU Driver");
  MODULE_LICENSE("GPL");
 -- 
-2.50.0
+2.50.1
 

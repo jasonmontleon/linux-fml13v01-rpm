@@ -1,4 +1,4 @@
-From 25d0905091658409702db45947ae5ff74a4ea91a Mon Sep 17 00:00:00 2001
+From 153cbf0a4d589b8ffdbe63a6ce3e760b27f4b209 Mon Sep 17 00:00:00 2001
 From: "shanlong.li" <shanlong.li@starfivetech.com>
 Date: Mon, 10 Jul 2023 03:07:57 -0700
 Subject: [PATCH 067/214] driver:uart: fix up uart communicate fail
@@ -30,5 +30,5 @@ index a9c24bf272c1..4663bee7d37b 100644
  
  	err = devm_add_action_or_reset(dev, dw8250_reset_control_assert, data->rst);
 -- 
-2.50.0
+2.50.1
 

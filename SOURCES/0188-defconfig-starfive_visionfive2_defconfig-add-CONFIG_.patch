@@ -1,4 +1,4 @@
-From 72d827c5f486a01a1d4782672af7288bffdf2da9 Mon Sep 17 00:00:00 2001
+From 8a342e306ef4d2f3b6e0b124f451910963229fbc Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Tue, 12 Nov 2024 10:54:14 +0800
 Subject: [PATCH 188/214] defconfig: starfive_visionfive2_defconfig: add
@@ -38,5 +38,5 @@ index 65a611b4b826..45e13b01cad6 100644
  # CONFIG_RUNTIME_TESTING_MENU is not set
  CONFIG_MEMTEST=y
 -- 
-2.50.0
+2.50.1
 

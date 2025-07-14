@@ -1,4 +1,4 @@
-From 2ea3fedd7298d9df911542626e6f1acd911134dc Mon Sep 17 00:00:00 2001
+From 98c94e8682668ad738624134f9c1aec654a50584 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Fri, 13 Sep 2024 10:15:55 +0800
 Subject: [PATCH 169/214] cros: add cros_ec_cmd_readmem
@@ -95,5 +95,5 @@ index 4f9f756bc17c..5aad0067c928 100644
   * cros_ec_get_time_ns() - Return time in ns.
   *
 -- 
-2.50.0
+2.50.1
 

@@ -1,4 +1,4 @@
-From 0032a6a52d01aedba3e3b2aa9285a4eeb9a30ada Mon Sep 17 00:00:00 2001
+From 346694d555e8c99fc9898d10b65626ad79d5b03a Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:04 +0800
 Subject: [PATCH 027/214] PCI: microchip: Add get_events() callback and add
@@ -170,5 +170,5 @@ index 0efe64d5f688..9db92ccf286c 100644
  	int num_events;
  };
 -- 
-2.50.0
+2.50.1
 

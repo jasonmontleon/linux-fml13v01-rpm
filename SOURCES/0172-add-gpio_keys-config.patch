@@ -1,4 +1,4 @@
-From 65ff2c4cdd843e9d3789e04ec4054afa63f751de Mon Sep 17 00:00:00 2001
+From a1f195a582298b463c39fd0925dad8bb3f9229c5 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Tue, 24 Sep 2024 18:35:39 +0800
 Subject: [PATCH 172/214] add gpio_keys config.
@@ -69,5 +69,5 @@ index 185c2a3613f9..81b675ea3dd3 100644
  CONFIG_SERIAL_8250_CONSOLE=y
  CONFIG_SERIAL_8250_NR_UARTS=6
 -- 
-2.50.0
+2.50.1
 

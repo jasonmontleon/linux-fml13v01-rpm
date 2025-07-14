@@ -1,4 +1,4 @@
-From 88b11e394efaedbdf42c7b45a0edb56cb423c5a6 Mon Sep 17 00:00:00 2001
+From 426e789d7091df94806adcc80da15d5d1c8347cc Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Fri, 22 Mar 2024 11:33:40 +0800
 Subject: [PATCH 138/214] riscv: dts: starfive: visionfive 2: Add aliases for
@@ -35,5 +35,5 @@ index fa5c74bd7816..1676338d43a2 100644
  
  	chosen {
 -- 
-2.50.0
+2.50.1
 

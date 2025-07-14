@@ -1,4 +1,4 @@
-From 68d73cdbbf98a81e6ca9689d8d6587bb65f07416 Mon Sep 17 00:00:00 2001
+From 300c1fab8c404f0065a8acf09dd460464e312a23 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 3 Jul 2023 16:14:20 +0800
 Subject: [PATCH 134/214] usb: xhci: using dma_alloc_noncoherent to alloc low
@@ -109,5 +109,5 @@ index 9e37591548ad..089affaf310b 100644
  		}
  		device_property_read_u32(tmpdev, "imod-interval-ns",
 -- 
-2.50.0
+2.50.1
 
