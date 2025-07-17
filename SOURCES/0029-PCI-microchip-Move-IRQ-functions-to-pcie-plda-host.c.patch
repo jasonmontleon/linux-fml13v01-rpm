@@ -1,4 +1,4 @@
-From 24220636080e1dbaa912fe0a65af79a121dd1de0 Mon Sep 17 00:00:00 2001
+From afc37bfee0db9f53b2283b265262555975336438 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:06 +0800
 Subject: [PATCH 029/214] PCI: microchip: Move IRQ functions to

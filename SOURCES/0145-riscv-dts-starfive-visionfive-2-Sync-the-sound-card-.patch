@@ -1,4 +1,4 @@
-From 9eb10745924e98a3095a16afd8eab09509064e21 Mon Sep 17 00:00:00 2001
+From eb3ae127aa0be9f5136857e50c29e51531ee4c20 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Mon, 15 Apr 2024 11:29:17 +0800
 Subject: [PATCH 145/214] riscv: dts: starfive: visionfive 2: Sync the sound

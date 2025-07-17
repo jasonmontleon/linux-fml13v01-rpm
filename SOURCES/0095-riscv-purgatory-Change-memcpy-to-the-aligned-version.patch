@@ -1,4 +1,4 @@
-From 876423a006237b7a6df7a03815a73c7897b6c735 Mon Sep 17 00:00:00 2001
+From e3b7c1676dcf15dbfd3c28b0cdf12729ba137d0e Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Sun, 4 Feb 2024 15:27:09 +0800
 Subject: [PATCH 095/214] riscv/purgatory: Change memcpy to the aligned version

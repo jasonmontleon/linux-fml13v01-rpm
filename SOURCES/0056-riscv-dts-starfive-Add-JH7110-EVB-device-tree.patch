@@ -1,4 +1,4 @@
-From 85fa2f52befb45617837d9477f5b28743106f559 Mon Sep 17 00:00:00 2001
+From 7d21c491dcc64855b7449667ba99ed3a8653cd42 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Fri, 28 Jul 2023 17:19:12 +0800
 Subject: [PATCH 056/214] riscv: dts: starfive: Add JH7110 EVB device tree
