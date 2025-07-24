@@ -1,4 +1,4 @@
-From 7f06d8f3ac9436f010d0ebc5a124c57b16033c0f Mon Sep 17 00:00:00 2001
+From 782849f6a140dc487c946fec15a3ff4c4d052be0 Mon Sep 17 00:00:00 2001
 From: Jason Montleon <jmontleo@redhat.com>
 Date: Mon, 17 Feb 2025 11:14:30 -0500
 Subject: [PATCH 214/214] Remove C++ style comments

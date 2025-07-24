@@ -1,4 +1,4 @@
-From 62cc06bffa5b4d0d45a27a44d16c1be57d36092f Mon Sep 17 00:00:00 2001
+From fbce091fc59abe34a15b8c5107d7c84c00fd4f56 Mon Sep 17 00:00:00 2001
 From: Ziv Xu <ziv.xu@starfivetech.com>
 Date: Wed, 13 Mar 2024 18:40:27 +0800
 Subject: [PATCH 121/214] driver: net: wireless: VF2 support aic8800 wifi

@@ -1,4 +1,4 @@
-From 2422a85a4d234cc979bbcc996bdf6f15f5a49d82 Mon Sep 17 00:00:00 2001
+From 7c503a04839a74600354e8360094f1fe5f325a20 Mon Sep 17 00:00:00 2001
 From: Sandie Cao <sandie.cao@deepcomputing.io>
 Date: Fri, 1 Nov 2024 10:29:26 +0800
 Subject: [PATCH 187/214] driver: usb: hub: Set GenesysLogic Hub Downstream
@@ -13,10 +13,10 @@ Signed-off-by: Sandie Cao <sandie.cao@deepcomputing.io>
  1 file changed, 15 insertions(+)
 
 diff --git a/drivers/usb/core/hub.c b/drivers/usb/core/hub.c
-index 855356752380..21eda35cb575 100644
+index bebc41308ca9..dfc4bce43ea1 100644
 --- a/drivers/usb/core/hub.c
 +++ b/drivers/usb/core/hub.c
-@@ -2635,6 +2635,21 @@ int usb_new_device(struct usb_device *udev)
+@@ -2663,6 +2663,21 @@ int usb_new_device(struct usb_device *udev)
  		goto fail;
  	}
  
