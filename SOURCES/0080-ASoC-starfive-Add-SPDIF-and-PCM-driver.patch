@@ -1,4 +1,4 @@
-From a733ec8829747a5f9b99633b51d27f9be68ad553 Mon Sep 17 00:00:00 2001
+From 4b80b87029b4a88fed8d11d91551c00b3e523dfa Mon Sep 17 00:00:00 2001
 From: Xingyu Wu <xingyu.wu@starfivetech.com>
 Date: Thu, 15 Jun 2023 11:32:50 +0800
 Subject: [PATCH 080/214] ASoC: starfive: Add SPDIF and PCM driver

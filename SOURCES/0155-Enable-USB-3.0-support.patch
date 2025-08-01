@@ -1,4 +1,4 @@
-From 02ef0e4bfb07935d573be747aefd098383ef9e1b Mon Sep 17 00:00:00 2001
+From 841d275562ce02fe1d53638275d5d037c3b804b7 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Wed, 14 Aug 2024 09:54:35 +0800
 Subject: [PATCH 155/214] Enable USB 3.0 support.

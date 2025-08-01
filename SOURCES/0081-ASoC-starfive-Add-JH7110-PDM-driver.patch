@@ -1,4 +1,4 @@
-From 66ae69e8d2aabbd97ca6b36202b106a463754071 Mon Sep 17 00:00:00 2001
+From 5b23fab724676b6ccb50c4d9cf0e31f5c824eb0e Mon Sep 17 00:00:00 2001
 From: Walker Chen <walker.chen@starfivetech.com>
 Date: Tue, 20 Jun 2023 15:57:53 +0800
 Subject: [PATCH 081/214] ASoC: starfive: Add JH7110 PDM driver
