@@ -1,4 +1,4 @@
-From 121ded96b04a1e7b6fad16c024b12bdbcec30a26 Mon Sep 17 00:00:00 2001
+From 1b95ea21217730d7a259074d1168514985e974cc Mon Sep 17 00:00:00 2001
 From: "zejian.su" <zejian.su@starfivetech.com>
 Date: Mon, 7 Aug 2023 10:38:36 +0800
 Subject: [PATCH 100/214] Expand 2 bytes after the SC buffer for the AE/AWB

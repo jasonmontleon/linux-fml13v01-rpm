@@ -1,4 +1,4 @@
-From 19b678ce50e62feedc9ce3ab0ab05c07ed295144 Mon Sep 17 00:00:00 2001
+From 795571cca51608b9284da07107670b1291a07bac Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Mon, 28 Oct 2024 11:07:14 +0800
 Subject: [PATCH 183/214] cros_ec_sysfs: add touchpad & audio-exp board

@@ -1,4 +1,4 @@
-From 6deb5b5999dd44a24bf4cdd8fade2b1bfa2025f6 Mon Sep 17 00:00:00 2001
+From ec4a7c8791d3ed8edc391351b1ed50a349e84598 Mon Sep 17 00:00:00 2001
 From: Sebastian Fricke <sebastian.fricke@collabora.com>
 Date: Wed, 8 Nov 2023 20:29:20 +0100
 Subject: [PATCH 106/214] media: v4l2: Add ignore_streaming flag

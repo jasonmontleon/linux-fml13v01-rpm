@@ -1,4 +1,4 @@
-From bb631025fccb5d7192689324d1630ff3195b6644 Mon Sep 17 00:00:00 2001
+From 3e5c1dabd66afabc180df4faf35ae8c4ad4ef699 Mon Sep 17 00:00:00 2001
 From: "minda.chen" <minda.chen@starfivetech.com>
 Date: Tue, 18 Oct 2022 09:57:39 +0800
 Subject: [PATCH 133/214] usb:xhci:To improve performance,usb using lowmem for
@@ -148,7 +148,7 @@ index cceb69d4f61e..99a6bd0242a6 100644
  	 * XXX: Might need to set the Interrupter Moderation Register to
  	 * something other than the default (~1ms minimum between interrupts).
 diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
-index 749ba3596c2b..9e37591548ad 100644
+index b350ee080236..f9467a09d33b 100644
 --- a/drivers/usb/host/xhci-plat.c
 +++ b/drivers/usb/host/xhci-plat.c
 @@ -253,6 +253,14 @@ int xhci_plat_probe(struct platform_device *pdev, struct device *sysdev, const s
