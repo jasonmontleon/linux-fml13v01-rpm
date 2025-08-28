@@ -1,4 +1,4 @@
-From 266adb9eb0f4da1e6a0f8d116168382cdb2c6d22 Mon Sep 17 00:00:00 2001
+From ae6754335dc386b22fca7400f2b293e2ee3d775c Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Tue, 5 Mar 2024 11:00:21 +0800
 Subject: [PATCH 118/214] crypto: jh7110: Comment RSA algo register
@@ -37,5 +37,5 @@ index 425fddf3a8ab..a539cc6ca7af 100644
  	starfive_aes_unregister_algs();
  err_algs_aes:
 -- 
-2.50.1
+2.51.0
 

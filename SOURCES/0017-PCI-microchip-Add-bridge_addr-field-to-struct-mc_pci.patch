@@ -1,4 +1,4 @@
-From 07bed13b2976a9708f75d37bdad782fda59ba531 Mon Sep 17 00:00:00 2001
+From 6a654019a72eb7a5931b4c6c869dd0cd47c63903 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:05:54 +0800
 Subject: [PATCH 017/214] PCI: microchip: Add bridge_addr field to struct
@@ -108,5 +108,5 @@ index d9030d550482..c55ede80a6d0 100644
  	/* Allow enabling MSI by disabling MSI-X */
  	val = readl(bridge_base_addr + PCIE_PCI_IRQ_DW0);
 -- 
-2.50.1
+2.51.0
 

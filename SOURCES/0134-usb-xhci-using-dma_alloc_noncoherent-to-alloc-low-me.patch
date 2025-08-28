@@ -1,4 +1,4 @@
-From ddf9fee7d39a4989655aa698f1b37f4e5c75a099 Mon Sep 17 00:00:00 2001
+From 268af083f702d9de812892f55d1c03caa3146b12 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 3 Jul 2023 16:14:20 +0800
 Subject: [PATCH 134/214] usb: xhci: using dma_alloc_noncoherent to alloc low
@@ -15,10 +15,10 @@ Signed-off-by: Minda Chen <minda.chen@starfivetech.com>
  2 files changed, 21 insertions(+), 17 deletions(-)
 
 diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
-index 99a6bd0242a6..616a79d826ba 100644
+index ce9822e06b73..5e8b3442a8c8 100644
 --- a/drivers/usb/host/xhci-mem.c
 +++ b/drivers/usb/host/xhci-mem.c
-@@ -1936,7 +1936,8 @@ void xhci_mem_cleanup(struct xhci_hcd *xhci)
+@@ -1938,7 +1938,8 @@ void xhci_mem_cleanup(struct xhci_hcd *xhci)
  
  	if (xhci->lowmem_pool.pool) {
  		pool = &xhci->lowmem_pool;
@@ -28,7 +28,7 @@ index 99a6bd0242a6..616a79d826ba 100644
  		gen_pool_destroy(pool->pool);
  		pool->pool = NULL;
  	}
-@@ -2423,15 +2424,15 @@ int xhci_setup_local_lowmem(struct xhci_hcd *xhci, size_t size)
+@@ -2425,15 +2426,15 @@ int xhci_setup_local_lowmem(struct xhci_hcd *xhci, size_t size)
  	if (!pool->pool) {
  		/* minimal alloc one page */
  		pool->pool = gen_pool_create(PAGE_SHIFT, dev_to_node(hcd->self.sysdev));
@@ -50,7 +50,7 @@ index 99a6bd0242a6..616a79d826ba 100644
  		goto destroy_pool;
  	}
  
-@@ -2441,11 +2442,11 @@ int xhci_setup_local_lowmem(struct xhci_hcd *xhci, size_t size)
+@@ -2443,11 +2444,11 @@ int xhci_setup_local_lowmem(struct xhci_hcd *xhci, size_t size)
  	 * for it.
  	 */
  	err = gen_pool_add_virt(pool->pool, (unsigned long)buffer,
@@ -64,7 +64,7 @@ index 99a6bd0242a6..616a79d826ba 100644
  		goto destroy_pool;
  	}
  
-@@ -2469,7 +2470,7 @@ int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
+@@ -2471,7 +2472,7 @@ int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
  	unsigned int	val, val2;
  	u64		val_64;
  	u32		page_size, temp;
@@ -73,7 +73,7 @@ index 99a6bd0242a6..616a79d826ba 100644
  
  	INIT_LIST_HEAD(&xhci->cmd_list);
  
-@@ -2603,9 +2604,11 @@ int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
+@@ -2605,9 +2606,11 @@ int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
  	xhci->isoc_bei_interval = AVOID_BEI_INTERVAL_MAX;
  
  	if (xhci->quirks & XHCI_LOCAL_BUFFER) {
@@ -109,5 +109,5 @@ index f9467a09d33b..f0696243c3c7 100644
  		}
  		device_property_read_u32(tmpdev, "imod-interval-ns",
 -- 
-2.50.1
+2.51.0
 

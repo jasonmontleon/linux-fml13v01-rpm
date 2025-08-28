@@ -1,4 +1,4 @@
-From 41cb394b81293e992a3cddb66e63629499bc3348 Mon Sep 17 00:00:00 2001
+From c6869332fa189111dac0cddba9ecb7aca53c503f Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:01 +0800
 Subject: [PATCH 024/214] PCI: microchip: Add num_events field to struct
@@ -68,5 +68,5 @@ index 3a17d8ab5bb2..adfca9f28458 100644
  
  void plda_pcie_setup_window(void __iomem *bridge_base_addr, u32 index,
 -- 
-2.50.1
+2.51.0
 

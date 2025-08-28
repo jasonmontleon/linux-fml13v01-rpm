@@ -1,4 +1,4 @@
-From 45aaa2b92dd785a2eea0682dd121a71940525ba3 Mon Sep 17 00:00:00 2001
+From 9d3ec390fdab2c9510b68f731803c6de34f345f4 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Thu, 26 Sep 2024 17:32:03 +0800
 Subject: [PATCH 174/214] add cros-ec-spi support.
@@ -788,7 +788,7 @@ index 7d82a0946e1c..d53ef21c1ba7 100644
  	  If you say Y here you get support for the ChromeOS Embedded
  	  Controller (EC) providing keyboard, battery and power services.
 diff --git a/drivers/platform/chrome/cros_ec.c b/drivers/platform/chrome/cros_ec.c
-index 47d19f7e295a..cacfbd9ef782 100644
+index e82f433e542e..14b843c16f0f 100644
 --- a/drivers/platform/chrome/cros_ec.c
 +++ b/drivers/platform/chrome/cros_ec.c
 @@ -214,7 +214,7 @@ int cros_ec_register(struct cros_ec_device *ec_dev)
@@ -1030,5 +1030,5 @@ index ab721cf13a98..470d35ad90fd 100644
  /* Switches */
  #define EC_MKBP_LID_OPEN	0
 -- 
-2.50.1
+2.51.0
 

@@ -1,4 +1,4 @@
-From 11b730e4c1699317adc8df1a1d4694cdb0a79c6d Mon Sep 17 00:00:00 2001
+From ca7016988cc5b94405b5d4d8f86d05055ed4167f Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Fri, 22 Mar 2024 09:54:28 +0800
 Subject: [PATCH 137/214] riscv: dts: starfive: Add vf2-overlay dtso subdir
@@ -149,5 +149,5 @@ index 000000000000..f51fc8f0a55f
 +	};
 +};
 -- 
-2.50.1
+2.51.0
 

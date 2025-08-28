@@ -1,4 +1,4 @@
-From 9b55d4608d085bfd40db9cfaa95b34fc75af2e3b Mon Sep 17 00:00:00 2001
+From 033d28002cf55417b22bcc1409a2f0640a8fe44c Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Wed, 4 Sep 2024 14:32:12 +0800
 Subject: [PATCH 160/214] USB: Fix USB3.0 not turned on.
@@ -37,5 +37,5 @@ index b6c14cd0d0f0..3c83a03da5ae 100755
  	cpu-supply = <&vdd_cpu>;
  };
 -- 
-2.50.1
+2.51.0
 

@@ -1,4 +1,4 @@
-From 255c1412329e96584da9d44f1efa7fbd2c00c396 Mon Sep 17 00:00:00 2001
+From d2f007ad6e41d651e7498a7f7a3652188200abc7 Mon Sep 17 00:00:00 2001
 From: Mark Brown <broonie@kernel.org>
 Date: Mon, 11 Sep 2023 23:48:39 +0100
 Subject: [PATCH 037/214] ASoC: Update jh7110 PWM DAC for ops move
@@ -33,5 +33,5 @@ index 033a9064f06b..391544fe8568 100644
  		.channels_min = 1,
  		.channels_max = 2,
 -- 
-2.50.1
+2.51.0
 

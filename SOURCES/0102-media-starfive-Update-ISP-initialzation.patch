@@ -1,4 +1,4 @@
-From 0a7350977c914bf7be0355c842fbe7509a9fb342 Mon Sep 17 00:00:00 2001
+From 2eb65b98425bfcd1ee771998f26144517a872a83 Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Mon, 13 Nov 2023 14:46:50 +0800
 Subject: [PATCH 102/214] media: starfive: Update ISP initialzation
@@ -227,5 +227,5 @@ index 22fcbb1cfb6a..e867605caaa4 100644
  
  /*Try to match sensor format with sink, and then get the index as default.*/
 -- 
-2.50.1
+2.51.0
 

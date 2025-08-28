@@ -1,4 +1,4 @@
-From 065f071996334599edd995867d43f6f196243ec3 Mon Sep 17 00:00:00 2001
+From 5ff68fbef620b88e723e6cdfa6625d6a9260754c Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Wed, 12 Feb 2025 09:32:40 +0800
 Subject: [PATCH 205/214] riscv: fml13v01: Update defconfig.
@@ -28,5 +28,5 @@ index 13b9f5aa0488..b82bf9caab1c 100644
  # CONFIG_RUNTIME_TESTING_MENU is not set
  CONFIG_MEMTEST=y
 -- 
-2.50.1
+2.51.0
 

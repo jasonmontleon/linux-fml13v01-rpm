@@ -1,4 +1,4 @@
-From cf5c286cee1644b9cfa152f705ef9da4ecdfa502 Mon Sep 17 00:00:00 2001
+From b1394087e13baae06844953c0ca57ec75f0a74c7 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Fri, 28 Jul 2023 17:19:12 +0800
 Subject: [PATCH 056/214] riscv: dts: starfive: Add JH7110 EVB device tree
@@ -2638,5 +2638,5 @@ index 5c69320e6430..ef3dfe05ba51 100644
  			compatible = "starfive,jh7110-pcie";
  			reg = <0x9 0x40000000 0x0 0x1000000>,
 -- 
-2.50.1
+2.51.0
 

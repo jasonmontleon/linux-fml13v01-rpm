@@ -1,4 +1,4 @@
-From c7a97161dd132045b5fc2107c25bef42e7e020df Mon Sep 17 00:00:00 2001
+From 82906788063267ec6d3018d8b3028caeef89d6dd Mon Sep 17 00:00:00 2001
 From: Sandie Cao <sandie.cao@deepcomputing.io>
 Date: Wed, 26 Mar 2025 14:12:43 +0800
 Subject: [PATCH 207/214] riscv: config: fml13v01: Change Wi-Fi, Bluetooth from
@@ -46,5 +46,5 @@ index 77511a63ad27..7abcaec7f286 100644
  CONFIG_USB_WIFI_ECR6600U=y
  CONFIG_AIC_WLAN_SUPPORT=y
 -- 
-2.50.1
+2.51.0
 

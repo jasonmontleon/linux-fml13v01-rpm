@@ -1,4 +1,4 @@
-From 589d0c4aeb7eb0554be715c58b1e5bcb4be3c9e0 Mon Sep 17 00:00:00 2001
+From 185a0ab66e6aa8cb9c108726bb9196e2075a7c18 Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Wed, 21 Dec 2022 16:20:04 +0800
 Subject: [PATCH 083/214] input: touchscreen: Add tinker_ft5406 driver support
@@ -450,5 +450,5 @@ index 000000000000..ebf651793af7
 +MODULE_DESCRIPTION("TINKER BOARD FT5406 Touch driver");
 +MODULE_LICENSE("GPL v2");
 -- 
-2.50.1
+2.51.0
 

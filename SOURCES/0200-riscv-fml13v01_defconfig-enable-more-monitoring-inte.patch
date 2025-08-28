@@ -1,4 +1,4 @@
-From 2731e53e6994cd459aaea6d3b9c2d55daa45386c Mon Sep 17 00:00:00 2001
+From c7bd0c81a7a43068a70863b022e3fd34ce884b06 Mon Sep 17 00:00:00 2001
 From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 Date: Mon, 6 Jan 2025 11:46:41 +0100
 Subject: [PATCH 200/214] riscv: fml13v01_defconfig: enable more monitoring
@@ -35,5 +35,5 @@ index 083269d2898e..c6d89a2bdc9e 100644
  CONFIG_NETFILTER_NETLINK_ACCT=y
  CONFIG_NETFILTER_NETLINK_QUEUE=y
 -- 
-2.50.1
+2.51.0
 

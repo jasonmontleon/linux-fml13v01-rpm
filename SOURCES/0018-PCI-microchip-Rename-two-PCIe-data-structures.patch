@@ -1,4 +1,4 @@
-From e41112445a961cfc9086f1a9b601217f7866c668 Mon Sep 17 00:00:00 2001
+From ce03624dd8a88729495b8c8f6a8c59ee5ae357d3 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:05:55 +0800
 Subject: [PATCH 018/214] PCI: microchip: Rename two PCIe data structures
@@ -348,5 +348,5 @@ index c55ede80a6d0..df0736f688ce 100644
  	ret = mc_pcie_init_clks(dev);
  	if (ret) {
 -- 
-2.50.1
+2.51.0
 

@@ -1,4 +1,4 @@
-From c66ad716258601d4f72a129db1f915b9abbc6638 Mon Sep 17 00:00:00 2001
+From 5dd57006dace844319ffd35ddae24725fbf26d6b Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Mon, 5 Jun 2023 13:54:16 +0800
 Subject: [PATCH 085/214] media: starfive: Add vin driver support
@@ -24121,5 +24121,5 @@ index 000000000000..bdae4aaa3f5a
 +extern int vin_notifier_call(unsigned long e, void *v);
 +#endif
 -- 
-2.50.1
+2.51.0
 

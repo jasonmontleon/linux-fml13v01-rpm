@@ -1,4 +1,4 @@
-From e1c7fed6ca0ba893b973b83580a07b69c1f15896 Mon Sep 17 00:00:00 2001
+From ff5e370a3110f3fe5186f6c71187d05bfdc40977 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Wed, 24 Apr 2024 14:23:07 +0800
 Subject: [PATCH 149/214] riscv: dts: starfive: visionfive 2: Quote
@@ -33,5 +33,5 @@ index 2ca03ee61a4c..42cdabdb8942 100644
  	ports {
  		#address-cells = <1>;
 -- 
-2.50.1
+2.51.0
 
