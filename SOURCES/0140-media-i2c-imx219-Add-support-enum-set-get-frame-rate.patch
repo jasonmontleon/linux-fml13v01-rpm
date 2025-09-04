@@ -1,4 +1,4 @@
-From b810e149500c369581589ee8bf266ad02e4c4177 Mon Sep 17 00:00:00 2001
+From 318a8363b41ede5fd101fde1042a1e2d031a8963 Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Fri, 18 Nov 2022 11:50:58 +0800
 Subject: [PATCH 140/214] media: i2c: imx219: Add support enum/set/get frame
