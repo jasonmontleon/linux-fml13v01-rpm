@@ -1,4 +1,4 @@
-From 3b3f51a3d9bc1f6d152bdd59b4490c8bd260bb4c Mon Sep 17 00:00:00 2001
+From fa8d9ce9ce5582ceb4c71bd441e72e507f16e9bd Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Mon, 13 Nov 2023 14:46:50 +0800
 Subject: [PATCH 102/214] media: starfive: Update ISP initialzation
