@@ -1,4 +1,4 @@
-From 613e3d0eb24e32ad956c8b4fb045e1d317250198 Mon Sep 17 00:00:00 2001
+From dde33517271c9be5a7a8198b828587096931e7e1 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Fri, 28 Jul 2023 18:42:55 +0800
 Subject: [PATCH 059/214] riscv: configs: Add starfive_jh7110_defconfig

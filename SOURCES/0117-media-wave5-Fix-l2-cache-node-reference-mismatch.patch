@@ -1,4 +1,4 @@
-From d49b4abd6b8aac49c9cb14e270f43110ba26e538 Mon Sep 17 00:00:00 2001
+From 347115529cd3662a3a7f24b727084945019ce379 Mon Sep 17 00:00:00 2001
 From: Som Qin <som.qin@starfivetech.com>
 Date: Wed, 28 Feb 2024 09:52:20 +0800
 Subject: [PATCH 117/214] media:wave5: Fix l2 cache node reference mismatch
