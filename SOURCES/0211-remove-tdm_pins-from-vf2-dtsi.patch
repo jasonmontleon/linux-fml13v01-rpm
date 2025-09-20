@@ -1,4 +1,4 @@
-From 4cd71558da7ee7b436c0a363e5a960f13bb867d2 Mon Sep 17 00:00:00 2001
+From 60b31b2a472da5bd751d0caf204cae634b59714a Mon Sep 17 00:00:00 2001
 From: Jason Montleon <jmontleo@redhat.com>
 Date: Wed, 12 Feb 2025 15:23:22 -0500
 Subject: [PATCH 211/214] remove tdm_pins from vf2 dtsi

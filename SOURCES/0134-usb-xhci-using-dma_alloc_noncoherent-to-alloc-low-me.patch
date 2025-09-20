@@ -1,4 +1,4 @@
-From 0d3ebe8cae3c7faf8b08e6998423cb51e5d0cbce Mon Sep 17 00:00:00 2001
+From 087b3589b7dae24f8cd4cc17c98848352ec60d51 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 3 Jul 2023 16:14:20 +0800
 Subject: [PATCH 134/214] usb: xhci: using dma_alloc_noncoherent to alloc low
@@ -15,7 +15,7 @@ Signed-off-by: Minda Chen <minda.chen@starfivetech.com>
  2 files changed, 21 insertions(+), 17 deletions(-)
 
 diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
-index ce9822e06b73..5e8b3442a8c8 100644
+index 817bab3bb52a..9962275a2a4b 100644
 --- a/drivers/usb/host/xhci-mem.c
 +++ b/drivers/usb/host/xhci-mem.c
 @@ -1938,7 +1938,8 @@ void xhci_mem_cleanup(struct xhci_hcd *xhci)

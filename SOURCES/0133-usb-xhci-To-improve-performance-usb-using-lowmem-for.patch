@@ -1,4 +1,4 @@
-From b0da30d9b782f21d3062f0ac5422411fddd1bdb8 Mon Sep 17 00:00:00 2001
+From 69a57bc77345ceb7da2b60a4a0f182d012459af2 Mon Sep 17 00:00:00 2001
 From: "minda.chen" <minda.chen@starfivetech.com>
 Date: Tue, 18 Oct 2022 09:57:39 +0800
 Subject: [PATCH 133/214] usb:xhci:To improve performance,usb using lowmem for
@@ -45,7 +45,7 @@ index 0b2a3f645d2f..bff9fbb93e41 100644
  
  				/* We don't support sg for isoc transfers ! */
 diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
-index 04718048b74b..ce9822e06b73 100644
+index 621f12c11cbc..817bab3bb52a 100644
 --- a/drivers/usb/host/xhci-mem.c
 +++ b/drivers/usb/host/xhci-mem.c
 @@ -14,6 +14,7 @@
