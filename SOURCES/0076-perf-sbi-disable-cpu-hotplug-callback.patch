@@ -1,4 +1,4 @@
-From fda9c01f5fdb5a82ab3ae3e5ddbe4f2786357275 Mon Sep 17 00:00:00 2001
+From bc3a6c33c14d0a0bac1835b78c60d7f7ba1fb649 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Thu, 2 Mar 2023 17:16:01 +0800
 Subject: [PATCH 076/214] perf: sbi: disable cpu hotplug callback.
