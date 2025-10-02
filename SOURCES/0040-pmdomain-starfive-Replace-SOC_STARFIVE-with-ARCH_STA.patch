@@ -1,4 +1,4 @@
-From dcfbba564727b44a366b73bd261949b33be27ff4 Mon Sep 17 00:00:00 2001
+From ea77ebf8bc40d33476bb2eb0d923decb7cdf3bc7 Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Wed, 13 Sep 2023 14:54:26 +0100
 Subject: [PATCH 040/214] pmdomain: starfive: Replace SOC_STARFIVE with

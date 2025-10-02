@@ -1,4 +1,4 @@
-From 62194814a0504125ce2f363fae0dce22d6ceb59f Mon Sep 17 00:00:00 2001
+From 7db5d2c4e292cf17d497d4fd2259556816a9f8ff Mon Sep 17 00:00:00 2001
 From: Sandie Cao <sandie.cao@deepcomputing.io>
 Date: Fri, 9 May 2025 18:43:37 +0800
 Subject: [PATCH 210/214] riscv: configs: fml13v01_defconfig: undefined

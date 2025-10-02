@@ -1,4 +1,4 @@
-From aa8c5ca6e96317cf1670e42d492c89df6543bc4e Mon Sep 17 00:00:00 2001
+From 85d18d52d38643f09bdbc04db19af84902c8419c Mon Sep 17 00:00:00 2001
 From: Eric Biggers <ebiggers@google.com>
 Date: Sun, 22 Oct 2023 01:10:42 -0700
 Subject: [PATCH 008/214] crypto: starfive - remove unnecessary alignmask for
