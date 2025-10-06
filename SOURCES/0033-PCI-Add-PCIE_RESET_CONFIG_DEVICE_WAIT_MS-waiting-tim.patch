@@ -1,4 +1,4 @@
-From 39e02e5b9f646b1e4e1c61ce9d5c0b38fd60bb7a Mon Sep 17 00:00:00 2001
+From bf8641b506bb51a31320d6c6d2d711bd59650db5 Mon Sep 17 00:00:00 2001
 From: Kevin Xie <kevin.xie@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:10 +0800
 Subject: [PATCH 033/214] PCI: Add PCIE_RESET_CONFIG_DEVICE_WAIT_MS waiting

@@ -1,4 +1,4 @@
-From 3f36516350922dae6ac695626b5a339c1a4d09e6 Mon Sep 17 00:00:00 2001
+From 049cfdeb54f1dc0b026289e684e582ad322a27a7 Mon Sep 17 00:00:00 2001
 From: Sandie Cao <sandie.cao@deepcomputing.io>
 Date: Fri, 18 Apr 2025 14:45:06 +0800
 Subject: [PATCH 209/214] riscv: configs: fml13v01_defconfig: sync with ubuntu

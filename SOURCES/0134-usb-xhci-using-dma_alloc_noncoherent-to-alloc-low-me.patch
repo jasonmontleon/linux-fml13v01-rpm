@@ -1,4 +1,4 @@
-From 9e95d0dc6e6d01f44c88533c94b7d92f7a565abe Mon Sep 17 00:00:00 2001
+From d177d5f315955501f585eb29637842235ef546ce Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 3 Jul 2023 16:14:20 +0800
 Subject: [PATCH 134/214] usb: xhci: using dma_alloc_noncoherent to alloc low

@@ -1,4 +1,4 @@
-From 35a5ec0525e97e98e771ab74f07796e57e4d2ebf Mon Sep 17 00:00:00 2001
+From 8dcf04f45634361ac707bf351f7be87508fe17c7 Mon Sep 17 00:00:00 2001
 From: William Qiu <william.qiu@starfivetech.com>
 Date: Fri, 22 Dec 2023 17:45:45 +0800
 Subject: [PATCH 006/214] dt-bindings: pwm: Add bindings for OpenCores PWM

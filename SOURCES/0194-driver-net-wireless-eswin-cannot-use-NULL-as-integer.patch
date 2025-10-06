@@ -1,4 +1,4 @@
-From 5c35d54a3875a1b6c50a5fae940d4bc93c41cf1d Mon Sep 17 00:00:00 2001
+From 24f653b0072118f7b1630b119b94f13c78be6558 Mon Sep 17 00:00:00 2001
 From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 Date: Mon, 6 Jan 2025 12:05:07 +0100
 Subject: [PATCH 194/214] driver: net: wireless: eswin: cannot use NULL as
