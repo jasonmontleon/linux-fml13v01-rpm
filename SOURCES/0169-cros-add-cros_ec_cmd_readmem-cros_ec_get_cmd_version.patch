@@ -1,4 +1,4 @@
-From c367b1dc3995ff05308bb0c31fa34ffedd5bbf76 Mon Sep 17 00:00:00 2001
+From 6441a10799913fa99d5f904d7a1a6836828382e5 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Fri, 13 Sep 2024 10:15:55 +0800
 Subject: [PATCH 169/214] cros: add cros_ec_cmd_readmem
