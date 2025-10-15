@@ -1,4 +1,4 @@
-From 7d513b4045e5265ac186465220c2c985e5a95d97 Mon Sep 17 00:00:00 2001
+From fc0d8b0cd5e0d61518f799d4be9863607f77ba84 Mon Sep 17 00:00:00 2001
 From: Xingyu Wu <xingyu.wu@starfivetech.com>
 Date: Fri, 16 Jun 2023 16:27:46 +0800
 Subject: [PATCH 079/214] ASoC: codecs: Add AC108 Codec driver

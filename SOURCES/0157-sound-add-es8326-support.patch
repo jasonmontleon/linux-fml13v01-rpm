@@ -1,4 +1,4 @@
-From f1e9c8dbfc26ce0242bfff9300be345a8a9886bb Mon Sep 17 00:00:00 2001
+From e5c0ea57042d7d51f6edd7f7c0a043a1d0c62db0 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Mon, 2 Sep 2024 10:24:34 +0800
 Subject: [PATCH 157/214] sound: add es8326 support.

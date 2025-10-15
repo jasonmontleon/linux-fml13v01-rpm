@@ -1,4 +1,4 @@
-From 453b3aa38b10a2a27ee4bbdc581fcb724e44d2ca Mon Sep 17 00:00:00 2001
+From b923ea21abb62c3649137d3d212693fe699caa6a Mon Sep 17 00:00:00 2001
 From: Mattijs Korpershoek <mkorpershoek@baylibre.com>
 Date: Wed, 29 Nov 2023 11:37:40 +0100
 Subject: [PATCH 115/214] media: chips-media: wave5: Fix panic on decoding

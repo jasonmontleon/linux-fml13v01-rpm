@@ -1,4 +1,4 @@
-From 2ba461f1a459a6a25ad670a0b4fc6293235518a7 Mon Sep 17 00:00:00 2001
+From c2657f450bdd4ef0ed1500fc041772f148c36282 Mon Sep 17 00:00:00 2001
 From: "minda.chen" <minda.chen@starfivetech.com>
 Date: Tue, 18 Oct 2022 09:57:39 +0800
 Subject: [PATCH 133/214] usb:xhci:To improve performance,usb using lowmem for
@@ -167,10 +167,10 @@ index b350ee080236..f9467a09d33b 100644
  					 &xhci->imod_interval);
  	}
 diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index a21ac9d80275..444324cf59a8 100644
+index 6443e11eaac0..d6829d674478 100644
 --- a/drivers/usb/host/xhci-ring.c
 +++ b/drivers/usb/host/xhci-ring.c
-@@ -3729,7 +3729,8 @@ int xhci_queue_bulk_tx(struct xhci_hcd *xhci, gfp_t mem_flags,
+@@ -3726,7 +3726,8 @@ int xhci_queue_bulk_tx(struct xhci_hcd *xhci, gfp_t mem_flags,
  
  	full_len = urb->transfer_buffer_length;
  	/* If we have scatter/gather list, we use it. */

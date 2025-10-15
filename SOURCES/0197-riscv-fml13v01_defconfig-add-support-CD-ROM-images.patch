@@ -1,4 +1,4 @@
-From f3f81449ca559a60f0e2dc9a597f6b04b4bef520 Mon Sep 17 00:00:00 2001
+From 54c7ffaa46ec22a387ae214ce19ce4fccb41e458 Mon Sep 17 00:00:00 2001
 From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 Date: Mon, 6 Jan 2025 11:25:21 +0100
 Subject: [PATCH 197/214] riscv: fml13v01_defconfig: add support CD-ROM images
