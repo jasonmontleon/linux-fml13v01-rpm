@@ -1,4 +1,4 @@
-From 50b010c6c1c4f4e429f49143b471367f02c37eaf Mon Sep 17 00:00:00 2001
+From 0dec6a9df86311e020ba41c6dfae8c6540743a85 Mon Sep 17 00:00:00 2001
 From: "Kevin.xie" <kevin.xie@starfivetech.com>
 Date: Thu, 24 Nov 2022 16:59:12 +0800
 Subject: [PATCH 072/214] drivers: nvme: Add precheck and delay for CQE pending
@@ -13,7 +13,7 @@ Signed-off-by: Kevin.xie <kevin.xie@starfivetech.com>
  1 file changed, 10 insertions(+)
 
 diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 136dba6221d8..3ed9482d0170 100644
+index 053385c84bf8..42e69925079e 100644
 --- a/drivers/nvme/host/pci.c
 +++ b/drivers/nvme/host/pci.c
 @@ -28,6 +28,7 @@

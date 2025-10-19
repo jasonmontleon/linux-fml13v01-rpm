@@ -1,4 +1,4 @@
-From 65bb13644c412b609c5e1d4caf0d8e470786aab6 Mon Sep 17 00:00:00 2001
+From da6a1d78bec0930928989b34e34b404f22880e64 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Fri, 25 Oct 2024 18:35:39 +0800
 Subject: [PATCH 182/214] cros-ec-spi: cs signals add support:

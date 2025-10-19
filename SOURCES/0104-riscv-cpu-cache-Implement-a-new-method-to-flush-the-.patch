@@ -1,4 +1,4 @@
-From b0c0f9329e6966026823ca3c0aa424c47d7d01f6 Mon Sep 17 00:00:00 2001
+From a589b3d58a79d4a17cf3ccf8ce138f5ca24dd35c Mon Sep 17 00:00:00 2001
 From: Windsome Zeng <windsome.zeng@starfivetech.com>
 Date: Thu, 11 Jan 2024 18:29:10 +0800
 Subject: [PATCH 104/214] riscv: cpu: cache: Implement a new method to flush

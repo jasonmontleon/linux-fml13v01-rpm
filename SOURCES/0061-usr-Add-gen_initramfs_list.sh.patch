@@ -1,4 +1,4 @@
-From 00e5f7ea93f6b90cb096de47188c78bfe777f681 Mon Sep 17 00:00:00 2001
+From b55e49f70718fbdcb5de2adb6d0e4e19ce98d24c Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Thu, 1 Jun 2023 23:10:09 -0700
 Subject: [PATCH 061/214] usr: Add gen_initramfs_list.sh

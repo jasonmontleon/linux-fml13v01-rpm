@@ -1,4 +1,4 @@
-From 5a0a704ffb0f8a97a897b7ad4cff3dd517ed6138 Mon Sep 17 00:00:00 2001
+From a6bddea891e4e36f67440a8ddbf4ac4718b88ecc Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Tue, 24 Sep 2024 18:35:39 +0800
 Subject: [PATCH 172/214] add gpio_keys config.

@@ -1,4 +1,4 @@
-From 42c243c03e16499d055bfe060dd625f224fa20a6 Mon Sep 17 00:00:00 2001
+From 7d382cf932e1b7e3ee8b0f6aa1e291b098da8910 Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Mon, 5 Jun 2023 14:46:16 +0800
 Subject: [PATCH 084/214] dt-binding: media: Add JH7110 Camera Subsystem.
