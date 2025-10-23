@@ -1,4 +1,4 @@
-From c3db34dfb8ac28131f718c492de9f8451ffe13c0 Mon Sep 17 00:00:00 2001
+From cdc237a5716159aaea5f26b8527b1cac194c3372 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Fri, 13 Oct 2023 14:10:24 +0800
 Subject: [PATCH 091/214] soc: starfive: jh71xx_pmu: Add EVENT_TURN_OFF

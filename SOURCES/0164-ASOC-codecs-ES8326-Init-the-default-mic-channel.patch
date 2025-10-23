@@ -1,4 +1,4 @@
-From eebf32b472769198932cf536adb28602d6aa953d Mon Sep 17 00:00:00 2001
+From 7ce9d0c2a5c949f33b5a6012d4c065a34d1f77b1 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Thu, 5 Sep 2024 16:25:11 +0800
 Subject: [PATCH 164/214] ASOC: codecs: ES8326: Init the default mic channel.
