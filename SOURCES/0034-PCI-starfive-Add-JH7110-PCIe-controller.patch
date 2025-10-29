@@ -1,4 +1,4 @@
-From 132b8b67dec3be4198165bdc6a5ccead86d21871 Mon Sep 17 00:00:00 2001
+From bfa691123c50f27525c8b676bd898710fc194871 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:11 +0800
 Subject: [PATCH 034/214] PCI: starfive: Add JH7110 PCIe controller
@@ -631,5 +631,5 @@ index 000000000000..9bb9f0e29565
 +MODULE_DESCRIPTION("StarFive JH7110 PCIe host driver");
 +MODULE_LICENSE("GPL v2");
 -- 
-2.51.0
+2.51.1
 

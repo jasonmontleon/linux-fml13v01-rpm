@@ -1,4 +1,4 @@
-From 09d53cb9bc21fcfdad42077d8fd4e0b3d508f839 Mon Sep 17 00:00:00 2001
+From 3473f4382603a5f2270071e4f935add875269b8d Mon Sep 17 00:00:00 2001
 From: Jason Montleon <jmontleo@redhat.com>
 Date: Wed, 12 Feb 2025 15:24:15 -0500
 Subject: [PATCH 212/214] add missing bool type
@@ -21,5 +21,5 @@ index a66458beecf7..1c980c47536d 100644
      VS_DEGAMMA_DISABLE = 0,
      VS_DEGAMMA_BT709 = 1,
 -- 
-2.51.0
+2.51.1
 

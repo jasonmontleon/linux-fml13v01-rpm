@@ -1,4 +1,4 @@
-From 4d933299f171919e0f3669eadce6fa0207d3817d Mon Sep 17 00:00:00 2001
+From f4ad36b69b356bba80cf426d28fbc5e075cf3957 Mon Sep 17 00:00:00 2001
 From: "shanlong.li" <shanlong.li@starfivetech.com>
 Date: Mon, 10 Jul 2023 03:07:57 -0700
 Subject: [PATCH 067/214] driver:uart: fix up uart communicate fail
@@ -7,28 +7,27 @@ fix up uart communicate fail
 
 Signed-off-by: shanlong.li <shanlong.li@starfivetech.com>
 ---
- drivers/tty/serial/8250/8250_dw.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/tty/serial/8250/8250_dw.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/tty/serial/8250/8250_dw.c b/drivers/tty/serial/8250/8250_dw.c
-index a9c24bf272c1..4663bee7d37b 100644
+index 8d60a1b4561a..61a463dfb37e 100644
 --- a/drivers/tty/serial/8250/8250_dw.c
 +++ b/drivers/tty/serial/8250/8250_dw.c
-@@ -655,10 +655,10 @@ static int dw8250_probe(struct platform_device *pdev)
+@@ -655,9 +655,10 @@ static int dw8250_probe(struct platform_device *pdev)
  	if (err)
  		return err;
  
 -	data->rst = devm_reset_control_get_optional_exclusive(dev, NULL);
 -	if (IS_ERR(data->rst))
 -		return PTR_ERR(data->rst);
--
 +	data->rst = devm_reset_control_array_get_exclusive(dev);
 +	if (IS_ERR(data->rst)) {
 +		err = PTR_ERR(data->rst);
 +	}
- 	reset_control_deassert(data->rst);
  
- 	err = devm_add_action_or_reset(dev, dw8250_reset_control_assert, data->rst);
+ 	err = reset_control_deassert(data->rst);
+ 	if (err)
 -- 
-2.51.0
+2.51.1
 

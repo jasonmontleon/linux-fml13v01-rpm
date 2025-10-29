@@ -1,4 +1,4 @@
-From ccf61826c879860b18b6069077cc93054ad85ff6 Mon Sep 17 00:00:00 2001
+From 4ad439f3bcdc2b7d868fe365b04e6cda854fb92f Mon Sep 17 00:00:00 2001
 From: Sebastian Fricke <sebastian.fricke@collabora.com>
 Date: Wed, 8 Nov 2023 20:29:22 +0100
 Subject: [PATCH 108/214] media: platform: chips-media: Move Coda to separate
@@ -189,5 +189,5 @@ index 19f98e6dafb9..abc6a01a74e9 100644
  #define TRACE_INCLUDE_FILE trace
  
 -- 
-2.51.0
+2.51.1
 

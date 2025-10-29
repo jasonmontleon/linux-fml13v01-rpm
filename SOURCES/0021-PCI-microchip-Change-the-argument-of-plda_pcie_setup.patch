@@ -1,4 +1,4 @@
-From bd82bf1c3bbfea8a26203ddd777dfec45ac0c00b Mon Sep 17 00:00:00 2001
+From 4a06a5c62350a036fdec5610a12e00f0f331cb8d Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:05:58 +0800
 Subject: [PATCH 021/214] PCI: microchip: Change the argument of
@@ -50,5 +50,5 @@ index 9b367927cd32..805870aed61d 100644
  		return ret;
  
 -- 
-2.51.0
+2.51.1
 

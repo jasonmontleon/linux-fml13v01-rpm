@@ -1,4 +1,4 @@
-From ca659a25e41fa8ab3b657c1a7490c31ce5a365ea Mon Sep 17 00:00:00 2001
+From 33b7827a37afca951bcc8ca7bee231c5431e47af Mon Sep 17 00:00:00 2001
 From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 Date: Mon, 6 Jan 2025 12:05:07 +0100
 Subject: [PATCH 194/214] driver: net: wireless: eswin: cannot use NULL as
@@ -34,5 +34,5 @@ index dcb8d9d3b50a..85bab3e7f20c 100644
  #if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 17, 0)
      else if ((sme->auth_type == NL80211_AUTHTYPE_SAE) &&
 -- 
-2.51.0
+2.51.1
 

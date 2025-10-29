@@ -1,4 +1,4 @@
-From 21bb80e0a16c765e6cd0235c0bd2768197176325 Mon Sep 17 00:00:00 2001
+From 18bfc94b69f132306c4e1423ae0170342fb2d180 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Mon, 25 Nov 2024 11:48:53 +0800
 Subject: [PATCH 190/214] cros: cros_ec_command: newly added command number
@@ -27,5 +27,5 @@ index 97cf575fbba1..00ac1d572b22 100644
  /*****************************************************************************/
  /* PWM commands */
 -- 
-2.51.0
+2.51.1
 

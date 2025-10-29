@@ -1,4 +1,4 @@
-From cb6e099551c381fb408e69182a8325becf69291c Mon Sep 17 00:00:00 2001
+From 5107eb0ef750eef423319786b24e6d8f4fbad03f Mon Sep 17 00:00:00 2001
 From: Walker Chen <walker.chen@starfivetech.com>
 Date: Mon, 12 Jun 2023 21:29:00 +0800
 Subject: [PATCH 078/214] ASoC: wm8960: Configuration for JH7110 Audio
@@ -674,5 +674,5 @@ index e8ff33b188e9..99bff43cb248 100644
  /*
   * WM8960 Clock dividers
 -- 
-2.51.0
+2.51.1
 

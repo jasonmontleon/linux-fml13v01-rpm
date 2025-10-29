@@ -1,4 +1,4 @@
-From 532d367889884ebd134a6b95f9067fd8f1c6831f Mon Sep 17 00:00:00 2001
+From e131a0bbc04b8f18e743964e5f175710429dc96e Mon Sep 17 00:00:00 2001
 From: Ziv Xu <ziv.xu@starfivetech.com>
 Date: Fri, 19 Jan 2024 15:22:55 +0800
 Subject: [PATCH 063/214] drivers: mtd: gigadevice: add gd25lq256d 32M flash
@@ -27,5 +27,5 @@ index d57ddaf1525b..4a593b72fbf8 100644
  		PARSE_SFDP
  		FLAGS(SPI_NOR_HAS_LOCK | SPI_NOR_HAS_TB | SPI_NOR_TB_SR_BIT6)
 -- 
-2.51.0
+2.51.1
 
