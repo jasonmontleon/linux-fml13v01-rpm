@@ -1,4 +1,4 @@
-From 05a1b5c146e9ba95fd8fc614574bc8569342fa27 Mon Sep 17 00:00:00 2001
+From 92ca8cb4a8f21f756f56246a3d57d64a14f58485 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Fri, 10 Jan 2025 17:49:46 +0800
 Subject: [PATCH 204/214] dts: modify filename:

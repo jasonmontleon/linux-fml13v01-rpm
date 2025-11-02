@@ -1,4 +1,4 @@
-From ae42cbc2ae780986e20364e1ffc6c17672a1e14a Mon Sep 17 00:00:00 2001
+From e68a19dfe7195a4f34b8a4486d0c0646b3a3b914 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Tue, 23 Apr 2024 18:09:53 +0800
 Subject: [PATCH 148/214] clk: starfive: jh7110-vout: Add sleep pm ops and

@@ -1,4 +1,4 @@
-From 8062ca6bcdd636446b8cea4939b03421b2b86bcd Mon Sep 17 00:00:00 2001
+From d9ccb5362e159fef7ad6847536004bd29a927470 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:00 +0800
 Subject: [PATCH 023/214] PCI: microchip: Rename interrupt related functions
