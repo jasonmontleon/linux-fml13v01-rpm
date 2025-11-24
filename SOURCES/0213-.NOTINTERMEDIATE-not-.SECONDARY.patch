@@ -1,4 +1,4 @@
-From 2fa0e6fe8493b4b9dde7034e9e7da0b5a344070a Mon Sep 17 00:00:00 2001
+From 5d1bffead0df58f87a7ba35d4d77b900fb00563f Mon Sep 17 00:00:00 2001
 From: Jason Montleon <jmontleo@redhat.com>
 Date: Mon, 17 Feb 2025 08:29:07 -0500
 Subject: [PATCH 213/214] .NOTINTERMEDIATE not .SECONDARY
@@ -21,5 +21,5 @@ index ee37ef8cadbf..d31a357acabf 100644
  define symlink-source-file
  @if [ ! -e $(dir $@) ]; then mkdir -p $(dir $@); fi
 -- 
-2.51.1
+2.52.0
 

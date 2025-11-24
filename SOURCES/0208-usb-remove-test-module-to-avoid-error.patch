@@ -1,4 +1,4 @@
-From f693a6a21de5e1cd219d0e04c90d5e103862a2d7 Mon Sep 17 00:00:00 2001
+From 51709d8389572ac2d8dbca16c81dc32ba21b9710 Mon Sep 17 00:00:00 2001
 From: Sandie Cao <sandie.cao@deepcomputing.io>
 Date: Tue, 8 Apr 2025 09:24:32 +0800
 Subject: [PATCH 208/214] usb: remove test module to avoid error
@@ -561,5 +561,5 @@ index a1a016328965..000000000000
 -
 -MODULE_LICENSE("GPL");
 -- 
-2.51.1
+2.52.0
 

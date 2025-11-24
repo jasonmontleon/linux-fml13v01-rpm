@@ -1,4 +1,4 @@
-From b0bef6cb0921bff22c075976952d749a24d8c775 Mon Sep 17 00:00:00 2001
+From 10daeff7f5fc8f282c2d25d78251cac62137c2f2 Mon Sep 17 00:00:00 2001
 From: Sebastian Fricke <sebastian.fricke@collabora.com>
 Date: Wed, 8 Nov 2023 20:29:20 +0100
 Subject: [PATCH 106/214] media: v4l2: Add ignore_streaming flag
@@ -42,5 +42,5 @@ index d6c8eb2b5201..1288fe364fab 100644
  	/* internal use only */
  	struct v4l2_m2m_dev		*m2m_dev;
 -- 
-2.51.1
+2.52.0
 

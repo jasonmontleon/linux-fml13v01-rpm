@@ -1,4 +1,4 @@
-From f471356bdc45cc38faa7c355d3b360b61cca4dfe Mon Sep 17 00:00:00 2001
+From a40a7c11c66dbad67388a4206263dbcaafb6fa21 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Fri, 18 Oct 2024 16:59:49 +0800
 Subject: [PATCH 179/214] dts: jh7110-starfive-visionfive-2-framework.dts: spi
@@ -38,5 +38,5 @@ index 825d7fbd178b..f397d6be0116 100755
  
  	tdm_pins: tdm-0 {
 -- 
-2.51.1
+2.52.0
 

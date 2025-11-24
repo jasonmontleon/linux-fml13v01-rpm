@@ -1,4 +1,4 @@
-From d745d2352b10caa3fa5794ea98c7ca27189fe989 Mon Sep 17 00:00:00 2001
+From 2a14f5027bdf96c47bf720f2b45f2f46d36cd46a Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:05:53 +0800
 Subject: [PATCH 016/214] PCI: microchip: Move PLDA IP register macros to
@@ -263,5 +263,5 @@ index 000000000000..cad3a98d967e
 +
 +#endif
 -- 
-2.51.1
+2.52.0
 

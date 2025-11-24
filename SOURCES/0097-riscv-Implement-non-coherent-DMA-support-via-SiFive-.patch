@@ -1,4 +1,4 @@
-From 3126941f2caab610d9d3447a38b90297b6584f74 Mon Sep 17 00:00:00 2001
+From a7142e4d9d49aa9fcb7d38640607384b83bdaf72 Mon Sep 17 00:00:00 2001
 From: Emil Renner Berthing <kernel@esmil.dk>
 Date: Mon, 26 Jun 2023 14:39:39 +0800
 Subject: [PATCH 097/214] riscv: Implement non-coherent DMA support via SiFive
@@ -97,5 +97,5 @@ index 341bd6706b4c..dbb2de6dfa45 100644
  	if (unlikely(noncoherent_cache_ops.wback_inv)) {
  		noncoherent_cache_ops.wback_inv(page_to_phys(page), size);
 -- 
-2.51.1
+2.52.0
 

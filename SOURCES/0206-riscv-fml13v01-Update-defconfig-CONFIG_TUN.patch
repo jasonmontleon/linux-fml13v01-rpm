@@ -1,4 +1,4 @@
-From 58373fbf80c3b12a7c2aeb5437b873f6c86b159e Mon Sep 17 00:00:00 2001
+From 9525e9d30f4070fa816330cf6f69d073016693ef Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Wed, 12 Feb 2025 11:05:56 +0800
 Subject: [PATCH 206/214] riscv: fml13v01: Update defconfig: CONFIG_TUN.
@@ -21,5 +21,5 @@ index b82bf9caab1c..77511a63ad27 100644
  # CONFIG_NET_VENDOR_ALACRITECH is not set
  # CONFIG_NET_VENDOR_AMAZON is not set
 -- 
-2.51.1
+2.52.0
 

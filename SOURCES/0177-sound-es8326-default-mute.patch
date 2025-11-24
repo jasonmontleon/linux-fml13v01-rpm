@@ -1,4 +1,4 @@
-From 9c6df8f408391e925084898d52c1cd77f5b0796e Mon Sep 17 00:00:00 2001
+From 361fcb581a5290ae1b7a149eadc693c3020ff4b4 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Tue, 15 Oct 2024 11:31:49 +0800
 Subject: [PATCH 177/214] sound: es8326: default mute.
@@ -68,5 +68,5 @@ index 6af49f2b1ec1..a25da8ea3dee 100755
  	regmap_write(es8326->regmap, ES8326_ADC1_SRC, 0x44);
  	regmap_write(es8326->regmap, ES8326_ADC2_SRC, 0x66);
 -- 
-2.51.1
+2.52.0
 

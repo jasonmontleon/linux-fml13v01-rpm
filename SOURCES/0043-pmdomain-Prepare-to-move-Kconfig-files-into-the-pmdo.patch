@@ -1,4 +1,4 @@
-From 51ee47063e0cd5420847f6395dd3a15e18836176 Mon Sep 17 00:00:00 2001
+From 67bfc24d9fa0171d0ef4c34f3e1e746da65185c3 Mon Sep 17 00:00:00 2001
 From: Ulf Hansson <ulf.hansson@linaro.org>
 Date: Mon, 11 Sep 2023 17:22:15 +0200
 Subject: [PATCH 043/214] pmdomain: Prepare to move Kconfig files into the
@@ -40,5 +40,5 @@ index 000000000000..ac77cf4271a7
 +
 +endmenu
 -- 
-2.51.1
+2.52.0
 

@@ -1,4 +1,4 @@
-From 7efdf9a57f5606b15fedfaa8e55ba5b6f5f98919 Mon Sep 17 00:00:00 2001
+From 3654e1cb4ee6e3400c1971457572086bdb89966a Mon Sep 17 00:00:00 2001
 From: Jia Jie Ho <jiajie.ho@starfivetech.com>
 Date: Mon, 20 Nov 2023 11:12:42 +0800
 Subject: [PATCH 011/214] crypto: starfive - Pad adata with zeroes
@@ -47,5 +47,5 @@ index 9378e6682f0e..e0fe599f8192 100644
  		goto write_text;
  
 -- 
-2.51.1
+2.52.0
 

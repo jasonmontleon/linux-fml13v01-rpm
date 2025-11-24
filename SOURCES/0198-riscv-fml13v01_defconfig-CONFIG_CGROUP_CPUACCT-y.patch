@@ -1,4 +1,4 @@
-From b41dcb0ee996c09747f33367e4cf2452f12c1082 Mon Sep 17 00:00:00 2001
+From 921ae3bf859c71c2098d029fe16a50a9f04e4912 Mon Sep 17 00:00:00 2001
 From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 Date: Mon, 6 Jan 2025 11:35:04 +0100
 Subject: [PATCH 198/214] riscv: fml13v01_defconfig: CONFIG_CGROUP_CPUACCT=y
@@ -23,5 +23,5 @@ index 4bc2885ea05b..cdc8f9f7a07b 100644
  CONFIG_NAMESPACES=y
  CONFIG_USER_NS=y
 -- 
-2.51.1
+2.52.0
 

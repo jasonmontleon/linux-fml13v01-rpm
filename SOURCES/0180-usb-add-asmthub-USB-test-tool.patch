@@ -1,4 +1,4 @@
-From 159e964d254872a168e598b897e67c771f1bb8a3 Mon Sep 17 00:00:00 2001
+From 6c5bed4f120f62fe3c0772538782a3978752dd35 Mon Sep 17 00:00:00 2001
 From: Sandie Cao <sandie.cao@deepcomputing.io>
 Date: Tue, 22 Oct 2024 16:22:25 +0800
 Subject: [PATCH 180/214] usb: add asmthub USB test-tool
@@ -562,5 +562,5 @@ index 000000000000..a1a016328965
 +
 +MODULE_LICENSE("GPL");
 -- 
-2.51.1
+2.52.0
 

@@ -1,4 +1,4 @@
-From a8a15f070335e86a3eb2f3f7dbc75e90a1cd2143 Mon Sep 17 00:00:00 2001
+From 929a56f185a7eccf0baa172f58942d7a5c22b0ad Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 3 Jul 2023 16:14:20 +0800
 Subject: [PATCH 134/214] usb: xhci: using dma_alloc_noncoherent to alloc low
@@ -89,10 +89,10 @@ index 817bab3bb52a..9962275a2a4b 100644
  
  	/*
 diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
-index f9467a09d33b..f0696243c3c7 100644
+index f6618657b26b..c516a5c6047a 100644
 --- a/drivers/usb/host/xhci-plat.c
 +++ b/drivers/usb/host/xhci-plat.c
-@@ -255,10 +255,11 @@ int xhci_plat_probe(struct platform_device *pdev, struct device *sysdev, const s
+@@ -256,10 +256,11 @@ int xhci_plat_probe(struct platform_device *pdev, struct device *sysdev, const s
  
  		if (device_property_read_bool(tmpdev, "xhci-lowmem-pool")) {
  			xhci->quirks |= XHCI_LOCAL_BUFFER;
@@ -109,5 +109,5 @@ index f9467a09d33b..f0696243c3c7 100644
  		}
  		device_property_read_u32(tmpdev, "imod-interval-ns",
 -- 
-2.51.1
+2.52.0
 

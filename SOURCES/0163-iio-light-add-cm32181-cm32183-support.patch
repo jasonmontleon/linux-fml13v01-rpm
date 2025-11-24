@@ -1,4 +1,4 @@
-From 8d24049c66f6fd3fe8031f2fe90bc94584c19d0f Mon Sep 17 00:00:00 2001
+From 20a6676548ddea53eea6f984ac9aae3dce2321cc Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Thu, 5 Sep 2024 14:47:45 +0800
 Subject: [PATCH 163/214] iio: light: add cm32181/cm32183 support.
@@ -84,5 +84,5 @@ index 9df85b3999fa..08d46dfeb45a 100644
  };
  MODULE_DEVICE_TABLE(of, cm32181_of_match);
 -- 
-2.51.1
+2.52.0
 

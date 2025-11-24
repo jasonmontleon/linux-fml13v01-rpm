@@ -1,4 +1,4 @@
-From 656557ad83eb10a9a8d0ad2530d5cbf39bd7b41d Mon Sep 17 00:00:00 2001
+From b047934b9159a450162247bdd709be3d152f7526 Mon Sep 17 00:00:00 2001
 From: Sebastian Fricke <sebastian.fricke@collabora.com>
 Date: Wed, 8 Nov 2023 20:29:22 +0100
 Subject: [PATCH 108/214] media: platform: chips-media: Move Coda to separate
@@ -43,7 +43,7 @@ Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
  rename drivers/media/platform/chips-media/{ => coda}/trace.h (99%)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index e8768278863c..c7c1f1d6f405 100644
+index fda16e8d4d68..d99197bc2c0c 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
 @@ -5111,7 +5111,7 @@ M:	Philipp Zabel <p.zabel@pengutronix.de>
@@ -189,5 +189,5 @@ index 19f98e6dafb9..abc6a01a74e9 100644
  #define TRACE_INCLUDE_FILE trace
  
 -- 
-2.51.1
+2.52.0
 

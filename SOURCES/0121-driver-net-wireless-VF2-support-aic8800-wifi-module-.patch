@@ -1,4 +1,4 @@
-From 31aa17e1ed98f17616c95228f260470b5bc20b63 Mon Sep 17 00:00:00 2001
+From 556390c29a9600ea3c6ce15462869e0ff6b3452a Mon Sep 17 00:00:00 2001
 From: Ziv Xu <ziv.xu@starfivetech.com>
 Date: Wed, 13 Mar 2024 18:40:27 +0800
 Subject: [PATCH 121/214] driver: net: wireless: VF2 support aic8800 wifi
@@ -67040,5 +67040,5 @@ index 000000000000..09010086a0d2
 +#define RWNX_VERS_BANNER "rwnx v6.4.3.0 - 1a4b0054d2M (master)"
 +#define RELEASE_DATE "2023_0707_1001"
 -- 
-2.51.1
+2.52.0
 

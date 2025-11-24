@@ -1,4 +1,4 @@
-From d5b7136ae95a811d24b2127b98cc9beedc865813 Mon Sep 17 00:00:00 2001
+From f3997a48e59c74fa87ce5346482461c4631c9587 Mon Sep 17 00:00:00 2001
 From: Xingyu Wu <xingyu.wu@starfivetech.com>
 Date: Wed, 21 Feb 2024 10:23:48 +0800
 Subject: [PATCH 052/214] ASoC: dwc: i2s: Fix getting platform data error for
@@ -31,5 +31,5 @@ index 43edad6c887d..90a26853c4e4 100644
  	struct resource *res;
  	int ret, irq;
 -- 
-2.51.1
+2.52.0
 

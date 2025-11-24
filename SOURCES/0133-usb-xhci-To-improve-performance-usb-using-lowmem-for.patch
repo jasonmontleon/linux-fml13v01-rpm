@@ -1,4 +1,4 @@
-From 16f4f73f458ba09bcad9a161c2c017d64caece36 Mon Sep 17 00:00:00 2001
+From af89f65a0dae721ad4eadc8b3949f3dfdcef0c4c Mon Sep 17 00:00:00 2001
 From: "minda.chen" <minda.chen@starfivetech.com>
 Date: Tue, 18 Oct 2022 09:57:39 +0800
 Subject: [PATCH 133/214] usb:xhci:To improve performance,usb using lowmem for
@@ -148,10 +148,10 @@ index 621f12c11cbc..817bab3bb52a 100644
  	 * XXX: Might need to set the Interrupter Moderation Register to
  	 * something other than the default (~1ms minimum between interrupts).
 diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
-index b350ee080236..f9467a09d33b 100644
+index 64383566cfb7..f6618657b26b 100644
 --- a/drivers/usb/host/xhci-plat.c
 +++ b/drivers/usb/host/xhci-plat.c
-@@ -253,6 +253,14 @@ int xhci_plat_probe(struct platform_device *pdev, struct device *sysdev, const s
+@@ -254,6 +254,14 @@ int xhci_plat_probe(struct platform_device *pdev, struct device *sysdev, const s
  		if (device_property_read_bool(tmpdev, "xhci-sg-trb-cache-size-quirk"))
  			xhci->quirks |= XHCI_SG_TRB_CACHE_SIZE_QUIRK;
  
@@ -310,5 +310,5 @@ index 808f2ee43b94..4307e56e4727 100644
  	unsigned long		priv[] __aligned(sizeof(s64));
  };
 -- 
-2.51.1
+2.52.0
 

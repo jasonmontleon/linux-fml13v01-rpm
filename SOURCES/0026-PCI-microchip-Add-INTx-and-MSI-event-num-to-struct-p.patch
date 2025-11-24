@@ -1,4 +1,4 @@
-From ae04d80581179d45ed2af1396404bf5751839c33 Mon Sep 17 00:00:00 2001
+From 0b9f9a7bf31b45df6e53bacb1b6c3bf65107685a Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:03 +0800
 Subject: [PATCH 026/214] PCI: microchip: Add INTx and MSI event num to struct
@@ -59,5 +59,5 @@ index 16b81b23c213..0efe64d5f688 100644
  
  void plda_pcie_setup_window(void __iomem *bridge_base_addr, u32 index,
 -- 
-2.51.1
+2.52.0
 

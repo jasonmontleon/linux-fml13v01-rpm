@@ -1,4 +1,4 @@
-From 0aef44106b4327c965657f80609af79732793c1e Mon Sep 17 00:00:00 2001
+From 41827588962cb1240e5a575bbef0904d0440f140 Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Mon, 3 Apr 2023 13:52:17 +0800
 Subject: [PATCH 087/214] media: i2c: Add imx708 support
@@ -14,7 +14,7 @@ Signed-off-by: Changhuang Liang <changhuang.liang@starfivetech.com>
  create mode 100644 drivers/media/i2c/imx708.c
 
 diff --git a/drivers/media/i2c/Kconfig b/drivers/media/i2c/Kconfig
-index 53b443be5a59..705c58b1213a 100644
+index d4082a86fced..9079f1b23b68 100644
 --- a/drivers/media/i2c/Kconfig
 +++ b/drivers/media/i2c/Kconfig
 @@ -201,6 +201,19 @@ config VIDEO_IMX415
@@ -1977,5 +1977,5 @@ index 000000000000..e93da6cab5db
 +MODULE_DESCRIPTION("Sony IMX708 sensor driver");
 +MODULE_LICENSE("GPL");
 -- 
-2.51.1
+2.52.0
 

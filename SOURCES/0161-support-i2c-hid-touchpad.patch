@@ -1,4 +1,4 @@
-From 8071347d041588c00220d9657cbf800998ca818a Mon Sep 17 00:00:00 2001
+From 629c72324a9092c57df34bee644bdf8cc3e1941f Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Thu, 5 Sep 2024 11:46:27 +0800
 Subject: [PATCH 161/214] support i2c hid touchpad.
@@ -115,7 +115,7 @@ index ac93c16c8166..5ddcc77aadf5 100644
  CONFIG_USB_OTG=y
  CONFIG_USB_XHCI_HCD=y
 diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index 3dcdd3368b46..ea54f59018e2 100644
+index 172b78327420..f3acef5559d4 100644
 --- a/drivers/hid/i2c-hid/i2c-hid-core.c
 +++ b/drivers/hid/i2c-hid/i2c-hid-core.c
 @@ -847,8 +847,12 @@ static int i2c_hid_init_irq(struct i2c_client *client)
@@ -161,5 +161,5 @@ index 8be4d576da77..4b8bd2789f03 100644
  				  hid_descriptor_address, quirks);
  }
 -- 
-2.51.1
+2.52.0
 
