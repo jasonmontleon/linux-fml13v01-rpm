@@ -1,4 +1,4 @@
-From 65d2c0fae9be72f1aff64126609574c10b837cc3 Mon Sep 17 00:00:00 2001
+From aeef6db9c4dbd898cc7acbb0704299127d8a736e Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Mon, 6 Feb 2023 11:31:14 +0800
 Subject: [PATCH 150/214] input: touchscreen: goodix: Update irq fetch mode
@@ -11,7 +11,7 @@ Signed-off-by: Changhuang Liang <changhuang.liang@starfivetech.com>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/input/touchscreen/goodix.c b/drivers/input/touchscreen/goodix.c
-index b068ff8afbc9..b4d91d394c1b 100644
+index 294bd942ee37..b59daa8882e0 100644
 --- a/drivers/input/touchscreen/goodix.c
 +++ b/drivers/input/touchscreen/goodix.c
 @@ -515,12 +515,12 @@ static irqreturn_t goodix_ts_irq_handler(int irq, void *dev_id)

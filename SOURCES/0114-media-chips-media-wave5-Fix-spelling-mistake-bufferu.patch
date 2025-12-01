@@ -1,4 +1,4 @@
-From 3e7bb1b04767d5dc331d62ac9a9d9fa0422fc83c Mon Sep 17 00:00:00 2001
+From 010b7441bf616e7bab0d02b8f8200f98808c451f Mon Sep 17 00:00:00 2001
 From: Colin Ian King <colin.i.king@gmail.com>
 Date: Fri, 24 Nov 2023 16:41:23 +0000
 Subject: [PATCH 114/214] media: chips-media: wave5: Fix spelling mistake

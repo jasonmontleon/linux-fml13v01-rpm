@@ -1,4 +1,4 @@
-From 9482151f1adc7bfadc208e04c7a2c7b322b3de11 Mon Sep 17 00:00:00 2001
+From 57a789454c761c549da35e88f84337cc794ba5c9 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Thu, 26 Sep 2024 17:32:03 +0800
 Subject: [PATCH 174/214] add cros-ec-spi support.
@@ -654,7 +654,7 @@ index 000000000000..974223d4a062
 +MODULE_AUTHOR("Thomas Weißschuh <linux@weissschuh.net");
 +MODULE_LICENSE("GPL");
 diff --git a/drivers/input/keyboard/cros_ec_keyb.c b/drivers/input/keyboard/cros_ec_keyb.c
-index e7ecfca838df..23c330f59b35 100644
+index 76fcf90ea7c7..b2d13d09a56f 100644
 --- a/drivers/input/keyboard/cros_ec_keyb.c
 +++ b/drivers/input/keyboard/cros_ec_keyb.c
 @@ -115,6 +115,16 @@ static const struct cros_ec_bs_map cros_ec_keyb_bs[] = {
