@@ -1,4 +1,4 @@
-From 7141c6546866a51ad63fc2eb3c69b62e504a2d27 Mon Sep 17 00:00:00 2001
+From 29cc1111852228af0258072ca19975d15bf4d408 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Tue, 11 Apr 2023 16:31:15 +0800
 Subject: [PATCH 048/214] riscv: dts: starfive: Add full support (except VIN

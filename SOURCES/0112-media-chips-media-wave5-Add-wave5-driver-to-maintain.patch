@@ -1,4 +1,4 @@
-From f136dd7f9325adff91551c6a56abb838c4996404 Mon Sep 17 00:00:00 2001
+From ecdc673bbe57c07eef9ed6117f9862c313109097 Mon Sep 17 00:00:00 2001
 From: Robert Beckett <bob.beckett@collabora.com>
 Date: Wed, 8 Nov 2023 20:29:26 +0100
 Subject: [PATCH 112/214] media: chips-media: wave5: Add wave5 driver to
@@ -14,10 +14,10 @@ Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
  1 file changed, 8 insertions(+)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index d99197bc2c0c..3fc62060779b 100644
+index b3a43585f727..7cb11bd6231b 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -23266,6 +23266,14 @@ F:	include/linux/watchdog.h
+@@ -23260,6 +23260,14 @@ F:	include/linux/watchdog.h
  F:	include/trace/events/watchdog.h
  F:	include/uapi/linux/watchdog.h
  

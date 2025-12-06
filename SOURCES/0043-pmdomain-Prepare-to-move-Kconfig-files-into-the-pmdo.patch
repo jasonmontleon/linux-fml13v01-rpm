@@ -1,4 +1,4 @@
-From c472628f0308b893880c90ec36570f24f4a35e2b Mon Sep 17 00:00:00 2001
+From 9bf3a44d8d74a3c213688d1f6db829792be93ee7 Mon Sep 17 00:00:00 2001
 From: Ulf Hansson <ulf.hansson@linaro.org>
 Date: Mon, 11 Sep 2023 17:22:15 +0200
 Subject: [PATCH 043/214] pmdomain: Prepare to move Kconfig files into the

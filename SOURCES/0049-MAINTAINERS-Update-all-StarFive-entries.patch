@@ -1,4 +1,4 @@
-From 3aaa4e30defb37c7b45c6a0800f3a75747e79616 Mon Sep 17 00:00:00 2001
+From b5a08c37351f2ea25a0a9896d944be99bcfcf1bf Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Tue, 11 Apr 2023 16:25:57 +0800
 Subject: [PATCH 049/214] MAINTAINERS: Update all StarFive entries
@@ -11,7 +11,7 @@ Signed-off-by: Hal Feng <hal.feng@starfivetech.com>
  1 file changed, 57 insertions(+), 4 deletions(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index c1aafeb3babf..fda16e8d4d68 100644
+index e700dca4974b..e0f1d3472276 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
 @@ -7054,6 +7054,14 @@ T:	git git://anongit.freedesktop.org/drm/drm-misc
@@ -90,7 +90,7 @@ index c1aafeb3babf..fda16e8d4d68 100644
  F:	drivers/pwm/pwm-microchip-core.c
  F:	drivers/reset/reset-mpfs.c
  F:	drivers/rtc/rtc-mpfs.c
-@@ -20435,6 +20465,15 @@ M:	Ion Badulescu <ionut@badula.org>
+@@ -20429,6 +20459,15 @@ M:	Ion Badulescu <ionut@badula.org>
  S:	Odd Fixes
  F:	drivers/net/ethernet/adaptec/starfire*
  
@@ -106,7 +106,7 @@ index c1aafeb3babf..fda16e8d4d68 100644
  STARFIVE CRYPTO DRIVER
  M:	Jia Jie Ho <jiajie.ho@starfivetech.com>
  M:	William Qiu <william.qiu@starfivetech.com>
-@@ -20473,6 +20512,13 @@ S:	Supported
+@@ -20467,6 +20506,13 @@ S:	Supported
  F:	Documentation/devicetree/bindings/clock/starfive,jh7110-pll.yaml
  F:	drivers/clk/starfive/clk-starfive-jh7110-pll.c
  
@@ -120,7 +120,7 @@ index c1aafeb3babf..fda16e8d4d68 100644
  STARFIVE JH7110 SYSCON
  M:	William Qiu <william.qiu@starfivetech.com>
  M:	Xingyu Wu <xingyu.wu@starfivetech.com>
-@@ -20520,9 +20566,10 @@ F:	drivers/usb/cdns3/cdns3-starfive.c
+@@ -20514,9 +20560,10 @@ F:	drivers/usb/cdns3/cdns3-starfive.c
  
  STARFIVE JH71XX PMU CONTROLLER DRIVER
  M:	Walker Chen <walker.chen@starfivetech.com>
@@ -132,7 +132,7 @@ index c1aafeb3babf..fda16e8d4d68 100644
  F:	include/dt-bindings/power/starfive,jh7110-pmu.h
  
  STARFIVE SOC DRIVERS
-@@ -20530,7 +20577,13 @@ M:	Conor Dooley <conor@kernel.org>
+@@ -20524,7 +20571,13 @@ M:	Conor Dooley <conor@kernel.org>
  S:	Maintained
  T:	git https://git.kernel.org/pub/scm/linux/kernel/git/conor/linux.git/
  F:	Documentation/devicetree/bindings/soc/starfive/
