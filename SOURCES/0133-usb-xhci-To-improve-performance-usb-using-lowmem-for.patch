@@ -1,4 +1,4 @@
-From da55c0884011c7f5bcfb5ab355b4af0251002a09 Mon Sep 17 00:00:00 2001
+From 0cac9b93500cb9130aa1cddcc4d2ba9060e93208 Mon Sep 17 00:00:00 2001
 From: "minda.chen" <minda.chen@starfivetech.com>
 Date: Tue, 18 Oct 2022 09:57:39 +0800
 Subject: [PATCH 133/214] usb:xhci:To improve performance,usb using lowmem for
@@ -45,7 +45,7 @@ index 0b2a3f645d2f..bff9fbb93e41 100644
  
  				/* We don't support sg for isoc transfers ! */
 diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
-index 621f12c11cbc..817bab3bb52a 100644
+index 264f8bbe8f9e..6e055eca80c4 100644
 --- a/drivers/usb/host/xhci-mem.c
 +++ b/drivers/usb/host/xhci-mem.c
 @@ -14,6 +14,7 @@
@@ -56,7 +56,7 @@ index 621f12c11cbc..817bab3bb52a 100644
  
  #include "xhci.h"
  #include "xhci-trace.h"
-@@ -1884,6 +1885,7 @@ EXPORT_SYMBOL_GPL(xhci_remove_secondary_interrupter);
+@@ -1878,6 +1879,7 @@ EXPORT_SYMBOL_GPL(xhci_remove_secondary_interrupter);
  void xhci_mem_cleanup(struct xhci_hcd *xhci)
  {
  	struct device	*dev = xhci_to_hcd(xhci)->self.sysdev;
@@ -64,7 +64,7 @@ index 621f12c11cbc..817bab3bb52a 100644
  	int i, j, num_ports;
  
  	cancel_delayed_work_sync(&xhci->cmd_timer);
-@@ -1934,6 +1936,13 @@ void xhci_mem_cleanup(struct xhci_hcd *xhci)
+@@ -1928,6 +1930,13 @@ void xhci_mem_cleanup(struct xhci_hcd *xhci)
  	xhci_dbg_trace(xhci, trace_xhci_dbg_init,
  			"Freed medium stream array pool");
  
@@ -78,7 +78,7 @@ index 621f12c11cbc..817bab3bb52a 100644
  	if (xhci->dcbaa)
  		dma_free_coherent(dev, sizeof(*xhci->dcbaa),
  				xhci->dcbaa, xhci->dcbaa->dma);
-@@ -2405,6 +2414,55 @@ xhci_create_secondary_interrupter(struct usb_hcd *hcd, unsigned int segs,
+@@ -2399,6 +2408,55 @@ xhci_create_secondary_interrupter(struct usb_hcd *hcd, unsigned int segs,
  }
  EXPORT_SYMBOL_GPL(xhci_create_secondary_interrupter);
  
@@ -134,7 +134,7 @@ index 621f12c11cbc..817bab3bb52a 100644
  int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
  {
  	struct xhci_interrupter *ir;
-@@ -2546,6 +2604,12 @@ int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
+@@ -2540,6 +2598,12 @@ int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
  
  	xhci->isoc_bei_interval = AVOID_BEI_INTERVAL_MAX;
  
@@ -167,10 +167,10 @@ index 64383566cfb7..f6618657b26b 100644
  					 &xhci->imod_interval);
  	}
 diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index 6443e11eaac0..d6829d674478 100644
+index cdb819e323b3..12f2d586e6d0 100644
 --- a/drivers/usb/host/xhci-ring.c
 +++ b/drivers/usb/host/xhci-ring.c
-@@ -3726,7 +3726,8 @@ int xhci_queue_bulk_tx(struct xhci_hcd *xhci, gfp_t mem_flags,
+@@ -3722,7 +3722,8 @@ int xhci_queue_bulk_tx(struct xhci_hcd *xhci, gfp_t mem_flags,
  
  	full_len = urb->transfer_buffer_length;
  	/* If we have scatter/gather list, we use it. */
@@ -274,7 +274,7 @@ index 8fd88fedbb30..89b418e7d05b 100644
  
  /**
 diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
-index 808f2ee43b94..4307e56e4727 100644
+index 849a83e4013c..9709161c9eec 100644
 --- a/drivers/usb/host/xhci.h
 +++ b/drivers/usb/host/xhci.h
 @@ -1506,6 +1506,13 @@ struct xhci_hub {

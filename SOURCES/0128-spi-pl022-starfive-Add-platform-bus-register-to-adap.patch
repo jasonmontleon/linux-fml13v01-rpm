@@ -1,4 +1,4 @@
-From 27a55d22a052e754ba642bb483e8a3c763aaabbe Mon Sep 17 00:00:00 2001
+From 5112af1459e8410584cdf57259b84420e069ad25 Mon Sep 17 00:00:00 2001
 From: "xingyu.wu" <xingyu.wu@starfivetech.com>
 Date: Tue, 28 Jun 2022 22:48:15 +0800
 Subject: [PATCH 128/214] spi-pl022:starfive:Add platform bus register to adapt

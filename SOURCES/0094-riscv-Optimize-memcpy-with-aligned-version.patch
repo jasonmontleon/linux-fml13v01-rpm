@@ -1,4 +1,4 @@
-From 16190136b2eb40f6ae87f627a47f8a28305b8c7e Mon Sep 17 00:00:00 2001
+From 7f27432e3dea6dd7bc74730cf0a1ba722e4d840a Mon Sep 17 00:00:00 2001
 From: Mason Huo <mason.huo@starfivetech.com>
 Date: Tue, 20 Jun 2023 13:37:52 +0800
 Subject: [PATCH 094/214] riscv: Optimize memcpy with aligned version

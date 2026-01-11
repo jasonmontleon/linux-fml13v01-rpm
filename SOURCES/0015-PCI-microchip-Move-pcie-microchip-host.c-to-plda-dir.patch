@@ -1,4 +1,4 @@
-From 1e8a000f9dafe1b037a3fed2dc5e90ab3e8c3709 Mon Sep 17 00:00:00 2001
+From eae313a7b0394828e440066f528e1932ad2be02f Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:05:52 +0800
 Subject: [PATCH 015/214] PCI: microchip: Move pcie-microchip-host.c to plda
@@ -21,7 +21,7 @@ Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
  rename drivers/pci/controller/{ => plda}/pcie-microchip-host.c (99%)
 
 diff --git a/drivers/pci/controller/Kconfig b/drivers/pci/controller/Kconfig
-index c0c3f2824990..80e23013c229 100644
+index 7736817d5dab..b8b6f3a4d0f2 100644
 --- a/drivers/pci/controller/Kconfig
 +++ b/drivers/pci/controller/Kconfig
 @@ -215,14 +215,6 @@ config PCIE_MT7621
@@ -39,7 +39,7 @@ index c0c3f2824990..80e23013c229 100644
  config PCI_HYPERV_INTERFACE
  	tristate "Microsoft Hyper-V PCI Interface"
  	depends on ((X86 && X86_64) || ARM64) && HYPERV && PCI_MSI
-@@ -345,4 +337,5 @@ config PCIE_XILINX_CPM
+@@ -344,4 +336,5 @@ config PCIE_XILINX_CPM
  source "drivers/pci/controller/cadence/Kconfig"
  source "drivers/pci/controller/dwc/Kconfig"
  source "drivers/pci/controller/mobiveil/Kconfig"

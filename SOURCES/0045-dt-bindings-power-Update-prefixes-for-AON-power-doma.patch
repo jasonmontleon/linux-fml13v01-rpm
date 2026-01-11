@@ -1,4 +1,4 @@
-From 65ad16b70137047a1d3f24ecb094e37ad2de8d61 Mon Sep 17 00:00:00 2001
+From 09a26834a5e8de3ba291c63fdebe971b84f8c6e2 Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Wed, 27 Sep 2023 06:07:33 -0700
 Subject: [PATCH 045/214] dt-bindings: power: Update prefixes for AON power

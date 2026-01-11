@@ -1,4 +1,4 @@
-From b863a66bf60c1f446c5813dfca23631fce6ae94d Mon Sep 17 00:00:00 2001
+From 5ab14e861145ae4bd31e0b0dbb62e6b01709cc2c Mon Sep 17 00:00:00 2001
 From: Sebastian Fricke <sebastian.fricke@collabora.com>
 Date: Wed, 8 Nov 2023 20:29:20 +0100
 Subject: [PATCH 106/214] media: v4l2: Add ignore_streaming flag
@@ -17,7 +17,7 @@ Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
  1 file changed, 7 insertions(+)
 
 diff --git a/include/media/v4l2-mem2mem.h b/include/media/v4l2-mem2mem.h
-index d6c8eb2b5201..1288fe364fab 100644
+index 370c230ad3be..dde620242e52 100644
 --- a/include/media/v4l2-mem2mem.h
 +++ b/include/media/v4l2-mem2mem.h
 @@ -84,6 +84,12 @@ struct v4l2_m2m_queue_ctx {

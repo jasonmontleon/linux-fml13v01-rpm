@@ -1,4 +1,4 @@
-From e1ef524fea9414a3cae43d4ceed2e11f1af579c9 Mon Sep 17 00:00:00 2001
+From 2169472c40c8773036910e900bdbdf5142740fcf Mon Sep 17 00:00:00 2001
 From: Ziv Xu <ziv.xu@starfivetech.com>
 Date: Wed, 13 Mar 2024 18:43:27 +0800
 Subject: [PATCH 123/214] driver: regulator: pmic driver support kernel 6.6
