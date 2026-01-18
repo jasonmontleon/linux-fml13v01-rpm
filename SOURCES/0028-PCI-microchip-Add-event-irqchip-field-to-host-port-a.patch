@@ -1,4 +1,4 @@
-From 8936d1ee0ea43a2d41500469da724f3710fb42d9 Mon Sep 17 00:00:00 2001
+From 65ce001645607f2d33bf887f794a225618ec2fe1 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:05 +0800
 Subject: [PATCH 028/214] PCI: microchip: Add event irqchip field to host port

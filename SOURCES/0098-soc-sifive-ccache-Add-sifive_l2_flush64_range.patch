@@ -1,4 +1,4 @@
-From 87ee05a8a37dc933329c5bec5cd3ecb12dc23971 Mon Sep 17 00:00:00 2001
+From fa780ae21e8231ec2e99459370038d41a6d48b8a Mon Sep 17 00:00:00 2001
 From: Samin Guo <samin.guo@starfivetech.com>
 Date: Mon, 26 Jun 2023 16:43:17 +0800
 Subject: [PATCH 098/214] soc: sifive: ccache: Add sifive_l2_flush64_range

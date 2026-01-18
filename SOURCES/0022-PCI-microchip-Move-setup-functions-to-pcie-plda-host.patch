@@ -1,4 +1,4 @@
-From ded818309bf62a165d4f17888e33fb50e5705beb Mon Sep 17 00:00:00 2001
+From 90421c1ed2b5fa26df2d98c4d91740b96de947ed Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:05:59 +0800
 Subject: [PATCH 022/214] PCI: microchip: Move setup functions to

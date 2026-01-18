@@ -1,4 +1,4 @@
-From e05e8d852b16e60e98321b5f99fdcd31c1636292 Mon Sep 17 00:00:00 2001
+From 98dba727e248073118b1756b1265d398ef94e517 Mon Sep 17 00:00:00 2001
 From: Ziv Xu <ziv.xu@starfivetech.com>
 Date: Wed, 13 Mar 2024 18:36:31 +0800
 Subject: [PATCH 119/214] riscv: dts: starfive: update dts to kernel 6.6

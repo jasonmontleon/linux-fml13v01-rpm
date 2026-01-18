@@ -1,4 +1,4 @@
-From 999dd58b57f4d75d821e88adf807b6cc77f04db8 Mon Sep 17 00:00:00 2001
+From 0c98c5b987cda739c020d8f45f1d0b1ba833a8f6 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:05:55 +0800
 Subject: [PATCH 018/214] PCI: microchip: Rename two PCIe data structures
