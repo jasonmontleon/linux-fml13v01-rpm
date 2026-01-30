@@ -1,4 +1,4 @@
-From 50d3b7a878ffea721fca617dc85bc10c98843bc5 Mon Sep 17 00:00:00 2001
+From 6b9e171821926267896a9a4697c9fbdcc42c9fbe Mon Sep 17 00:00:00 2001
 From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 Date: Mon, 6 Jan 2025 11:39:22 +0100
 Subject: [PATCH 199/214] riscv: fml13v01_defconfig: enable AppArmor

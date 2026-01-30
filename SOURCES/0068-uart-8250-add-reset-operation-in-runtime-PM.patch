@@ -1,4 +1,4 @@
-From 524441be45f0a3c557d81c3b009fdb8e1ad3c2f8 Mon Sep 17 00:00:00 2001
+From 56b10a7fc90725a5fc0c78aedad6aa9a0f07fe60 Mon Sep 17 00:00:00 2001
 From: William Qiu <william.qiu@starfivetech.com>
 Date: Wed, 20 Sep 2023 17:19:59 +0800
 Subject: [PATCH 068/214] uart: 8250: add reset operation in runtime PM

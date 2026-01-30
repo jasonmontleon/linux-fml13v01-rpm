@@ -1,4 +1,4 @@
-From cf95adbd2ced40f59fb59840050469d193111b19 Mon Sep 17 00:00:00 2001
+From 8ee01a66a5750ae6c3cf2039936e83bf95419366 Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Thu, 28 Mar 2024 09:35:03 +0800
 Subject: [PATCH 139/214] media: starfive: Initialize struct v4l2_subdev_format
