@@ -1,4 +1,4 @@
-From a9365955ca025e1db2c2f67f5e26b683d4fb5396 Mon Sep 17 00:00:00 2001
+From 71819de175e37b48b2306ba0c07e70fb90216fe7 Mon Sep 17 00:00:00 2001
 From: "keith.zhao" <keith.zhao@starfivetech.com>
 Date: Sun, 28 Apr 2024 16:17:50 +0800
 Subject: [PATCH 153/214] vout:debian: blank wave
@@ -24,5 +24,5 @@ index ad737f780401..8f0a04bd0fc0 100644
  	  Choose this option if you have a VeriSilicon soc chipset.
  	  This driver provides VeriSilicon kernel mode
 -- 
-2.52.0
+2.53.0
 

@@ -1,4 +1,4 @@
-From b45598d2aa510e6a45445925b171de0526fa41e9 Mon Sep 17 00:00:00 2001
+From 7132c2b4448d2091e4e72b37cf76cae4e2ab0894 Mon Sep 17 00:00:00 2001
 From: Som Qin <som.qin@starfivetech.com>
 Date: Mon, 15 Jan 2024 11:32:24 +0800
 Subject: [PATCH 116/214] media: add wave511 v4l2 support for starfive jh 7110
@@ -704,5 +704,5 @@ index 352f6e904e50..3c70d4572455 100644
  	bool cbcr_interleave;
  	bool nv21;
 -- 
-2.52.0
+2.53.0
 

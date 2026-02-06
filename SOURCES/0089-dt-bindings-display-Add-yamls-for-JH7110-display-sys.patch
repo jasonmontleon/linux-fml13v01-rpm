@@ -1,4 +1,4 @@
-From 732b641360abd1266562853df16512da8c7d53a9 Mon Sep 17 00:00:00 2001
+From 8759c0a657830ae5c2341ce3a8e93bfafbc2e8fe Mon Sep 17 00:00:00 2001
 From: "shengyang.chen" <shengyang.chen@starfivetech.com>
 Date: Tue, 13 Jun 2023 14:22:29 +0800
 Subject: [PATCH 089/214] dt-bindings: display: Add yamls for JH7110 display
@@ -278,5 +278,5 @@ index 000000000000..892d467cf239
 +        ports = <&dc_out>;
 +    };
 -- 
-2.52.0
+2.53.0
 

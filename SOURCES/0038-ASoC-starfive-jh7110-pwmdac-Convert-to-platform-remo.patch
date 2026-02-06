@@ -1,4 +1,4 @@
-From 0f400b3a4c2c9aef4cd932b7b9ce08a62ed07232 Mon Sep 17 00:00:00 2001
+From a37d5225fc0ad77cc9a164bee3a9d21fd2ae0727 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
 Date: Sat, 14 Oct 2023 00:19:49 +0200
 Subject: [PATCH 038/214] ASoC: starfive/jh7110-pwmdac: Convert to platform
@@ -53,5 +53,5 @@ index 391544fe8568..b08f68399cfa 100644
  module_platform_driver(jh7110_pwmdac_driver);
  
 -- 
-2.52.0
+2.53.0
 

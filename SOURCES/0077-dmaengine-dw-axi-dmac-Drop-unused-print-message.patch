@@ -1,4 +1,4 @@
-From b6150d4923a66e0423e1599de376f1db3fe96689 Mon Sep 17 00:00:00 2001
+From 98dc703666704264749505f0b4bbb8f41de543be Mon Sep 17 00:00:00 2001
 From: Walker Chen <walker.chen@starfivetech.com>
 Date: Mon, 12 Jun 2023 21:21:45 +0800
 Subject: [PATCH 077/214] dmaengine: dw-axi-dmac: Drop unused print message
@@ -25,5 +25,5 @@ index 72fb40de58b3..89f18f433dea 100644
  	}
  
 -- 
-2.52.0
+2.53.0
 

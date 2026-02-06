@@ -1,4 +1,4 @@
-From e33bbce94f39902b20cafe873ab380fa700c83d3 Mon Sep 17 00:00:00 2001
+From 784ba0e03849e4683961b2a45b044b25dbfdf074 Mon Sep 17 00:00:00 2001
 From: "Kevin.xie" <kevin.xie@starfivetech.com>
 Date: Fri, 9 Jun 2023 14:57:13 +0800
 Subject: [PATCH 071/214] regulator: starfive-jh7110: Add regulator support for
@@ -213,5 +213,5 @@ index 000000000000..e76c9a67eabd
 +
 +#endif /* __LINUX_REGULATOR_JH7110_H */
 -- 
-2.52.0
+2.53.0
 

@@ -1,4 +1,4 @@
-From 02a9e7a61a5cad1e1d08ce9699aa5357dd1766c8 Mon Sep 17 00:00:00 2001
+From 5ebf08a9e012246ea0bda266527a065870738bca Mon Sep 17 00:00:00 2001
 From: Jason Montleon <jmontleo@redhat.com>
 Date: Mon, 17 Feb 2025 11:14:30 -0500
 Subject: [PATCH 214/214] Remove C++ style comments
@@ -29,5 +29,5 @@ index 33e0da35c291..c5628e105644 100644
  
  struct jh7110_isp_sc_buffer {
 -- 
-2.52.0
+2.53.0
 

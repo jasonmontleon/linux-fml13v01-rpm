@@ -1,4 +1,4 @@
-From 7ff5a92e99a3a333baa2c78f882cc8235c64024b Mon Sep 17 00:00:00 2001
+From d4bba7069a1ddb3d2f854b00b566a2d5582a10c7 Mon Sep 17 00:00:00 2001
 From: "shanlong.li" <shanlong.li@starfivetech.com>
 Date: Thu, 8 Jun 2023 00:07:15 -0700
 Subject: [PATCH 064/214] driver: mailbox: Add mailbox driver
@@ -817,5 +817,5 @@ index 000000000000..977514a7c154
 +MODULE_AUTHOR("Shanlong Li <shanlong.li@starfivetech.com>");
 +MODULE_LICENSE("GPL");
 -- 
-2.52.0
+2.53.0
 

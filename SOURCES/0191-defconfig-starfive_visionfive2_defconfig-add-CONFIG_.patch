@@ -1,4 +1,4 @@
-From 749da9d6afff5cf8154f25a1edf586ac75fb7df4 Mon Sep 17 00:00:00 2001
+From 24793d45cd5f5c57a58e3a0d7037a946bd2c9507 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Thu, 5 Dec 2024 11:36:52 +0800
 Subject: [PATCH 191/214] defconfig: starfive_visionfive2_defconfig: add
@@ -22,5 +22,5 @@ index e59bdaeac172..6b0dd55c3769 100644
  CONFIG_HIGH_RES_TIMERS=y
  CONFIG_BPF_SYSCALL=y
 -- 
-2.52.0
+2.53.0
 

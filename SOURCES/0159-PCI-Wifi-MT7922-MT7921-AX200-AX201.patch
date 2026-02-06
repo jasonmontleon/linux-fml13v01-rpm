@@ -1,4 +1,4 @@
-From 098bf5e48bb87b8e61ee387f5f8f3647ab7f7403 Mon Sep 17 00:00:00 2001
+From 87aab2206cce126fd34c50606862a91a917f9fb6 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Tue, 3 Sep 2024 17:05:26 +0800
 Subject: [PATCH 159/214] PCI Wifi: MT7922 MT7921 AX200/AX201.
@@ -49,5 +49,5 @@ index 7e043788a76c..ac93c16c8166 100644
  CONFIG_USB_WIFI_ECR6600U=y
  CONFIG_AIC_WLAN_SUPPORT=y
 -- 
-2.52.0
+2.53.0
 

@@ -1,4 +1,4 @@
-From 7e0d9e24e267a891ff839339129c5ee8884bdb16 Mon Sep 17 00:00:00 2001
+From dcec73ec43a6846ac8f40465d7d7f5956371751c Mon Sep 17 00:00:00 2001
 From: "shanlong.li" <shanlong.li@starfivetech.com>
 Date: Mon, 10 Jul 2023 03:07:57 -0700
 Subject: [PATCH 067/214] driver:uart: fix up uart communicate fail
@@ -29,5 +29,5 @@ index 8d60a1b4561a..61a463dfb37e 100644
  	err = reset_control_deassert(data->rst);
  	if (err)
 -- 
-2.52.0
+2.53.0
 

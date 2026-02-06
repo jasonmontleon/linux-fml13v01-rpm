@@ -1,4 +1,4 @@
-From c7270e4ddd4587ebbcd4aa2133074cb9507b1a46 Mon Sep 17 00:00:00 2001
+From b1a35008c9d7de74cd5e030c48e5a3510569cc85 Mon Sep 17 00:00:00 2001
 From: William Qiu <william.qiu@starfivetech.com>
 Date: Thu, 15 Jun 2023 20:15:25 +0800
 Subject: [PATCH 070/214] CAN: starfive - Add CAN engine support
@@ -1323,5 +1323,5 @@ index 000000000000..ca802cb4110f
 +MODULE_AUTHOR("William Qiu<william.qiu@starfivetech.com");
 +MODULE_LICENSE("GPL");
 -- 
-2.52.0
+2.53.0
 

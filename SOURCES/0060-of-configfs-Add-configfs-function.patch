@@ -1,4 +1,4 @@
-From c8a8486a1c7f3ac86c3b2e69fbc0f949a4cf33a6 Mon Sep 17 00:00:00 2001
+From 63b110afec666ee5f0c9d135f307792b8c868fb8 Mon Sep 17 00:00:00 2001
 From: Jianlong Huang <jianlong.huang@starfivetech.com>
 Date: Thu, 16 Jun 2022 17:13:57 +0800
 Subject: [PATCH 060/214] of: configfs: Add configfs function
@@ -324,5 +324,5 @@ index 000000000000..4f0bc86a7b08
 +}
 +late_initcall(of_cfs_init);
 -- 
-2.52.0
+2.53.0
 

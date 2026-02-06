@@ -1,4 +1,4 @@
-From 5eccd4a79d810bf25cb726be27e2c88ed324cc5c Mon Sep 17 00:00:00 2001
+From 1769ff831a56a657a69ff976a04c7863453bc1db Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Wed, 13 Nov 2024 18:24:45 +0800
 Subject: [PATCH 189/214] defconfig: starfive_visionfive2_defconfig:
@@ -35,5 +35,5 @@ index 45e13b01cad6..e59bdaeac172 100644
  CONFIG_CRYPTO_USER_API_SKCIPHER=y
  CONFIG_CRYPTO_USER_API_RNG=y
 -- 
-2.52.0
+2.53.0
 

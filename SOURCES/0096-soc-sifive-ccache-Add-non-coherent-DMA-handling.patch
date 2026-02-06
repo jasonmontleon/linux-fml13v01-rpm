@@ -1,4 +1,4 @@
-From ff2b926b60d8010e40c0b1cade2996106087ca4c Mon Sep 17 00:00:00 2001
+From b502850599697b41a157306029a0e2b819f3ff47 Mon Sep 17 00:00:00 2001
 From: Emil Renner Berthing <kernel@esmil.dk>
 Date: Mon, 26 Jun 2023 14:45:57 +0800
 Subject: [PATCH 096/214] soc: sifive: ccache: Add non-coherent DMA handling
@@ -162,5 +162,5 @@ index 4d4ed49388a0..d349ccb3969b 100644
 +
  #endif /* __SOC_SIFIVE_CCACHE_H */
 -- 
-2.52.0
+2.53.0
 

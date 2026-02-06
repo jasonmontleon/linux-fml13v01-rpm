@@ -1,4 +1,4 @@
-From e11debb11b27e18a1e47c657f00be6cc9f4bb869 Mon Sep 17 00:00:00 2001
+From 0db013fb8169172870e67a525121655bd770d472 Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Fri, 18 Nov 2022 11:50:58 +0800
 Subject: [PATCH 140/214] media: i2c: imx219: Add support enum/set/get frame
@@ -198,5 +198,5 @@ index a3d5a8a7c660..e59438da875c 100644
  	/* sensor doesn't enter LP-11 state upon power up until and unless
  	 * streaming is started, so upon power up switch the modes to:
 -- 
-2.52.0
+2.53.0
 

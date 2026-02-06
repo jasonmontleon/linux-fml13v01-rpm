@@ -1,4 +1,4 @@
-From 8d7e4ada4d3b962cb2b78f3aa8bb9bba665a5d28 Mon Sep 17 00:00:00 2001
+From 46bf617b7aa690f9fa8ae4bb73ce2943d5af690a Mon Sep 17 00:00:00 2001
 From: Ziv Xu <ziv.xu@starfivetech.com>
 Date: Wed, 13 Mar 2024 18:45:30 +0800
 Subject: [PATCH 124/214] driver: vout: vout support kernel 6.6
@@ -87,5 +87,5 @@ index f86fd8d83a7a..02be2df1b4ec 100644
  			sf_dphy_set_reg(dphy->topsys + 0x1c, 0x0,
  							RG_CDTX_PLL_SSC_EN_SHIFT, RG_CDTX_PLL_SSC_EN_MASK);
 -- 
-2.52.0
+2.53.0
 
