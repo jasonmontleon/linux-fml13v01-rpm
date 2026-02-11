@@ -1,4 +1,4 @@
-From 63b110afec666ee5f0c9d135f307792b8c868fb8 Mon Sep 17 00:00:00 2001
+From be0d5ed6dd095cc42933103f0990f07b2ff4cc8e Mon Sep 17 00:00:00 2001
 From: Jianlong Huang <jianlong.huang@starfivetech.com>
 Date: Thu, 16 Jun 2022 17:13:57 +0800
 Subject: [PATCH 060/214] of: configfs: Add configfs function

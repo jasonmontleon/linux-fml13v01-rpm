@@ -1,4 +1,4 @@
-From 0d4806f4ebe370ba0ec20628afdb131e630f737d Mon Sep 17 00:00:00 2001
+From 781e6a9323c40c8d37860c579512fadb05d238ab Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Thu, 5 Sep 2024 11:46:27 +0800
 Subject: [PATCH 161/214] support i2c hid touchpad.
@@ -115,10 +115,10 @@ index ac93c16c8166..5ddcc77aadf5 100644
  CONFIG_USB_OTG=y
  CONFIG_USB_XHCI_HCD=y
 diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index 172b78327420..f3acef5559d4 100644
+index 0a350780407e..f165a620a898 100644
 --- a/drivers/hid/i2c-hid/i2c-hid-core.c
 +++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -847,8 +847,12 @@ static int i2c_hid_init_irq(struct i2c_client *client)
+@@ -848,8 +848,12 @@ static int i2c_hid_init_irq(struct i2c_client *client)
  
  	i2c_hid_dbg(ihid, "Requesting IRQ: %d\n", client->irq);
  

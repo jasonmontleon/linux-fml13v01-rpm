@@ -1,4 +1,4 @@
-From 224b5370827c61c0419502c32b3b34059fb6a200 Mon Sep 17 00:00:00 2001
+From 30cfbbacb991318785dedeaf21ed992deb315256 Mon Sep 17 00:00:00 2001
 From: "ziv.xu" <ziv.xu@starfive.com>
 Date: Wed, 23 Nov 2022 14:53:58 +0800
 Subject: [PATCH 130/214] spi-pl022-starfive:fix the problem of spi overlay

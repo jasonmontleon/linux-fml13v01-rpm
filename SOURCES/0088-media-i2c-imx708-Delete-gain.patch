@@ -1,4 +1,4 @@
-From 6aacd28fe9858406b407857ff7c9a9b5c3fd05f3 Mon Sep 17 00:00:00 2001
+From 5fa3a077d9fcb1c0cc2bff3fcfb5f0bcb574914e Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Mon, 3 Apr 2023 15:28:11 +0800
 Subject: [PATCH 088/214] media: i2c: imx708: Delete gain
