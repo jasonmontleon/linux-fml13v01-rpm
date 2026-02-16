@@ -1,4 +1,4 @@
-From 5cc6f0bfeb80bbd71bb00cce5ed726ccb305f7fa Mon Sep 17 00:00:00 2001
+From 82c89f693a4d0090551a40ada6c68c72ead21c98 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Sun, 25 Jun 2023 09:40:29 +0800
 Subject: [PATCH 066/214] uart: 8250: Add dw auto flow ctrl support

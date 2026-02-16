@@ -1,4 +1,4 @@
-From cfe8790f406f6d47e689979aebb71c0e030dcb3b Mon Sep 17 00:00:00 2001
+From d7f57c00a5cf441f166270a95ab476e063b07fe4 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Wed, 12 Feb 2025 09:32:40 +0800
 Subject: [PATCH 205/214] riscv: fml13v01: Update defconfig.

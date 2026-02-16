@@ -1,4 +1,4 @@
-From 8b21109cf8f482219d056790388f189f8b3b47d4 Mon Sep 17 00:00:00 2001
+From 2799695588599fb2881a0cd4388cd8652b61ee68 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Wed, 20 Sep 2023 14:53:22 +0800
 Subject: [PATCH 057/214] riscv: dts: starfive: Add JH7110 EVB expanded device

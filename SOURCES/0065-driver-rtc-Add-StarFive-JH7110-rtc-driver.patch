@@ -1,4 +1,4 @@
-From 28043964998de3260a7683fd5fc480bd3ab4f503 Mon Sep 17 00:00:00 2001
+From bbd09d63d3d134cd4f770cea76991d9c2fa5a47a Mon Sep 17 00:00:00 2001
 From: "ziv.xu" <ziv.xu@starfivetech.com>
 Date: Fri, 9 Jun 2023 15:31:53 +0800
 Subject: [PATCH 065/214] driver: rtc: Add StarFive JH7110 rtc driver

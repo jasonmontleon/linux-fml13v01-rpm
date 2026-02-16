@@ -1,4 +1,4 @@
-From 50231a89d2bb67c9a9f02bf4a8152fab055b51b0 Mon Sep 17 00:00:00 2001
+From 0363d58c8f6ccc6e2e9a0bd5894437dafa8cd3a8 Mon Sep 17 00:00:00 2001
 From: Sebastian Fricke <sebastian.fricke@collabora.com>
 Date: Wed, 8 Nov 2023 20:29:21 +0100
 Subject: [PATCH 107/214] media: v4l2: Allow M2M job queuing w/o streaming CAP
