@@ -1,4 +1,4 @@
-From 0444e60fe23369a51dc9355cc80e88cf7f395228 Mon Sep 17 00:00:00 2001
+From 98649ee13748361de595befa4154fce57d1c3849 Mon Sep 17 00:00:00 2001
 From: Xingyu Wu <xingyu.wu@starfivetech.com>
 Date: Wed, 21 Feb 2024 10:23:48 +0800
 Subject: [PATCH 052/214] ASoC: dwc: i2s: Fix getting platform data error for

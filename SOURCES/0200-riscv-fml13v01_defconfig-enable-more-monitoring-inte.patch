@@ -1,4 +1,4 @@
-From 1eccbe7c02afc8ff31bc8ffa94ef45e0e656d187 Mon Sep 17 00:00:00 2001
+From a78f4e953964e1859f4a61ebeb5a54fc5bdb8c18 Mon Sep 17 00:00:00 2001
 From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 Date: Mon, 6 Jan 2025 11:46:41 +0100
 Subject: [PATCH 200/214] riscv: fml13v01_defconfig: enable more monitoring

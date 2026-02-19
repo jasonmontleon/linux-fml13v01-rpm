@@ -1,4 +1,4 @@
-From dc4a4786bc749a11b5677e826af3754143babee8 Mon Sep 17 00:00:00 2001
+From ff8fddd8f46c2171d57d88bcd00a8247038d98e9 Mon Sep 17 00:00:00 2001
 From: Ziv Xu <ziv.xu@starfivetech.com>
 Date: Wed, 13 Mar 2024 18:37:31 +0800
 Subject: [PATCH 120/214] riscv: configs: add visionfive2 defconfig to kernel
