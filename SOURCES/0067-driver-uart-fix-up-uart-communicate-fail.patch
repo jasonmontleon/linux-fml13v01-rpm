@@ -1,4 +1,4 @@
-From 65d76d11d06b697361dd3d879efe6d0c4f2574b8 Mon Sep 17 00:00:00 2001
+From 95b2a4770d30c455814af3f1c82fc369a467ce41 Mon Sep 17 00:00:00 2001
 From: "shanlong.li" <shanlong.li@starfivetech.com>
 Date: Mon, 10 Jul 2023 03:07:57 -0700
 Subject: [PATCH 067/214] driver:uart: fix up uart communicate fail
@@ -11,7 +11,7 @@ Signed-off-by: shanlong.li <shanlong.li@starfivetech.com>
  1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/tty/serial/8250/8250_dw.c b/drivers/tty/serial/8250/8250_dw.c
-index 8d60a1b4561a..61a463dfb37e 100644
+index a38fa644d08b..4f630838e816 100644
 --- a/drivers/tty/serial/8250/8250_dw.c
 +++ b/drivers/tty/serial/8250/8250_dw.c
 @@ -655,9 +655,10 @@ static int dw8250_probe(struct platform_device *pdev)

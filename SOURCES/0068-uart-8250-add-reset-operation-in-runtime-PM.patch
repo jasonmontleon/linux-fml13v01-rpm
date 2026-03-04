@@ -1,4 +1,4 @@
-From 7d7661ad476efb2efa9a6d08d7154cfb66a6774e Mon Sep 17 00:00:00 2001
+From 774e86597f2c2ed5c0b64b1465761b788b5dfb57 Mon Sep 17 00:00:00 2001
 From: William Qiu <william.qiu@starfivetech.com>
 Date: Wed, 20 Sep 2023 17:19:59 +0800
 Subject: [PATCH 068/214] uart: 8250: add reset operation in runtime PM
@@ -11,7 +11,7 @@ Signed-off-by: William Qiu <william.qiu@starfivetech.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/drivers/tty/serial/8250/8250_dw.c b/drivers/tty/serial/8250/8250_dw.c
-index 61a463dfb37e..6cc8327169e5 100644
+index 4f630838e816..24661bd228c3 100644
 --- a/drivers/tty/serial/8250/8250_dw.c
 +++ b/drivers/tty/serial/8250/8250_dw.c
 @@ -751,6 +751,8 @@ static int dw8250_runtime_suspend(struct device *dev)
@@ -23,9 +23,9 @@ index 61a463dfb37e..6cc8327169e5 100644
  	clk_disable_unprepare(data->clk);
  
  	clk_disable_unprepare(data->pclk);
-@@ -766,6 +768,8 @@ static int dw8250_runtime_resume(struct device *dev)
- 
- 	clk_prepare_enable(data->clk);
+@@ -773,6 +775,8 @@ static int dw8250_runtime_resume(struct device *dev)
+ 		return ret;
+ 	}
  
 +	reset_control_deassert(data->rst);
 +

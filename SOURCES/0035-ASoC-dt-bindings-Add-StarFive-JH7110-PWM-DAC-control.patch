@@ -1,4 +1,4 @@
-From f583cfa8e1a94f329c70438894e8a72a4407093c Mon Sep 17 00:00:00 2001
+From ed7d61350dad2b6e46faee77e96c7c7f2457d871 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Mon, 14 Aug 2023 16:06:16 +0800
 Subject: [PATCH 035/214] ASoC: dt-bindings: Add StarFive JH7110 PWM-DAC

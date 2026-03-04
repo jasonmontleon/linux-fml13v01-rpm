@@ -1,4 +1,4 @@
-From dae19ceed85463637154c43317ab5d15bf5ea3de Mon Sep 17 00:00:00 2001
+From 53645bbe1c4631d9563a71306566f26f567621eb Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Thu, 4 Jan 2024 18:02:20 +0800
 Subject: [PATCH 103/214] perf: riscv: Add SiFive Private L2 cache and PMU

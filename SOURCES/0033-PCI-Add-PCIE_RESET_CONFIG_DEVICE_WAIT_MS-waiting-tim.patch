@@ -1,4 +1,4 @@
-From d8be07bccc6b6a87a86b19f71e5bc4d0afa4afc8 Mon Sep 17 00:00:00 2001
+From 8038b2f0a7425cf996dcf2a1e35b6726f13fc96a Mon Sep 17 00:00:00 2001
 From: Kevin Xie <kevin.xie@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:10 +0800
 Subject: [PATCH 033/214] PCI: Add PCIE_RESET_CONFIG_DEVICE_WAIT_MS waiting
@@ -29,12 +29,12 @@ Acked-by: Bjorn Helgaas <bhelgaas@google.com>
  1 file changed, 16 insertions(+)
 
 diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
-index d69a17947ffc..f8fdde5eabfd 100644
+index 485f917641e1..c6e278d7baeb 100644
 --- a/drivers/pci/pci.h
 +++ b/drivers/pci/pci.h
-@@ -22,6 +22,22 @@
-  */
- #define PCIE_PME_TO_L2_TIMEOUT_US	10000
+@@ -47,6 +47,22 @@
+ #define PCI_EXP_AER_FLAGS	(PCI_EXP_DEVCTL_CERE | PCI_EXP_DEVCTL_NFERE | \
+ 				 PCI_EXP_DEVCTL_FERE | PCI_EXP_DEVCTL_URRE)
  
 +/*
 + * As described in PCI base specification r6.0, section 6.6.1 <Conventional

@@ -1,4 +1,4 @@
-From a5b835ad8797cd57231cd2cd4f1bb9b14321fd74 Mon Sep 17 00:00:00 2001
+From ca5b71823359c0f0e5284646df71ef9544a72fe4 Mon Sep 17 00:00:00 2001
 From: Xingyu Wu <xingyu.wu@starfivetech.com>
 Date: Thu, 19 Oct 2023 13:35:00 +0800
 Subject: [PATCH 003/214] clocksource: Add JH7110 timer driver
@@ -14,10 +14,10 @@ Signed-off-by: Xingyu Wu <xingyu.wu@starfivetech.com>
  create mode 100644 drivers/clocksource/timer-jh7110.c
 
 diff --git a/drivers/clocksource/Kconfig b/drivers/clocksource/Kconfig
-index 8208a3d89563..b758949522e5 100644
+index 5b526b74e5de..84dba9fe90a7 100644
 --- a/drivers/clocksource/Kconfig
 +++ b/drivers/clocksource/Kconfig
-@@ -642,6 +642,17 @@ config RISCV_TIMER
+@@ -643,6 +643,17 @@ config RISCV_TIMER
  	  is accessed via both the SBI and the rdcycle instruction.  This is
  	  required for all RISC-V systems.
  

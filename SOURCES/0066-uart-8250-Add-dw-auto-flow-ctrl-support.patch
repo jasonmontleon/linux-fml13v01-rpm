@@ -1,4 +1,4 @@
-From e361d57bb62a07dd33e79548e253bb8c7d299c9d Mon Sep 17 00:00:00 2001
+From 49a5d7803b4b6ce53abbc3b026a12ab54e8cee31 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Sun, 25 Jun 2023 09:40:29 +0800
 Subject: [PATCH 066/214] uart: 8250: Add dw auto flow ctrl support
@@ -29,7 +29,7 @@ index c536028e92dc..92d0098e7b3b 100644
  		if (uart->port.type != PORT_8250_CIR) {
  			if (uart_console_registered(&uart->port))
 diff --git a/drivers/tty/serial/8250/8250_dw.c b/drivers/tty/serial/8250/8250_dw.c
-index 57b27f9ea1f0..8d60a1b4561a 100644
+index 60a05bfecde3..a38fa644d08b 100644
 --- a/drivers/tty/serial/8250/8250_dw.c
 +++ b/drivers/tty/serial/8250/8250_dw.c
 @@ -612,6 +612,12 @@ static int dw8250_probe(struct platform_device *pdev)

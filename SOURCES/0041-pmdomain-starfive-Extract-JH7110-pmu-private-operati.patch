@@ -1,4 +1,4 @@
-From d02e06029998da8e857ee9dbc28053945213bc50 Mon Sep 17 00:00:00 2001
+From b72a60868b6a2a5640e4a941cdd5f0d2c83c0104 Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Wed, 13 Sep 2023 14:54:27 +0100
 Subject: [PATCH 041/214] pmdomain: starfive: Extract JH7110 pmu private
