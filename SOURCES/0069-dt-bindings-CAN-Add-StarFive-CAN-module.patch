@@ -1,4 +1,4 @@
-From 68f87ee8af8289bc96a6a1c3f960bf6b13ac6c13 Mon Sep 17 00:00:00 2001
+From ee1f860f0fd6160ca94a036630c1e72ee24fbbe4 Mon Sep 17 00:00:00 2001
 From: William Qiu <william.qiu@starfivetech.com>
 Date: Thu, 15 Jun 2023 20:14:22 +0800
 Subject: [PATCH 069/214] dt-bindings: CAN: Add StarFive CAN module
