@@ -1,4 +1,4 @@
-From 9f8ababc419670c96f3059bb165c37d23ed15d16 Mon Sep 17 00:00:00 2001
+From 22a97b89aa64ca1488d239f95b1e2215f07437de Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Tue, 5 Mar 2024 11:00:21 +0800
 Subject: [PATCH 118/214] crypto: jh7110: Comment RSA algo register

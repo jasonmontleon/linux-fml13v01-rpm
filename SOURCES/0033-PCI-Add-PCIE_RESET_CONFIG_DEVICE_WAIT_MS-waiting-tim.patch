@@ -1,4 +1,4 @@
-From 2a8d89d81a9d39702ac3e9121adb8094e4cd4f7f Mon Sep 17 00:00:00 2001
+From c8aa731535e9dc9cf4a44e7f3fe4c0906266e6a7 Mon Sep 17 00:00:00 2001
 From: Kevin Xie <kevin.xie@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:10 +0800
 Subject: [PATCH 033/214] PCI: Add PCIE_RESET_CONFIG_DEVICE_WAIT_MS waiting
@@ -29,7 +29,7 @@ Acked-by: Bjorn Helgaas <bhelgaas@google.com>
  1 file changed, 16 insertions(+)
 
 diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
-index 485f917641e1..c6e278d7baeb 100644
+index dae7b98536f7..8ae10e52cab1 100644
 --- a/drivers/pci/pci.h
 +++ b/drivers/pci/pci.h
 @@ -47,6 +47,22 @@

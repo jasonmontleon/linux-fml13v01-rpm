@@ -1,4 +1,4 @@
-From 2f5b14b0eea7856005b0c18ac2efe19deeb81cb1 Mon Sep 17 00:00:00 2001
+From 2d0854965812598e9673657c6bae69ce01e3b59e Mon Sep 17 00:00:00 2001
 From: "shanlong.li" <shanlong.li@starfivetech.com>
 Date: Thu, 8 Jun 2023 00:07:15 -0700
 Subject: [PATCH 064/214] driver: mailbox: Add mailbox driver

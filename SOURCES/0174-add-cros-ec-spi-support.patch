@@ -1,4 +1,4 @@
-From 015b116949a15c1780fe852058ea30353934d4de Mon Sep 17 00:00:00 2001
+From 49211a9c17e4f073f0304a7ebdc9c0774e7cdffe Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Thu, 26 Sep 2024 17:32:03 +0800
 Subject: [PATCH 174/214] add cros-ec-spi support.
@@ -104,7 +104,7 @@ index 81b675ea3dd3..42f564e9ad27 100644
  CONFIG_CLK_STARFIVE_JH7110_STG=y
  CONFIG_CLK_STARFIVE_JH7110_ISP=y
 diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
-index a4c361b6619c..c71351cee19a 100644
+index 2b090dbd836c..3e8786e0379c 100644
 --- a/drivers/hwmon/Kconfig
 +++ b/drivers/hwmon/Kconfig
 @@ -477,6 +477,17 @@ config SENSORS_CORSAIR_PSU

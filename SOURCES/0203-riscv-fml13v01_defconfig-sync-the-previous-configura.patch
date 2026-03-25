@@ -1,4 +1,4 @@
-From b917e7f0baaa9dd7cd0ca522631ff80d05d1455c Mon Sep 17 00:00:00 2001
+From aa5fc35a5363e18ad9434d7ea968d5585254b6af Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Wed, 8 Jan 2025 16:05:30 +0800
 Subject: [PATCH 203/214] riscv: fml13v01_defconfig: sync the previous

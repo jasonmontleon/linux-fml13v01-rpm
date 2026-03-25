@@ -1,4 +1,4 @@
-From e70381083c16ac2f28a5b4317c40687307603b9f Mon Sep 17 00:00:00 2001
+From 6f96e3d6cfaabe75f0de58d850aed98e01f1c203 Mon Sep 17 00:00:00 2001
 From: Jia Jie Ho <jiajie.ho@starfivetech.com>
 Date: Wed, 15 Nov 2023 01:12:13 +0800
 Subject: [PATCH 009/214] crypto: starfive - Update driver dependencies
