@@ -1,4 +1,4 @@
-From afa8731453957870159ee33ed37ac646fce692a5 Mon Sep 17 00:00:00 2001
+From c050713d9b6da5357278df4a679bc22611a6e1bf Mon Sep 17 00:00:00 2001
 From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 Date: Mon, 6 Jan 2025 11:16:14 +0100
 Subject: [PATCH 196/214] riscv: fml13v01_defconfig: add squashfs support
