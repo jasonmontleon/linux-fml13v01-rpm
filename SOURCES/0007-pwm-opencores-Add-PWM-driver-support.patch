@@ -1,4 +1,4 @@
-From d0efa0e5104ce807cb61364b6bef765efc722d6d Mon Sep 17 00:00:00 2001
+From 501072e2d16ead3ff7902cf401088cfeab196bcc Mon Sep 17 00:00:00 2001
 From: William Qiu <william.qiu@starfivetech.com>
 Date: Fri, 22 Dec 2023 17:45:46 +0800
 Subject: [PATCH 007/214] pwm: opencores: Add PWM driver support

@@ -1,4 +1,4 @@
-From 5cd7d7eebcfb5436008442a77b659b97dc3e3678 Mon Sep 17 00:00:00 2001
+From ecbf365cc2d344a6b08470eec89b2f51149e0e31 Mon Sep 17 00:00:00 2001
 From: Jason Montleon <jmontleo@redhat.com>
 Date: Wed, 12 Feb 2025 15:24:15 -0500
 Subject: [PATCH 212/214] add missing bool type

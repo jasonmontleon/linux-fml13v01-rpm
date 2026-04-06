@@ -1,4 +1,4 @@
-From 412d0bbb511da3644b9fd5addc18b61ac66c34c7 Mon Sep 17 00:00:00 2001
+From 7b4d8bf9190da0186756c9be9c3b99f9660f5d6f Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Sat, 7 Oct 2023 18:10:20 +0800
 Subject: [PATCH 055/214] mm/pgtable-generic.c: Export symbol __pte_offset_map

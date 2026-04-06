@@ -1,4 +1,4 @@
-From 2982700536e90c697b8ba868567623f2de666e3a Mon Sep 17 00:00:00 2001
+From 038bbab394681b189d959e617e6171e46b0602df Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Thu, 5 Sep 2024 11:46:27 +0800
 Subject: [PATCH 161/214] support i2c hid touchpad.

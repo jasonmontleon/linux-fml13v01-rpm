@@ -1,4 +1,4 @@
-From 3995a1cc5e45caab62628c0cdc4979cca1b21316 Mon Sep 17 00:00:00 2001
+From dc1ae47d93efc1a9a5bc86b83fa02e168e6cc64b Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Mon, 9 Sep 2024 18:36:46 +0800
 Subject: [PATCH 167/214] config USB BT
