@@ -1,4 +1,4 @@
-From ab2069f4e6ab6c179b2549e560f2feb008f43dcc Mon Sep 17 00:00:00 2001
+From 744b899875ed1ab3ac5fc63e6d9512c7586623a6 Mon Sep 17 00:00:00 2001
 From: Sandie Cao <sandie.cao@deepcomputing.io>
 Date: Tue, 8 Apr 2025 09:24:32 +0800
 Subject: [PATCH 208/214] usb: remove test module to avoid error

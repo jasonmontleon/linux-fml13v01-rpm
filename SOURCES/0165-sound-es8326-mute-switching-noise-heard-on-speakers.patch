@@ -1,4 +1,4 @@
-From f9d87d2686153ad198753ccf3953e7a61b102c32 Mon Sep 17 00:00:00 2001
+From bf911f2e3e2d785eefaaed82f69df43373d18452 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Mon, 9 Sep 2024 10:14:51 +0800
 Subject: [PATCH 165/214] sound: es8326: mute switching, noise heard on

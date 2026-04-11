@@ -1,4 +1,4 @@
-From 41c98caad3e4727b87e866da7ea98ed91bf489c0 Mon Sep 17 00:00:00 2001
+From 49980f576addf73d49cc2cfaf0cd9bda9120ae0b Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Fri, 22 Mar 2024 11:33:40 +0800
 Subject: [PATCH 138/214] riscv: dts: starfive: visionfive 2: Add aliases for

@@ -1,4 +1,4 @@
-From 677f731826b4194fe6822569e094dce31c3cf85c Mon Sep 17 00:00:00 2001
+From ae8f3b0bb578e36c9884bb11bb9fb5d987fffa81 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
 Date: Sat, 14 Oct 2023 00:19:49 +0200
 Subject: [PATCH 038/214] ASoC: starfive/jh7110-pwmdac: Convert to platform

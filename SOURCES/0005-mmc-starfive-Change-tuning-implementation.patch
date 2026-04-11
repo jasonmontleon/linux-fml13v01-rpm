@@ -1,4 +1,4 @@
-From ff650359e3808708d45166c1b7aff2f422701e87 Mon Sep 17 00:00:00 2001
+From 4de98bd53c49786eeea1536dd6d72beecf8a4c02 Mon Sep 17 00:00:00 2001
 From: William Qiu <william.qiu@starfivetech.com>
 Date: Fri, 22 Sep 2023 14:28:33 +0800
 Subject: [PATCH 005/214] mmc: starfive: Change tuning implementation
