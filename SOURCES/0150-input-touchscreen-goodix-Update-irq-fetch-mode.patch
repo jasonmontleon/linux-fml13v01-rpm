@@ -1,4 +1,4 @@
-From b858716a5c164b2cf99403aa210d22c27937e43c Mon Sep 17 00:00:00 2001
+From 620a443ed156cdc461f59ed6f1c0fe7b55903437 Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Mon, 6 Feb 2023 11:31:14 +0800
 Subject: [PATCH 150/214] input: touchscreen: goodix: Update irq fetch mode
@@ -30,5 +30,5 @@ index 294bd942ee37..b59daa8882e0 100644
  					 ts->irq_flags, ts->client->name, ts);
  }
 -- 
-2.53.0
+2.54.0
 

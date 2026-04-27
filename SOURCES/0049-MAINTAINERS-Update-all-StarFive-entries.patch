@@ -1,4 +1,4 @@
-From 353fb84f193bc3e7313a747f35853b6f268f6aeb Mon Sep 17 00:00:00 2001
+From ae47aa8e4969720f2716e9b0411edfe804838572 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Tue, 11 Apr 2023 16:25:57 +0800
 Subject: [PATCH 049/214] MAINTAINERS: Update all StarFive entries
@@ -148,5 +148,5 @@ index e700dca4974b..e0f1d3472276 100644
  STARFIVE TRNG DRIVER
  M:	Jia Jie Ho <jiajie.ho@starfivetech.com>
 -- 
-2.53.0
+2.54.0
 

@@ -1,4 +1,4 @@
-From da6c8f1140111d2547339d7d3c094e6496af912a Mon Sep 17 00:00:00 2001
+From eb59742317efec092bb11c131040dd22c5f98ca4 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:05:52 +0800
 Subject: [PATCH 015/214] PCI: microchip: Move pcie-microchip-host.c to plda
@@ -110,5 +110,5 @@ index 137fb8570ba2..cb09a8137e25 100644
  /* Number of MSI IRQs */
  #define MC_MAX_NUM_MSI_IRQS			32
 -- 
-2.53.0
+2.54.0
 

@@ -1,4 +1,4 @@
-From 099d5ed703f17e44d5053f283cf9109ee58025db Mon Sep 17 00:00:00 2001
+From 5e5f5b1e2ac29cfc9a06b9b24a8fdf1667000b99 Mon Sep 17 00:00:00 2001
 From: "xingyu.wu" <xingyu.wu@starfivetech.com>
 Date: Tue, 28 Jun 2022 22:48:15 +0800
 Subject: [PATCH 128/214] spi-pl022:starfive:Add platform bus register to adapt
@@ -233,5 +233,5 @@ index 869f0095e6ac..2350d18e4849 100644
  MODULE_DESCRIPTION("PL022 SSP Controller Driver");
  MODULE_LICENSE("GPL");
 -- 
-2.53.0
+2.54.0
 

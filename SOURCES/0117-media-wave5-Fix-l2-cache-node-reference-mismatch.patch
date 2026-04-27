@@ -1,4 +1,4 @@
-From b4d1c4fbed8b9841778d8003b7ec17242964ba94 Mon Sep 17 00:00:00 2001
+From 93ecea0fd00b962ae37885d6bb377c47302c7760 Mon Sep 17 00:00:00 2001
 From: Som Qin <som.qin@starfivetech.com>
 Date: Wed, 28 Feb 2024 09:52:20 +0800
 Subject: [PATCH 117/214] media:wave5: Fix l2 cache node reference mismatch
@@ -33,5 +33,5 @@ index 3a20bc1c0a8c..6d6f64e92c37 100644
  		dev_err(&pdev->dev, "find cache node, fail\n");
  		goto err_enc_unreg;
 -- 
-2.53.0
+2.54.0
 

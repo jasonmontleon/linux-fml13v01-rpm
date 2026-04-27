@@ -1,4 +1,4 @@
-From f50943f1a78680ca655589917d23b94562586144 Mon Sep 17 00:00:00 2001
+From 2ae3f55ee6ebcd3d4d3f91165c0ae99602e8564f Mon Sep 17 00:00:00 2001
 From: Mason Huo <mason.huo@starfivetech.com>
 Date: Tue, 20 Jun 2023 13:37:52 +0800
 Subject: [PATCH 094/214] riscv: Optimize memcpy with aligned version
@@ -366,5 +366,5 @@ index 000000000000..177998eaaf6b
 +
 +void *memcpy(void *dest, const void *src, size_t len) __weak __alias(__memcpy);
 -- 
-2.53.0
+2.54.0
 

@@ -1,4 +1,4 @@
-From b822b29e675a59e4b1abf8da1054292a35f1fbb1 Mon Sep 17 00:00:00 2001
+From c75bad5331c82b1b0ae4f4fcc8af5a49159f586c Mon Sep 17 00:00:00 2001
 From: Jia Jie Ho <jiajie.ho@starfivetech.com>
 Date: Mon, 4 Dec 2023 11:02:39 +0800
 Subject: [PATCH 013/214] crypto: starfive - Remove unneeded NULL checks
@@ -34,5 +34,5 @@ index 7cb2aec75678..7bbf0695e94f 100644
  }
  
 -- 
-2.53.0
+2.54.0
 

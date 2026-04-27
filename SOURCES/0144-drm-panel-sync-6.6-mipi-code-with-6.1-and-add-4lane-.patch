@@ -1,4 +1,4 @@
-From e40b29b2cd309701e34b6d971174d88a2af35e5e Mon Sep 17 00:00:00 2001
+From 27e0c0be87e32bac74df6713dba24213a2c929f6 Mon Sep 17 00:00:00 2001
 From: "shengyang.chen" <shengyang.chen@starfivetech.com>
 Date: Fri, 19 Apr 2024 11:05:21 +0800
 Subject: [PATCH 144/214] drm/panel: sync 6.6 mipi code with 6.1 and add 4lane
@@ -1781,5 +1781,5 @@ index 02be2df1b4ec..63e3271b6ef1 100644
  	ret = sf_dphy_clkrst_get(&pdev->dev, dphy);
  
 -- 
-2.53.0
+2.54.0
 

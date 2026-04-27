@@ -1,4 +1,4 @@
-From d9b5e3ae9a3940e8bcb21d283b19ae74b45e0899 Mon Sep 17 00:00:00 2001
+From e09120c5dd16deb042d71aa8dd188753c56916d7 Mon Sep 17 00:00:00 2001
 From: Xingyu Wu <xingyu.wu@starfivetech.com>
 Date: Mon, 21 Aug 2023 23:29:15 +0800
 Subject: [PATCH 001/214] clk: starfive: jh7110-sys: Fix lower rate of CPUfreq
@@ -77,5 +77,5 @@ index 58ef7c6d69cc..1f42faaaaf55 100644
  
  static const struct of_device_id jh7110_syscrg_match[] = {
 -- 
-2.53.0
+2.54.0
 

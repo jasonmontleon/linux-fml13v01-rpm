@@ -1,4 +1,4 @@
-From b3ca99a600c2f589c415c57df30d0257ea8ab468 Mon Sep 17 00:00:00 2001
+From 5cf22e13955009a3d5e8c20dcf61ad4de690ca2e Mon Sep 17 00:00:00 2001
 From: Xingyu Wu <xingyu.wu@starfivetech.com>
 Date: Thu, 19 Oct 2023 13:35:00 +0800
 Subject: [PATCH 003/214] clocksource: Add JH7110 timer driver
@@ -434,5 +434,5 @@ index 000000000000..71de29a3ec91
 +MODULE_DESCRIPTION("StarFive JH7110 timer driver");
 +MODULE_LICENSE("GPL");
 -- 
-2.53.0
+2.54.0
 

@@ -1,4 +1,4 @@
-From 6e052228b503b6af730d06b54da587d924cbc911 Mon Sep 17 00:00:00 2001
+From 24fd8cd15ca55c87641e3b1cbe95b9d2d2685ce1 Mon Sep 17 00:00:00 2001
 From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 Date: Mon, 6 Jan 2025 13:34:05 +0100
 Subject: [PATCH 201/214] riscv: fml13v01_defconfig: support compressed
@@ -25,5 +25,5 @@ index c6d89a2bdc9e..34ed4ab49ffd 100644
  CONFIG_MTD_BLOCK=y
  CONFIG_MTD_CFI=y
 -- 
-2.53.0
+2.54.0
 

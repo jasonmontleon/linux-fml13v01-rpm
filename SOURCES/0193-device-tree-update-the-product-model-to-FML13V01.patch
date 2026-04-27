@@ -1,4 +1,4 @@
-From 2b88b73e96b114106013a96014c1573ff5645790 Mon Sep 17 00:00:00 2001
+From 75d5b84a7c5ff1dfc93535d89afdf35417809488 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Fri, 3 Jan 2025 17:04:46 +0800
 Subject: [PATCH 193/214] device-tree:: update the product model to FML13V01.
@@ -45,5 +45,5 @@ index 4012d0e550b4..09f8668cc2a6
  	aliases {
  //		ethernet0 = &gmac0;
 -- 
-2.53.0
+2.54.0
 

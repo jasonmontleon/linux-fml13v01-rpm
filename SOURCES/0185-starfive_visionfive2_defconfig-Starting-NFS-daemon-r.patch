@@ -1,4 +1,4 @@
-From 776c9a54561467e3cbdf6bf4b5bb2b296d1e33f2 Mon Sep 17 00:00:00 2001
+From b355adf32faa02230c0b052738c538c35b2108cb Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Thu, 31 Oct 2024 09:45:46 +0800
 Subject: [PATCH 185/214] starfive_visionfive2_defconfig: Starting NFS daemon:
@@ -22,5 +22,5 @@ index 0d201e5301f3..65a611b4b826 100644
  # CONFIG_CIFS_STATS2 is not set
  CONFIG_CIFS_UPCALL=y
 -- 
-2.53.0
+2.54.0
 

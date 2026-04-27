@@ -1,4 +1,4 @@
-From bcc428a620d7f3adebf2ac46c0165c66572bf688 Mon Sep 17 00:00:00 2001
+From 48258ecc941927ed923645893aad6d0c995a1b73 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Wed, 16 Oct 2024 17:59:51 +0800
 Subject: [PATCH 178/214] devicetree:
@@ -474,5 +474,5 @@ index cae538750090..825d7fbd178b 100755
  &sound7 {
  	/* i2s + es8326 */
 -- 
-2.53.0
+2.54.0
 

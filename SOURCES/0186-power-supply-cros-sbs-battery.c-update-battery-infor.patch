@@ -1,4 +1,4 @@
-From 5493fb4d899c29878db6a79f38779af806c17a71 Mon Sep 17 00:00:00 2001
+From bd839a5e6a94a29673d58b67a02f179156613f89 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Thu, 31 Oct 2024 17:49:07 +0800
 Subject: [PATCH 186/214] power supply: cros-sbs-battery.c: update battery
@@ -43,5 +43,5 @@ index 8e5f8e8c3df7..17d5e6679927 100644
  	return NOTIFY_DONE;
  }
 -- 
-2.53.0
+2.54.0
 

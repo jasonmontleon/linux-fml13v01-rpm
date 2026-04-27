@@ -1,4 +1,4 @@
-From ce7160043db8f5dddb66e7ee432d4ccb19afafae Mon Sep 17 00:00:00 2001
+From 6bdce35cc2ea72015688afdadcf2c46e2db3e291 Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Wed, 13 Sep 2023 14:54:27 +0100
 Subject: [PATCH 041/214] pmdomain: starfive: Extract JH7110 pmu private
@@ -180,5 +180,5 @@ index 7d5f50d71c0d..0dbdcc0d2c91 100644
  
  static const struct of_device_id jh71xx_pmu_of_match[] = {
 -- 
-2.53.0
+2.54.0
 

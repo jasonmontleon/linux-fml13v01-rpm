@@ -1,4 +1,4 @@
-From 74708e93ad78f03bf817276d7db56c05b95eaf82 Mon Sep 17 00:00:00 2001
+From aea8afa5d7309895b3e7d5bf4fa62f1ee0412d7c Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:07 +0800
 Subject: [PATCH 030/214] pci: plda: Add event bitmap field to struct
@@ -72,5 +72,5 @@ index 6672a231a4bc..443109d04d59 100644
  };
  
 -- 
-2.53.0
+2.54.0
 
