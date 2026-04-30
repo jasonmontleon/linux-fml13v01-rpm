@@ -1,4 +1,4 @@
-From 1747895068cfc8614b438ca113d958efb6623e2c Mon Sep 17 00:00:00 2001
+From d112b9ed04d590d927d47dd0aa93e7182ccad20e Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Wed, 27 Sep 2023 06:07:34 -0700
 Subject: [PATCH 046/214] pmdomain: starfive: Update prefixes for AON power
