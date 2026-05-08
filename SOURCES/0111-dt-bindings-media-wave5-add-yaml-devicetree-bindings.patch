@@ -1,4 +1,4 @@
-From b7843dd0b19e9653622590c190c2fd6b22882579 Mon Sep 17 00:00:00 2001
+From beebe8923792dc424c513a7618a3abee09f3e159 Mon Sep 17 00:00:00 2001
 From: Robert Beckett <bob.beckett@collabora.com>
 Date: Wed, 8 Nov 2023 20:29:25 +0100
 Subject: [PATCH 111/214] dt-bindings: media: wave5: add yaml devicetree

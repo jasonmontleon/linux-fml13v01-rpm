@@ -1,4 +1,4 @@
-From 0bd1755bd8cf232ba194b052fb6b48c0dffe49c6 Mon Sep 17 00:00:00 2001
+From 9352e7d48518589ec57f81a49eb6accdaecba397 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:02 +0800
 Subject: [PATCH 025/214] PCI: microchip: Add request_event_irq() callback

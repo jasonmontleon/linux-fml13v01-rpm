@@ -1,4 +1,4 @@
-From 6026771079b62061230ab0889ec4dd51ddc4e2f9 Mon Sep 17 00:00:00 2001
+From af2d8ed63d697ed7182fbef539e597085e1c9279 Mon Sep 17 00:00:00 2001
 From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 Date: Mon, 6 Jan 2025 10:59:53 +0100
 Subject: [PATCH 195/214] riscv: add defconfig for DeepComputing fml13v01

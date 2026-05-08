@@ -1,4 +1,4 @@
-From 36f1603df60e8d1a899502a72279b68e2da2690b Mon Sep 17 00:00:00 2001
+From 0192cdee5ddb776a775a9d5deed253aa30d3ae02 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Thu, 19 Sep 2024 15:58:06 +0800
 Subject: [PATCH 171/214] dts: jh7110-starfive-visionfive-2-framework.dts
