@@ -1,4 +1,4 @@
-From f763edfc32b2b224ce6f1429ac15dc2ff61a6477 Mon Sep 17 00:00:00 2001
+From 1b5a95e6cf7ffb1b34bccc2c6d6f8cc22d0cf46d Mon Sep 17 00:00:00 2001
 From: Sebastian Fricke <sebastian.fricke@collabora.com>
 Date: Wed, 8 Nov 2023 20:29:22 +0100
 Subject: [PATCH 108/214] media: platform: chips-media: Move Coda to separate

@@ -1,4 +1,4 @@
-From 3753fb0e7081475531b89a82ea0af16a0ac1ab0a Mon Sep 17 00:00:00 2001
+From d13aede1af25052d78b618db4ae3053d9026c66e Mon Sep 17 00:00:00 2001
 From: "xingyu.wu" <xingyu.wu@starfivetech.com>
 Date: Tue, 19 Jul 2022 14:49:20 +0800
 Subject: [PATCH 129/214] spi:pl022-starfive:Avoid power device error when

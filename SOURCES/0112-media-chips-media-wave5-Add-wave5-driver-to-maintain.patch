@@ -1,4 +1,4 @@
-From e549e817503d6a34e610aed92a8e386e26b7a828 Mon Sep 17 00:00:00 2001
+From e38e25a4607c1b31b83fb88540d7f5fc6a2c236c Mon Sep 17 00:00:00 2001
 From: Robert Beckett <bob.beckett@collabora.com>
 Date: Wed, 8 Nov 2023 20:29:26 +0100
 Subject: [PATCH 112/214] media: chips-media: wave5: Add wave5 driver to
