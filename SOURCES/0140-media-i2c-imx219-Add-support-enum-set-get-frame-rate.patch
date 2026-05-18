@@ -1,4 +1,4 @@
-From f1ecfda00fe1d3dda7edc6abb7bf64ae252dba92 Mon Sep 17 00:00:00 2001
+From 048a3bf3b03ef16df03736f17a6dd931d5d1f31a Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Fri, 18 Nov 2022 11:50:58 +0800
 Subject: [PATCH 140/214] media: i2c: imx219: Add support enum/set/get frame
@@ -12,7 +12,7 @@ Signed-off-by: Changhuang Liang <changhuang.liang@starfivetech.com>
  1 file changed, 105 insertions(+)
 
 diff --git a/drivers/media/i2c/imx219.c b/drivers/media/i2c/imx219.c
-index a3d5a8a7c660..e59438da875c 100644
+index 03cbacd77a80..fc2484b00158 100644
 --- a/drivers/media/i2c/imx219.c
 +++ b/drivers/media/i2c/imx219.c
 @@ -170,6 +170,8 @@ struct imx219_mode {
@@ -188,7 +188,7 @@ index a3d5a8a7c660..e59438da875c 100644
  };
  
  static const struct v4l2_subdev_ops imx219_subdev_ops = {
-@@ -1289,6 +1392,8 @@ static int imx219_probe(struct i2c_client *client)
+@@ -1292,6 +1395,8 @@ static int imx219_probe(struct i2c_client *client)
  
  	/* Set default mode to max resolution */
  	imx219->mode = &supported_modes[0];

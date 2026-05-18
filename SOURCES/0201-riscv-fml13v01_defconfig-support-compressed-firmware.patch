@@ -1,4 +1,4 @@
-From e3f1564eaf7a5d02efa1632fdc57a8647382a03f Mon Sep 17 00:00:00 2001
+From dd8ee1c245a66d5de1a0771ae39b62811fef45d2 Mon Sep 17 00:00:00 2001
 From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 Date: Mon, 6 Jan 2025 13:34:05 +0100
 Subject: [PATCH 201/214] riscv: fml13v01_defconfig: support compressed

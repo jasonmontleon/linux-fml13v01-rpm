@@ -1,4 +1,4 @@
-From 4de03ebc5f57686fd82db0aef3d5538e160b8085 Mon Sep 17 00:00:00 2001
+From e3b12265687b771591f407c089ce94c5b2dc8645 Mon Sep 17 00:00:00 2001
 From: Sandie Cao <sandie.cao@deepcomputing.io>
 Date: Fri, 1 Nov 2024 10:29:26 +0800
 Subject: [PATCH 187/214] driver: usb: hub: Set GenesysLogic Hub Downstream

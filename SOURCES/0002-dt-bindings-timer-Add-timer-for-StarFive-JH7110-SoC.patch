@@ -1,4 +1,4 @@
-From c0ce32df69df0e0e4210680b9d4b63234cce3099 Mon Sep 17 00:00:00 2001
+From 2879199aeef4a7cb87213dffd227963b92aef66d Mon Sep 17 00:00:00 2001
 From: Xingyu Wu <xingyu.wu@starfivetech.com>
 Date: Thu, 19 Oct 2023 13:34:59 +0800
 Subject: [PATCH 002/214] dt-bindings: timer: Add timer for StarFive JH7110 SoC

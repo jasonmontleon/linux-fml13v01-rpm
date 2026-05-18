@@ -1,4 +1,4 @@
-From 63d85fb792a00f338222ed853e3b15a79e9ec83b Mon Sep 17 00:00:00 2001
+From e7807a54f00fbb9393a6df2830102a92ec1a703f Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Wed, 13 Nov 2024 18:24:45 +0800
 Subject: [PATCH 189/214] defconfig: starfive_visionfive2_defconfig:
