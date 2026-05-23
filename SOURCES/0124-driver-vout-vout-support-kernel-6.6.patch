@@ -1,4 +1,4 @@
-From 2bc9327ad8adf803363bb9af4ef2c9d988a3e5e7 Mon Sep 17 00:00:00 2001
+From 2e77416341ad8e854031037777d5829f5ac028d6 Mon Sep 17 00:00:00 2001
 From: Ziv Xu <ziv.xu@starfivetech.com>
 Date: Wed, 13 Mar 2024 18:45:30 +0800
 Subject: [PATCH 124/214] driver: vout: vout support kernel 6.6

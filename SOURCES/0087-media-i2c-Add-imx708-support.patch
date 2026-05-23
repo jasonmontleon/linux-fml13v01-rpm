@@ -1,4 +1,4 @@
-From 50b6d72a2037f08dba1759984622de8a9a693f5a Mon Sep 17 00:00:00 2001
+From 51d52c5de7ee3045aaa9613a69d62f8a28b4b11f Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Mon, 3 Apr 2023 13:52:17 +0800
 Subject: [PATCH 087/214] media: i2c: Add imx708 support

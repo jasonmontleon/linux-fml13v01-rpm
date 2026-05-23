@@ -1,4 +1,4 @@
-From 7628dd146c3bcde7c7a7de97d4ee141683468cb7 Mon Sep 17 00:00:00 2001
+From 72a6b5de4ad9384212fb1dd40f4139083217704c Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Mon, 25 Nov 2024 11:48:53 +0800
 Subject: [PATCH 190/214] cros: cros_ec_command: newly added command number

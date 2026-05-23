@@ -1,4 +1,4 @@
-From b481ee24d2ea011006f6d0a55152d5486554a7b5 Mon Sep 17 00:00:00 2001
+From dcf3e232cca8ad1992900ec96c4a676cc4fd6a2b Mon Sep 17 00:00:00 2001
 From: "minda.chen" <minda.chen@starfivetech.com>
 Date: Tue, 18 Oct 2022 09:57:39 +0800
 Subject: [PATCH 133/214] usb:xhci:To improve performance,usb using lowmem for

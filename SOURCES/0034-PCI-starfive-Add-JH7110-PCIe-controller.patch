@@ -1,4 +1,4 @@
-From 20bb66acf76d19b36c0957bebc1ce69a4efae934 Mon Sep 17 00:00:00 2001
+From bb84e09cd8985ac4500edc940d917bf35bdc2e47 Mon Sep 17 00:00:00 2001
 From: Minda Chen <minda.chen@starfivetech.com>
 Date: Mon, 8 Jan 2024 19:06:11 +0800
 Subject: [PATCH 034/214] PCI: starfive: Add JH7110 PCIe controller

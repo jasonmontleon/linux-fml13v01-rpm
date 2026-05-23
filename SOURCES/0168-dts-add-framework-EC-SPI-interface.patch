@@ -1,4 +1,4 @@
-From c6a0b84cd1bbf2d35bdacd5821c2b76eb95618e6 Mon Sep 17 00:00:00 2001
+From 6a2ebdb5d1c0a1f5d5315372bd312b901fe9ff8b Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Fri, 13 Sep 2024 09:46:29 +0800
 Subject: [PATCH 168/214] dts: add framework EC SPI interface.

@@ -1,4 +1,4 @@
-From efcb6eb74748395b77ffae6b55b58da9e9a8b2e5 Mon Sep 17 00:00:00 2001
+From 554c37af1615fcf358977ac59d7a22cac4250767 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Tue, 11 Apr 2023 16:25:57 +0800
 Subject: [PATCH 049/214] MAINTAINERS: Update all StarFive entries
@@ -11,10 +11,10 @@ Signed-off-by: Hal Feng <hal.feng@starfivetech.com>
  1 file changed, 57 insertions(+), 4 deletions(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index e700dca4974b..e0f1d3472276 100644
+index 8b1ee5b11eca..0dbbea2e3d12 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -7054,6 +7054,14 @@ T:	git git://anongit.freedesktop.org/drm/drm-misc
+@@ -7062,6 +7062,14 @@ T:	git git://anongit.freedesktop.org/drm/drm-misc
  F:	Documentation/devicetree/bindings/display/rockchip/
  F:	drivers/gpu/drm/rockchip/
  
@@ -29,7 +29,7 @@ index e700dca4974b..e0f1d3472276 100644
  DRM DRIVERS FOR STI
  M:	Alain Volmat <alain.volmat@foss.st.com>
  L:	dri-devel@lists.freedesktop.org
-@@ -16016,6 +16024,13 @@ F:	Documentation/i2c/busses/i2c-ocores.rst
+@@ -16024,6 +16032,13 @@ F:	Documentation/i2c/busses/i2c-ocores.rst
  F:	drivers/i2c/busses/i2c-ocores.c
  F:	include/linux/platform_data/i2c-ocores.h
  
@@ -43,7 +43,7 @@ index e700dca4974b..e0f1d3472276 100644
  OPENRISC ARCHITECTURE
  M:	Jonas Bonn <jonas@southpole.se>
  M:	Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>
-@@ -16427,6 +16442,14 @@ S:	Maintained
+@@ -16435,6 +16450,14 @@ S:	Maintained
  F:	Documentation/devicetree/bindings/pci/layerscape-pcie-gen4.txt
  F:	drivers/pci/controller/mobiveil/pcie-layerscape-gen4.c
  
@@ -58,7 +58,7 @@ index e700dca4974b..e0f1d3472276 100644
  PCI DRIVER FOR RENESAS R-CAR
  M:	Marek Vasut <marek.vasut+renesas@gmail.com>
  M:	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-@@ -16658,7 +16681,7 @@ M:	Daire McNamara <daire.mcnamara@microchip.com>
+@@ -16666,7 +16689,7 @@ M:	Daire McNamara <daire.mcnamara@microchip.com>
  L:	linux-pci@vger.kernel.org
  S:	Supported
  F:	Documentation/devicetree/bindings/pci/microchip*
@@ -67,7 +67,7 @@ index e700dca4974b..e0f1d3472276 100644
  
  PCIE DRIVER FOR QUALCOMM MSM
  M:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-@@ -16682,6 +16705,13 @@ S:	Maintained
+@@ -16690,6 +16713,13 @@ S:	Maintained
  F:	Documentation/devicetree/bindings/pci/socionext,uniphier-pcie*
  F:	drivers/pci/controller/dwc/pcie-uniphier*
  
@@ -81,7 +81,7 @@ index e700dca4974b..e0f1d3472276 100644
  PCIE DRIVER FOR ST SPEAR13XX
  M:	Pratyush Anand <pratyush.anand@gmail.com>
  L:	linux-pci@vger.kernel.org
-@@ -18454,7 +18484,7 @@ F:	drivers/char/hw_random/mpfs-rng.c
+@@ -18462,7 +18492,7 @@ F:	drivers/char/hw_random/mpfs-rng.c
  F:	drivers/clk/microchip/clk-mpfs*.c
  F:	drivers/i2c/busses/i2c-microchip-corei2c.c
  F:	drivers/mailbox/mailbox-mpfs.c
@@ -90,7 +90,7 @@ index e700dca4974b..e0f1d3472276 100644
  F:	drivers/pwm/pwm-microchip-core.c
  F:	drivers/reset/reset-mpfs.c
  F:	drivers/rtc/rtc-mpfs.c
-@@ -20429,6 +20459,15 @@ M:	Ion Badulescu <ionut@badula.org>
+@@ -20437,6 +20467,15 @@ M:	Ion Badulescu <ionut@badula.org>
  S:	Odd Fixes
  F:	drivers/net/ethernet/adaptec/starfire*
  
@@ -106,7 +106,7 @@ index e700dca4974b..e0f1d3472276 100644
  STARFIVE CRYPTO DRIVER
  M:	Jia Jie Ho <jiajie.ho@starfivetech.com>
  M:	William Qiu <william.qiu@starfivetech.com>
-@@ -20467,6 +20506,13 @@ S:	Supported
+@@ -20475,6 +20514,13 @@ S:	Supported
  F:	Documentation/devicetree/bindings/clock/starfive,jh7110-pll.yaml
  F:	drivers/clk/starfive/clk-starfive-jh7110-pll.c
  
@@ -120,7 +120,7 @@ index e700dca4974b..e0f1d3472276 100644
  STARFIVE JH7110 SYSCON
  M:	William Qiu <william.qiu@starfivetech.com>
  M:	Xingyu Wu <xingyu.wu@starfivetech.com>
-@@ -20514,9 +20560,10 @@ F:	drivers/usb/cdns3/cdns3-starfive.c
+@@ -20522,9 +20568,10 @@ F:	drivers/usb/cdns3/cdns3-starfive.c
  
  STARFIVE JH71XX PMU CONTROLLER DRIVER
  M:	Walker Chen <walker.chen@starfivetech.com>
@@ -132,7 +132,7 @@ index e700dca4974b..e0f1d3472276 100644
  F:	include/dt-bindings/power/starfive,jh7110-pmu.h
  
  STARFIVE SOC DRIVERS
-@@ -20524,7 +20571,13 @@ M:	Conor Dooley <conor@kernel.org>
+@@ -20532,7 +20579,13 @@ M:	Conor Dooley <conor@kernel.org>
  S:	Maintained
  T:	git https://git.kernel.org/pub/scm/linux/kernel/git/conor/linux.git/
  F:	Documentation/devicetree/bindings/soc/starfive/

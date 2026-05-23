@@ -1,4 +1,4 @@
-From 8b0f5026c26798010a3fee1a79ed089b1269a11c Mon Sep 17 00:00:00 2001
+From 7347ee8bec9e8df43b869fd29e0ac255cb009e3a Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Mon, 26 Aug 2024 14:52:32 +0800
 Subject: [PATCH 156/214] Add hdmi edp display panel support.

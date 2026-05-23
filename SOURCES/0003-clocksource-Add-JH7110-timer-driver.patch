@@ -1,4 +1,4 @@
-From fdbf3d5ac93177c3b4e0f8f7d588a31c87a20f26 Mon Sep 17 00:00:00 2001
+From 6a89df12d22a7028d04caa31918324329d19a508 Mon Sep 17 00:00:00 2001
 From: Xingyu Wu <xingyu.wu@starfivetech.com>
 Date: Thu, 19 Oct 2023 13:35:00 +0800
 Subject: [PATCH 003/214] clocksource: Add JH7110 timer driver

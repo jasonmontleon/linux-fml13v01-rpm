@@ -1,4 +1,4 @@
-From f770a2741c8ab5123348928307676515a83618f0 Mon Sep 17 00:00:00 2001
+From a582806061a96bfeb6813b077fc411576c10f6bd Mon Sep 17 00:00:00 2001
 From: Walker Chen <walker.chen@starfivetech.com>
 Date: Mon, 12 Jun 2023 21:21:45 +0800
 Subject: [PATCH 077/214] dmaengine: dw-axi-dmac: Drop unused print message
@@ -12,7 +12,7 @@ Signed-off-by: Walker Chen <walker.chen@starfivetech.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index 72fb40de58b3..89f18f433dea 100644
+index 3ea3e203253a..ac44a457efcc 100644
 --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
 +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
 @@ -523,7 +523,7 @@ static void dw_axi_dma_set_hw_channel(struct axi_dma_chan *chan, bool set)
