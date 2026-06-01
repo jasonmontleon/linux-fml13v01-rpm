@@ -1,4 +1,4 @@
-From 5bc63166e87d824eef7fe9f87301f83201c59ff4 Mon Sep 17 00:00:00 2001
+From d031749ca70a461077eb4da9c84f91bbefb81ec6 Mon Sep 17 00:00:00 2001
 From: Hal Feng <hal.feng@starfivetech.com>
 Date: Tue, 19 Sep 2023 21:35:39 +0800
 Subject: [PATCH 058/214] riscv: dts: starfive: Add evb-overlay dtso subdir

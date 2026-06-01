@@ -1,4 +1,4 @@
-From 0219602b43e06094f89f70f4825bb58ac0230b21 Mon Sep 17 00:00:00 2001
+From bbc05932daeb46bc9cab646417f2884823059ad0 Mon Sep 17 00:00:00 2001
 From: William Qiu <william.qiu@starfivetech.com>
 Date: Thu, 15 Jun 2023 20:15:25 +0800
 Subject: [PATCH 070/214] CAN: starfive - Add CAN engine support
