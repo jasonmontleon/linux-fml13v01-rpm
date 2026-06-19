@@ -1,4 +1,4 @@
-From 416a36d7c9b9861a8e420e024a92d9da80ed27a7 Mon Sep 17 00:00:00 2001
+From d54888afd82dbe449fc940fa0e3713b445c6e071 Mon Sep 17 00:00:00 2001
 From: Walker Chen <walker.chen@starfivetech.com>
 Date: Mon, 12 Jun 2023 21:29:00 +0800
 Subject: [PATCH 078/214] ASoC: wm8960: Configuration for JH7110 Audio

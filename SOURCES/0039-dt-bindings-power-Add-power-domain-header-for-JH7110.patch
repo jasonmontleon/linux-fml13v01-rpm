@@ -1,4 +1,4 @@
-From 625eba9f455092e00b8f5c65205462b735a0ab29 Mon Sep 17 00:00:00 2001
+From 1e46aba76f1f075452b2b2cf60ee942f15a946ed Mon Sep 17 00:00:00 2001
 From: Changhuang Liang <changhuang.liang@starfivetech.com>
 Date: Wed, 13 Sep 2023 14:54:25 +0100
 Subject: [PATCH 039/214] dt-bindings: power: Add power-domain header for

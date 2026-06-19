@@ -1,4 +1,4 @@
-From 368290a41de8b4688021b864fb5b9f700e52191d Mon Sep 17 00:00:00 2001
+From cd7c5d8922f9a6d1d72551a28c5345e4044d6023 Mon Sep 17 00:00:00 2001
 From: "minda.chen" <minda.chen@starfivetech.com>
 Date: Tue, 18 Oct 2022 09:57:39 +0800
 Subject: [PATCH 133/214] usb:xhci:To improve performance,usb using lowmem for
@@ -30,10 +30,10 @@ index 3e9e1372f510..fb34043e2ba4 100644
  	status = "okay";
  };
 diff --git a/drivers/usb/core/hcd.c b/drivers/usb/core/hcd.c
-index 0b2a3f645d2f..bff9fbb93e41 100644
+index 884391a30ad4..c99c78885fc7 100644
 --- a/drivers/usb/core/hcd.c
 +++ b/drivers/usb/core/hcd.c
-@@ -1439,7 +1439,9 @@ int usb_hcd_map_urb_for_dma(struct usb_hcd *hcd, struct urb *urb,
+@@ -1437,7 +1437,9 @@ int usb_hcd_map_urb_for_dma(struct usb_hcd *hcd, struct urb *urb,
  			if (ret == 0)
  				urb->transfer_flags |= URB_MAP_LOCAL;
  		} else if (hcd_uses_dma(hcd)) {

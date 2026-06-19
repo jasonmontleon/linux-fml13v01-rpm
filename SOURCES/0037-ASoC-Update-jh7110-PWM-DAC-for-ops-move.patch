@@ -1,4 +1,4 @@
-From 8e36be2498ece1bb1a322e7896e46136dcb4fc9d Mon Sep 17 00:00:00 2001
+From 8817e4ca4c8a784d3cd5191c0f14022595cbe47f Mon Sep 17 00:00:00 2001
 From: Mark Brown <broonie@kernel.org>
 Date: Mon, 11 Sep 2023 23:48:39 +0100
 Subject: [PATCH 037/214] ASoC: Update jh7110 PWM DAC for ops move

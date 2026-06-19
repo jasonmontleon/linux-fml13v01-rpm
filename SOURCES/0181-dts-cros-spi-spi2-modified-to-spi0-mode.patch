@@ -1,4 +1,4 @@
-From 8fe080041fe6f5407dce6e4e24f24716accbe54d Mon Sep 17 00:00:00 2001
+From b8ce6d285d5e24ed5f234055203f4d6836315f57 Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Thu, 24 Oct 2024 13:24:51 +0800
 Subject: [PATCH 181/214] dts: cros-spi: spi2 modified to spi0 mode.

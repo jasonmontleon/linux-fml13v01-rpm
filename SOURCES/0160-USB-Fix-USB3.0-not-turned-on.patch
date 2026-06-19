@@ -1,4 +1,4 @@
-From 4e314bea24b1772b0858f1a54006ed974d0d4bf3 Mon Sep 17 00:00:00 2001
+From 6099126f177ee618010233bcb5c6096ea24129aa Mon Sep 17 00:00:00 2001
 From: "yang.wang" <yang.wang@deepcomputing.io>
 Date: Wed, 4 Sep 2024 14:32:12 +0800
 Subject: [PATCH 160/214] USB: Fix USB3.0 not turned on.
